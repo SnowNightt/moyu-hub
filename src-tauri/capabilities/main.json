@@ -1,0 +1,42 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "main-window",
+  "description": "MoyuHub shell: settings, fixed window and tray. Business permissions are added when used.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "core:app:allow-default-window-icon",
+    "core:window:allow-start-dragging",
+    "core:window:allow-minimize",
+    "core:window:allow-unminimize",
+    "core:window:allow-close",
+    "core:window:allow-show",
+    "core:window:allow-hide",
+    "core:window:allow-set-focus",
+    "core:window:allow-set-always-on-top",
+    "core:window:allow-set-theme",
+    "core:window:allow-set-effects",
+    "core:menu:default",
+    "core:tray:default",
+    "store:default",
+    "process:allow-exit",
+    "window-state:allow-save-window-state",
+    "window-state:allow-restore-state",
+    "sql:default",
+    "sql:allow-execute",
+    {
+      "identifier": "http:default",
+      "allow": [
+        {
+          "url": "https://store.steampowered.com/api/featuredcategories*"
+        },
+        {
+          "url": "https://store.steampowered.com/api/appdetails*"
+        },
+        {
+          "url": "https://store.steampowered.com/search/results/*"
+        }
+      ]
+    }
+  ]
+}

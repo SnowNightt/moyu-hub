@@ -1,0 +1,463 @@
+{
+  "620": {
+    "success": true,
+    "data": {
+      "type": "game",
+      "name": "Portal 2",
+      "steam_appid": 620,
+      "required_age": 0,
+      "is_free": false,
+      "controller_support": "full",
+      "dlc": [323180],
+      "detailed_description": "Portal 2 用创新的游戏内容、故事以及最初 Portal 那赢得超过 70 项以上业界奖项般的配乐打造出另一个大奖赢家的继承者。<br><br>Portal 2 的单人游戏部分带来充满活力的新角色、一大堆新鲜的解谜元素，以及更大、更加曲折的试验室。玩家将可以于前所未见的光圈科技实验室中探索，并且与在原游戏中引导你，偶尔想要把你杀掉的电脑陪伴者 GLaDOS 重逢。<br><br>本游戏的双人合作模式将有其独立的战役内容，包含独特的故事、试验室，以及两名新的玩家角色。这项新的游戏模式让玩家必须重新思考所有他们在 Portal 中所了解到的事实。想要过关不只要一起行动，还必须一起思考。<br><br><strong>游戏特色<\/strong><br><ul class=\"bb_ul\"><li><strong>丰富的单人游戏：<\/strong>次世代的游戏内容与令人注目的故事剧情。<br><\/li><li><strong>完整双人合作模式：<\/strong>多人连线内容具有其额外的故事、角色，以及游戏内容。<br><\/li><li><strong>高级物理系统：<\/strong>创造出前所未见的新领域，带来更加有趣的挑战，规模更大但不会更难的游戏。<br>原创音乐。<br><\/li><li><strong>大作续集：<\/strong>全球超过 30 个媒体杂志将初代 Portal 选为 2007 年度游戏。<br><\/li><li><strong>编辑工具：<\/strong>Portal 2 编辑工具将会包含在内。<\/li><\/ul>",
+      "about_the_game": "Portal 2 用创新的游戏内容、故事以及最初 Portal 那赢得超过 70 项以上业界奖项般的配乐打造出另一个大奖赢家的继承者。<br><br>Portal 2 的单人游戏部分带来充满活力的新角色、一大堆新鲜的解谜元素，以及更大、更加曲折的试验室。玩家将可以于前所未见的光圈科技实验室中探索，并且与在原游戏中引导你，偶尔想要把你杀掉的电脑陪伴者 GLaDOS 重逢。<br><br>本游戏的双人合作模式将有其独立的战役内容，包含独特的故事、试验室，以及两名新的玩家角色。这项新的游戏模式让玩家必须重新思考所有他们在 Portal 中所了解到的事实。想要过关不只要一起行动，还必须一起思考。<br><br><strong>游戏特色<\/strong><br><ul class=\"bb_ul\"><li><strong>丰富的单人游戏：<\/strong>次世代的游戏内容与令人注目的故事剧情。<br><\/li><li><strong>完整双人合作模式：<\/strong>多人连线内容具有其额外的故事、角色，以及游戏内容。<br><\/li><li><strong>高级物理系统：<\/strong>创造出前所未见的新领域，带来更加有趣的挑战，规模更大但不会更难的游戏。<br>原创音乐。<br><\/li><li><strong>大作续集：<\/strong>全球超过 30 个媒体杂志将初代 Portal 选为 2007 年度游戏。<br><\/li><li><strong>编辑工具：<\/strong>Portal 2 编辑工具将会包含在内。<\/li><\/ul>",
+      "short_description": "“终身测试计划”现已升级，您可以为您自己或您的好友设计合作谜题！",
+      "supported_languages": "英语<strong>*<\/strong>, 法语<strong>*<\/strong>, 德语<strong>*<\/strong>, 西班牙语 - 西班牙<strong>*<\/strong>, 捷克语, 丹麦语, 荷兰语, 芬兰语, 匈牙利语, 意大利语, 日语, 韩语, 挪威语, 波兰语, 葡萄牙语 - 葡萄牙, 罗马尼亚语, 俄语<strong>*<\/strong>, 简体中文, 瑞典语, 泰语, 繁体中文, 土耳其语, 保加利亚语, 希腊语, 葡萄牙语 - 巴西, 西班牙语 - 拉丁美洲, 乌克兰语<br><strong>*<\/strong>具有完全音频支持的语言",
+      "header_image": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/faffc0f560786e2f05104a8d2fac837c6969bf13\/header.jpg?t=1790187113",
+      "capsule_image": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/bd23943dcd0280aa2cdc066e2f86d2185cfd4cce\/capsule_231x87.jpg?t=1790187113",
+      "capsule_imagev5": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/bd23943dcd0280aa2cdc066e2f86d2185cfd4cce\/capsule_184x69.jpg?t=1790187113",
+      "website": "http:\/\/www.thinkwithportals.com\/",
+      "pc_requirements": {
+        "minimum": "<strong>最低配置:<\/strong><br><ul class=\"bb_ul\"><li><strong>操作系统 *:<\/strong> Windows 7 \/ Vista \/ XP<br><\/li><li><strong>处理器:<\/strong> 3.0 GHz P4、Dual Core 2.0 以上或 AMD64X2 以上<br><\/li><li><strong>内存:<\/strong> 2 GB RAM<br><\/li><li><strong>显卡:<\/strong> 显卡必须拥有 128 MB 以上显存，并支持 Pixel Shader 2.0b（ATI Radeon X800 以上\/ NVIDIA GeForce 7600 以上\/ Intel HD Graphics 2000 以上）。<br><\/li><li><strong>DirectX 版本:<\/strong> 9.0c<br><\/li><li><strong>存储空间:<\/strong> 需要 8 GB 可用空间<br><\/li><li><strong>声卡:<\/strong> 兼容 DirectX 9.0c<\/li><\/ul>"
+      },
+      "mac_requirements": {
+        "minimum": "<strong>最低配置:<\/strong><br><ul class=\"bb_ul\"><li><strong>操作系统:<\/strong> MacOS X 10.6.7 或更新版本<br><\/li><li><strong>处理器:<\/strong> 英特尔酷睿双核处理器（2GHz 或以上）<br><\/li><li><strong>内存:<\/strong> 2 GB RAM<br><\/li><li><strong>显卡:<\/strong> ATI Radeon 2400 以上\/ NVIDIA 8600M 以上\/ Intel HD Graphics 3000<br><\/li><li><strong>存储空间:<\/strong> 需要 8 GB 可用空间<\/li><\/ul>"
+      },
+      "linux_requirements": {
+        "minimum": "<strong>最低配置:<\/strong><br><ul class=\"bb_ul\"><li><strong>操作系统:<\/strong> Ubuntu 12.04<br><\/li><li><strong>处理器:<\/strong> 2.8GHz 的英特尔双核处理器或 AMD 处理器<br><\/li><li><strong>内存:<\/strong> 2 GB RAM<br><\/li><li><strong>显卡:<\/strong> nVidia GeForce 8600\/9600GT、ATI Radeon HD2600\/3600（显卡驱动：nVidia 310、AMD 12.11)、OpenGL 2.1<br><\/li><li><strong>存储空间:<\/strong> 需要 8 GB 可用空间<br><\/li><li><strong>声卡:<\/strong> OpenAL 兼容声卡<\/li><\/ul>"
+      },
+      "developers": ["Valve"],
+      "publishers": ["Valve"],
+      "price_overview": {
+        "currency": "CNY",
+        "initial": 4200,
+        "final": 840,
+        "discount_percent": 80,
+        "initial_formatted": "¥ 42.00",
+        "final_formatted": "¥ 8.40"
+      },
+      "packages": [7877, 204528, 8187],
+      "package_groups": [
+        {
+          "name": "default",
+          "title": "购买 Portal 2",
+          "description": "",
+          "selection_text": "选择一个购买选项",
+          "save_text": "",
+          "display_type": 0,
+          "is_recurring_subscription": "false",
+          "subs": [
+            {
+              "packageid": 7877,
+              "percent_savings_text": "-80% ",
+              "percent_savings": 0,
+              "option_text": "Portal 2 - <span class=\"discount_original_price\">¥ 42.00<\/span> ¥ 8.40",
+              "option_description": "",
+              "can_get_free_license": "0",
+              "is_free_license": false,
+              "price_in_cents_with_discount": 840
+            },
+            {
+              "packageid": 204528,
+              "percent_savings_text": " ",
+              "percent_savings": 0,
+              "option_text": "Portal 2 - Commercial License - ¥ 37.00",
+              "option_description": "",
+              "can_get_free_license": "0",
+              "is_free_license": false,
+              "price_in_cents_with_discount": 3700
+            },
+            {
+              "packageid": 8187,
+              "percent_savings_text": "-60% ",
+              "percent_savings": 0,
+              "option_text": "Portal 2 - The Final Hours - <span class=\"discount_original_price\">¥ 11.00<\/span> ¥ 4.40",
+              "option_description": "",
+              "can_get_free_license": "0",
+              "is_free_license": false,
+              "price_in_cents_with_discount": 440
+            }
+          ]
+        }
+      ],
+      "platforms": { "windows": true, "mac": false, "linux": true },
+      "metacritic": {
+        "score": 95,
+        "url": "https:\/\/www.metacritic.com\/game\/pc\/portal-2?ftag=MCD-06-10aaa1f"
+      },
+      "categories": [
+        { "id": 2, "description": "单人" },
+        { "id": 1, "description": "多人" },
+        { "id": 9, "description": "合作" },
+        { "id": 38, "description": "在线合作" },
+        { "id": 39, "description": "同屏\/分屏合作" },
+        { "id": 24, "description": "同屏\/分屏" },
+        { "id": 22, "description": "Steam 成就" },
+        { "id": 28, "description": "完全支持控制器" },
+        { "id": 29, "description": "Steam 集换式卡牌" },
+        { "id": 13, "description": "支持字幕" },
+        { "id": 51, "description": "Steam 创意工坊" },
+        { "id": 30, "description": "Steam 创意工坊" },
+        { "id": 67, "description": "视角舒适度" },
+        { "id": 68, "description": "自定义音量控制" },
+        { "id": 74, "description": "无需应对快速反应事件" },
+        { "id": 55, "description": "DUALSHOCK 控制器支持" },
+        { "id": 56, "description": "DUALSHOCK 控制器支持" },
+        { "id": 57, "description": "DualSense 控制器支持" },
+        { "id": 58, "description": "DualSense 控制器支持" },
+        { "id": 79, "description": "随时保存" },
+        { "id": 59, "description": "Steam 输入 API 支持" },
+        { "id": 69, "description": "立体声" },
+        { "id": 70, "description": "环绕声" },
+        { "id": 23, "description": "Steam 云" },
+        { "id": 15, "description": "统计数据" },
+        { "id": 17, "description": "包含关卡编辑器" },
+        { "id": 14, "description": "解说可用" },
+        { "id": 41, "description": "在手机上远程畅玩" },
+        { "id": 42, "description": "在平板上远程畅玩" },
+        { "id": 43, "description": "在电视上远程畅玩" },
+        { "id": 44, "description": "远程同乐" },
+        { "id": 62, "description": "家庭共享" }
+      ],
+      "genres": [
+        { "id": "1", "description": "动作" },
+        { "id": "25", "description": "冒险" }
+      ],
+      "screenshots": [
+        {
+          "id": 0,
+          "path_thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_f3f6787d74739d3b2ec8a484b5c994b3d31ef325.600x338.jpg?t=1790187113",
+          "path_full": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_f3f6787d74739d3b2ec8a484b5c994b3d31ef325.1920x1080.jpg?t=1790187113"
+        },
+        {
+          "id": 1,
+          "path_thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_6a4f5afdaa98402de9cf0b59fed27bab3256a6f4.600x338.jpg?t=1790187113",
+          "path_full": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_6a4f5afdaa98402de9cf0b59fed27bab3256a6f4.1920x1080.jpg?t=1790187113"
+        },
+        {
+          "id": 2,
+          "path_thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_0cdd90fafc160b52d08b303d205f9fd4e83cf164.600x338.jpg?t=1790187113",
+          "path_full": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_0cdd90fafc160b52d08b303d205f9fd4e83cf164.1920x1080.jpg?t=1790187113"
+        },
+        {
+          "id": 3,
+          "path_thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_ec35a739b4b33270eb170d9e561c5b016cba50a6.600x338.jpg?t=1790187113",
+          "path_full": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_ec35a739b4b33270eb170d9e561c5b016cba50a6.1920x1080.jpg?t=1790187113"
+        },
+        {
+          "id": 4,
+          "path_thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_3d13161104a04603a0524536770c5f74626db4c0.600x338.jpg?t=1790187113",
+          "path_full": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_3d13161104a04603a0524536770c5f74626db4c0.1920x1080.jpg?t=1790187113"
+        },
+        {
+          "id": 5,
+          "path_thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_8a772608d29ffd56ac013d2ac7c4388b96e87a21.600x338.jpg?t=1790187113",
+          "path_full": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_8a772608d29ffd56ac013d2ac7c4388b96e87a21.1920x1080.jpg?t=1790187113"
+        },
+        {
+          "id": 6,
+          "path_thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_358127df30a766a1516ad139083c2bcec3fe0975.600x338.jpg?t=1790187113",
+          "path_full": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_358127df30a766a1516ad139083c2bcec3fe0975.1920x1080.jpg?t=1790187113"
+        },
+        {
+          "id": 7,
+          "path_thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_410c7955c3cc8ca4a5e3c81daa214f534c9aabc8.600x338.jpg?t=1790187113",
+          "path_full": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_410c7955c3cc8ca4a5e3c81daa214f534c9aabc8.1920x1080.jpg?t=1790187113"
+        },
+        {
+          "id": 8,
+          "path_thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_0e16bceacb6616a5ca4bc4ba4d28c7a0d06b671c.600x338.jpg?t=1790187113",
+          "path_full": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_0e16bceacb6616a5ca4bc4ba4d28c7a0d06b671c.1920x1080.jpg?t=1790187113"
+        },
+        {
+          "id": 9,
+          "path_thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_d8f172249d6e89999c3692bf2c380921f197fd82.600x338.jpg?t=1790187113",
+          "path_full": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_d8f172249d6e89999c3692bf2c380921f197fd82.1920x1080.jpg?t=1790187113"
+        },
+        {
+          "id": 10,
+          "path_thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_fe9782ea3b43ef7af37b18e0a5c5f7bdc9c21f12.600x338.jpg?t=1790187113",
+          "path_full": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_fe9782ea3b43ef7af37b18e0a5c5f7bdc9c21f12.1920x1080.jpg?t=1790187113"
+        },
+        {
+          "id": 11,
+          "path_thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_3858536cbc0a07dfbe36e8f87b3f08bf3be45e54.600x338.jpg?t=1790187113",
+          "path_full": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/620\/ss_3858536cbc0a07dfbe36e8f87b3f08bf3be45e54.1920x1080.jpg?t=1790187113"
+        }
+      ],
+      "movies": [
+        {
+          "id": 5787,
+          "name": "Portal 2 E3 Demo (Excursion Funnels)",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/5787\/movie.293x165.jpg?t=1682715616",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3746\/0f4bee66d490b637707ac4fca3e850f2cc2d3b2a\/1750108721\/dash_av1.mpd?t=1682715616",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3746\/0f4bee66d490b637707ac4fca3e850f2cc2d3b2a\/1750108721\/dash_h264.mpd?t=1682715616",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3746\/0f4bee66d490b637707ac4fca3e850f2cc2d3b2a\/1750108721\/hls_264_master.m3u8?t=1682715616",
+          "highlight": true
+        },
+        {
+          "id": 80822,
+          "name": "Portal 2 Remix Trailer",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/80822\/movie.293x165.jpg?t=1683129612",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/5096\/2bbd128dd4e1d90aa6f688fb91e6665a301f48c5\/1750108756\/dash_av1.mpd?t=1683129612",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/5096\/2bbd128dd4e1d90aa6f688fb91e6665a301f48c5\/1750108756\/dash_h264.mpd?t=1683129612",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/5096\/2bbd128dd4e1d90aa6f688fb91e6665a301f48c5\/1750108756\/hls_264_master.m3u8?t=1683129612",
+          "highlight": false
+        },
+        {
+          "id": 81613,
+          "name": "Portal 2 - Perpetual Testing Initiative",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/81613\/movie.293x165.jpg?t=1682715589",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/7495\/c992fec9601198bd42fc3563a62c932b8dc032cb\/1750108756\/dash_av1.mpd?t=1682715589",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/7495\/c992fec9601198bd42fc3563a62c932b8dc032cb\/1750108756\/dash_h264.mpd?t=1682715589",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/7495\/c992fec9601198bd42fc3563a62c932b8dc032cb\/1750108756\/hls_264_master.m3u8?t=1682715589",
+          "highlight": false
+        },
+        {
+          "id": 5926,
+          "name": "Portal 2 Co-op Trailer",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/5926\/movie.293x165.jpg?t=1682715596",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4105\/75674acd6517bf86cad79034131dc7853c2967cb\/1750109925\/dash_av1.mpd?t=1682715596",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4105\/75674acd6517bf86cad79034131dc7853c2967cb\/1750109925\/dash_h264.mpd?t=1682715596",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4105\/75674acd6517bf86cad79034131dc7853c2967cb\/1750109925\/hls_264_master.m3u8?t=1682715596",
+          "highlight": false
+        },
+        {
+          "id": 5739,
+          "name": "Portal 2 Teaser",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/5739\/movie.293x165.jpg?t=1682715602",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3670\/be99f50a782b0258dcf3d6b0d0d3d24c28da0568\/1750108717\/dash_av1.mpd?t=1682715602",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3670\/be99f50a782b0258dcf3d6b0d0d3d24c28da0568\/1750108717\/dash_h264.mpd?t=1682715602",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3670\/be99f50a782b0258dcf3d6b0d0d3d24c28da0568\/1750108717\/hls_264_master.m3u8?t=1682715602",
+          "highlight": false
+        },
+        {
+          "id": 5786,
+          "name": "Portal 2 E3 Demo (Wheatley)",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/5786\/movie.293x165.jpg?t=1682715609",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3745\/63ba44a28c34bc7600e0dbe3e863f343b331b983\/1750108718\/dash_av1.mpd?t=1682715609",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3745\/63ba44a28c34bc7600e0dbe3e863f343b331b983\/1750108718\/dash_h264.mpd?t=1682715609",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3745\/63ba44a28c34bc7600e0dbe3e863f343b331b983\/1750108718\/hls_264_master.m3u8?t=1682715609",
+          "highlight": false
+        },
+        {
+          "id": 5790,
+          "name": "Portal 2 E3 Demo (Pneumatic Diversity Vents)",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/5790\/movie.293x165.jpg?t=1682715623",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3749\/a0aa2429b0a7e059c7b036574c4285f046251bb3\/1750108721\/dash_av1.mpd?t=1682715623",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3749\/a0aa2429b0a7e059c7b036574c4285f046251bb3\/1750108721\/dash_h264.mpd?t=1682715623",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3749\/a0aa2429b0a7e059c7b036574c4285f046251bb3\/1750108721\/hls_264_master.m3u8?t=1682715623",
+          "highlight": false
+        },
+        {
+          "id": 5788,
+          "name": "Portal 2 E3 Demo (Faith Plates)",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/5788\/movie.293x165.jpg?t=1682715630",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3747\/4ddba80177b8b5387e36958b993aadacc9d0d4c8\/1750108721\/dash_av1.mpd?t=1682715630",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3747\/4ddba80177b8b5387e36958b993aadacc9d0d4c8\/1750108721\/dash_h264.mpd?t=1682715630",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3747\/4ddba80177b8b5387e36958b993aadacc9d0d4c8\/1750108721\/hls_264_master.m3u8?t=1682715630",
+          "highlight": false
+        },
+        {
+          "id": 5789,
+          "name": "Portal 2 E3 Demo (Thermal Discouragement Beams)",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/5789\/movie.293x165.jpg?t=1682715637",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3748\/2ff801b8dba88c611c053aea3576ffc70700da96\/1750108721\/dash_av1.mpd?t=1682715637",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3748\/2ff801b8dba88c611c053aea3576ffc70700da96\/1750108721\/dash_h264.mpd?t=1682715637",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3748\/2ff801b8dba88c611c053aea3576ffc70700da96\/1750108721\/hls_264_master.m3u8?t=1682715637",
+          "highlight": false
+        },
+        {
+          "id": 5791,
+          "name": "Portal 2 E3 Demo (Repulsion Gel)",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/5791\/movie.293x165.jpg?t=1682715644",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3750\/40b9aa66ff85c9d149c72bfd38520ee2fce7b00d\/1750108726\/dash_av1.mpd?t=1682715644",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3750\/40b9aa66ff85c9d149c72bfd38520ee2fce7b00d\/1750108726\/dash_h264.mpd?t=1682715644",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3750\/40b9aa66ff85c9d149c72bfd38520ee2fce7b00d\/1750108726\/hls_264_master.m3u8?t=1682715644",
+          "highlight": false
+        },
+        {
+          "id": 5795,
+          "name": "Portal 2 E3 Demo (Propulsion Gel)",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/5795\/movie.293x165.jpg?t=1682715651",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3763\/c8dd66b86402917be8f783d66288f276f3ce4459\/1750108727\/dash_av1.mpd?t=1682715651",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3763\/c8dd66b86402917be8f783d66288f276f3ce4459\/1750108727\/dash_h264.mpd?t=1682715651",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/3763\/c8dd66b86402917be8f783d66288f276f3ce4459\/1750108727\/hls_264_master.m3u8?t=1682715651",
+          "highlight": false
+        },
+        {
+          "id": 80633,
+          "name": "Portal 2: Valentine's Day",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/80633\/movie.293x165.jpg?t=1682715658",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4706\/4f2ca3296dd667ad639d0090d1fb44007c0bda38\/1750108787\/dash_av1.mpd?t=1682715658",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4706\/4f2ca3296dd667ad639d0090d1fb44007c0bda38\/1750108787\/dash_h264.mpd?t=1682715658",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4706\/4f2ca3296dd667ad639d0090d1fb44007c0bda38\/1750108787\/hls_264_master.m3u8?t=1682715658",
+          "highlight": false
+        },
+        {
+          "id": 80739,
+          "name": "Portal 2 - Panels Short (English)",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/80739\/movie.293x165.jpg?t=1682715665",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4902\/9daf4787a3f8d4779526ac59a5a3bc58a65d822f\/1750108740\/dash_av1.mpd?t=1682715665",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4902\/9daf4787a3f8d4779526ac59a5a3bc58a65d822f\/1750108740\/dash_h264.mpd?t=1682715665",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4902\/9daf4787a3f8d4779526ac59a5a3bc58a65d822f\/1750108740\/hls_264_master.m3u8?t=1682715665",
+          "highlight": false
+        },
+        {
+          "id": 80747,
+          "name": "Portal 2 - Bot Trust Short (English)",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/80747\/movie.293x165.jpg?t=1682715692",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4934\/a2674b45b26de979b85c76a3704fa055eada90a2\/1750108755\/dash_av1.mpd?t=1682715692",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4934\/a2674b45b26de979b85c76a3704fa055eada90a2\/1750108755\/dash_h264.mpd?t=1682715692",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4934\/a2674b45b26de979b85c76a3704fa055eada90a2\/1750108755\/hls_264_master.m3u8?t=1682715692",
+          "highlight": false
+        },
+        {
+          "id": 80752,
+          "name": "Portal 2 - Turrets (English)",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/80752\/movie.293x165.jpg?t=1682715720",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4971\/b727f5d233494afd55752c6e189b6e8b539d8480\/1750108756\/dash_av1.mpd?t=1682715720",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4971\/b727f5d233494afd55752c6e189b6e8b539d8480\/1750108756\/dash_h264.mpd?t=1682715720",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4971\/b727f5d233494afd55752c6e189b6e8b539d8480\/1750108756\/hls_264_master.m3u8?t=1682715720",
+          "highlight": false
+        },
+        {
+          "id": 80762,
+          "name": "Portal 2 - Boots Short (English)",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/80762\/movie.293x165.jpg?t=1682715769",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4984\/037490e46a3b8e5467ccab354f85f4e623c99ee8\/1750108756\/dash_av1.mpd?t=1682715769",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4984\/037490e46a3b8e5467ccab354f85f4e623c99ee8\/1750108756\/dash_h264.mpd?t=1682715769",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/4984\/037490e46a3b8e5467ccab354f85f4e623c99ee8\/1750108756\/hls_264_master.m3u8?t=1682715769",
+          "highlight": false
+        },
+        {
+          "id": 80788,
+          "name": "Portal 2 - Launch TV Ad",
+          "thumbnail": "https:\/\/shared.akamai.steamstatic.com\/store_item_assets\/steam\/apps\/80788\/movie.293x165.jpg?t=1682715776",
+          "dash_av1": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/5015\/c3d24a03d62be83014d25e01999174f2d010e430\/1750108756\/dash_av1.mpd?t=1682715776",
+          "dash_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/5015\/c3d24a03d62be83014d25e01999174f2d010e430\/1750108756\/dash_h264.mpd?t=1682715776",
+          "hls_h264": "https:\/\/video.akamai.steamstatic.com\/store_trailers\/620\/5015\/c3d24a03d62be83014d25e01999174f2d010e430\/1750108756\/hls_264_master.m3u8?t=1682715776",
+          "highlight": false
+        }
+      ],
+      "recommendations": { "total": 391046 },
+      "achievements": {
+        "total": 51,
+        "highlighted": [
+          {
+            "icon": "SURVIVE_CONTAINER_RIDE.jpg",
+            "localized_name": "唤醒闹钟",
+            "archived": 0,
+            "hidden": 0,
+            "name": "唤醒闹钟",
+            "path": "https:\/\/shared.akamai.steamstatic.com\/community_assets\/images\/apps\/620\/SURVIVE_CONTAINER_RIDE.jpg"
+          },
+          {
+            "icon": "WAKE_UP.jpg",
+            "localized_name": "怪兽",
+            "archived": 0,
+            "hidden": 0,
+            "name": "怪兽",
+            "path": "https:\/\/shared.akamai.steamstatic.com\/community_assets\/images\/apps\/620\/WAKE_UP.jpg"
+          },
+          {
+            "icon": "LASER.jpg",
+            "localized_name": "不气馁",
+            "archived": 0,
+            "hidden": 0,
+            "name": "不气馁",
+            "path": "https:\/\/shared.akamai.steamstatic.com\/community_assets\/images\/apps\/620\/LASER.jpg"
+          },
+          {
+            "icon": "BRIDGE.jpg",
+            "localized_name": "恶水桥",
+            "archived": 0,
+            "hidden": 0,
+            "name": "恶水桥",
+            "path": "https:\/\/shared.akamai.steamstatic.com\/community_assets\/images\/apps\/620\/BRIDGE.jpg"
+          },
+          {
+            "icon": "BREAK_OUT.jpg",
+            "localized_name": "破坏者",
+            "archived": 0,
+            "hidden": 0,
+            "name": "破坏者",
+            "path": "https:\/\/shared.akamai.steamstatic.com\/community_assets\/images\/apps\/620\/BREAK_OUT.jpg"
+          },
+          {
+            "icon": "STALEMATE_ASSOCIATE.jpg",
+            "localized_name": "僵局协助",
+            "archived": 0,
+            "hidden": 0,
+            "name": "僵局协助",
+            "path": "https:\/\/shared.akamai.steamstatic.com\/community_assets\/images\/apps\/620\/STALEMATE_ASSOCIATE.jpg"
+          },
+          {
+            "icon": "ADDICTED_TO_SPUDS.jpg",
+            "localized_name": "炸土豆",
+            "archived": 0,
+            "hidden": 0,
+            "name": "炸土豆",
+            "path": "https:\/\/shared.akamai.steamstatic.com\/community_assets\/images\/apps\/620\/ADDICTED_TO_SPUDS.jpg"
+          },
+          {
+            "icon": "BLUE_GEL.jpg",
+            "localized_name": "不受挑战垂直",
+            "archived": 0,
+            "hidden": 0,
+            "name": "不受挑战垂直",
+            "path": "https:\/\/shared.akamai.steamstatic.com\/community_assets\/images\/apps\/620\/BLUE_GEL.jpg"
+          },
+          {
+            "icon": "ORANGE_GEL.jpg",
+            "localized_name": "摩擦以外因素",
+            "archived": 0,
+            "hidden": 0,
+            "name": "摩擦以外因素",
+            "path": "https:\/\/shared.akamai.steamstatic.com\/community_assets\/images\/apps\/620\/ORANGE_GEL.jpg"
+          },
+          {
+            "icon": "WHITE_GEL.jpg",
+            "localized_name": "排除白色",
+            "archived": 0,
+            "hidden": 0,
+            "name": "排除白色",
+            "path": "https:\/\/shared.akamai.steamstatic.com\/community_assets\/images\/apps\/620\/WHITE_GEL.jpg"
+          }
+        ]
+      },
+      "release_date": { "coming_soon": false, "date": "2011 年 4 月 18 日" },
+      "support_info": { "url": "http:\/\/steamcommunity.com\/app\/620", "email": "" },
+      "background": "https:\/\/store.akamai.steamstatic.com\/images\/storepagebackground\/app\/620?t=1790187113",
+      "background_raw": "https:\/\/store.akamai.steamstatic.com\/images\/storepagebackground\/app\/620?t=1790187113",
+      "content_descriptors": { "ids": [], "notes": null },
+      "ratings": {
+        "usk": { "rating": "12" },
+        "dejus": {
+          "rating_generated": "1",
+          "rating": "12",
+          "required_age": "12",
+          "banned": "0",
+          "use_age_gate": "0",
+          "descriptors": "Linguagem imprópria"
+        },
+        "steam_germany": {
+          "rating_generated": "1",
+          "rating": "12",
+          "required_age": "12",
+          "banned": "0",
+          "use_age_gate": "0",
+          "descriptors": "Schimpfwörte"
+        },
+        "igrs": {
+          "rating_generated": "1",
+          "rating": "13",
+          "required_age": "13",
+          "banned": "0",
+          "use_age_gate": "0",
+          "descriptors": "Penggunaan bahasa\nInteraksi Daring"
+        }
+      }
+    }
+  }
+}

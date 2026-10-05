@@ -1,0 +1,35 @@
+/* Derived from the current MoyuHub HTML application. No wallpaper or new visual design. */
+:root {
+  --ink: #16212b;
+  --muted: #667786;
+  --accent: #386958;
+  --accent-soft: #dcebe4;
+  --opacity: 0.4;
+  --blur: 26px;
+  --panel: rgba(248, 252, 255, 0.48);
+  --surface: rgba(255, 255, 255, 0.24);
+  --line: rgba(255, 255, 255, 0.86);
+  --rule: rgba(68, 92, 106, 0.13);
+  --side: 250px;
+  --font-size: 20px;
+  --reading-line: 1.8;
+  --reading-width: 680px;
+  --font-family: SimSun, 'Songti SC', serif;
+  --reading-bg: rgba(255, 253, 248, 0.93);
+}
+[data-theme='dark'] {
+  --ink: #eff5f8;
+  --muted: #a9bbc8;
+  --accent: #92c5ad;
+  --accent-soft: #274637;
+  --surface: rgba(6, 18, 27, 0.5);
+  --line: rgba(180, 208, 224, 0.17);
+  --rule: rgba(178, 206, 223, 0.11);
+  --reading-bg: rgba(20, 31, 40, 0.97);
+  --depth-well: rgba(6, 17, 26, 0.58);
+  --depth-plate: rgba(43, 64, 78, 0.58);
+  --depth-light: rgba(214, 234, 244, 0.23);
+  --depth-shadow:
+    0 2px 4px rgba(4, 10, 18, 0.24), 0 11px 20px -9px rgba(3, 10, 20, 0.53),
+    0 24px 36px -24px rgba(2, 8, 18, 0.68);
+}
