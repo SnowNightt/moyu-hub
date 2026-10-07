@@ -1,4 +1,5 @@
 mod parse;
+mod xml;
 use parse::{err, io, Result};
 use serde_json::{json, Value};
 use sqlx::{Row, SqlitePool};

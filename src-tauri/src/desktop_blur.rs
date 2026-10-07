@@ -27,8 +27,8 @@ use windows_sys::Win32::{
     UI::{
         Shell::{DefSubclassProc, RemoveWindowSubclass, SetWindowSubclass},
         WindowsAndMessaging::{
-            FindWindowW, GetClientRect, GetSystemMetrics, GetWindow, GetWindowRect, IsIconic,
-            IsWindowVisible, KillTimer, SetTimer, GW_HWNDPREV, SM_CXVIRTUALSCREEN,
+            FindWindowW, GetClientRect, GetSystemMetrics, GetTopWindow, GetWindow, GetWindowRect,
+            IsIconic, IsWindowVisible, KillTimer, SetTimer, GW_HWNDNEXT, SM_CXVIRTUALSCREEN,
             SM_CYVIRTUALSCREEN, SM_XVIRTUALSCREEN, SM_YVIRTUALSCREEN, WM_DISPLAYCHANGE,
             WM_NCDESTROY, WM_TIMER, WM_WINDOWPOSCHANGED,
         },
@@ -148,7 +148,28 @@ struct Renderer {
     update: *const c_void,
     build: u32,
     strength: u32,
-    last_geometry: Option<(i32, i32, i32, i32, u32)>,
+    last_snapshot: Option<Snapshot>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+struct Snapshot {
+    geometry: (i32, i32, i32, i32, u32),
+    desktop: (i32, i32, i32, i32),
+    // Visible, non-minimized top-level windows in Z order, including our own
+    // position. Tracking only exclusions misses changes underneath our window.
+    windows: Vec<isize>,
+}
+
+impl Snapshot {
+    fn updates_since(&self, previous: Option<&Self>, force: bool) -> (bool, bool) {
+        let Some(previous) = previous.filter(|_| !force) else {
+            return (true, true);
+        };
+        (
+            self.geometry != previous.geometry,
+            self.desktop != previous.desktop || self.windows != previous.windows,
+        )
+    }
 }
 
 fn failure(context: &str, error: impl std::fmt::Display) -> String {
@@ -287,7 +308,7 @@ impl Renderer {
             update,
             build,
             strength,
-            last_geometry: None,
+            last_snapshot: None,
         };
         renderer.sync(true)?;
         Ok(renderer)
@@ -314,24 +335,45 @@ impl Renderer {
         );
         // Exclude our own window AND windows above it. Otherwise focusing another
         // application could make that application appear inside our backdrop.
-        let mut exclusions = vec![HWND::default()];
-        let mut above = GetWindow(self.hwnd.0, GW_HWNDPREV);
+        let mut exclusions = vec![HWND::default(), self.hwnd];
+        let mut windows = Vec::new();
+        let mut current = GetTopWindow(ptr::null_mut());
+        let mut above = true;
         let mut visited = 0;
-        while !above.is_null() && visited < 4096 {
+        while !current.is_null() && visited < 4096 {
             visited += 1;
-            if IsWindowVisible(above) != 0 {
-                exclusions.push(HWND(above));
+            if current == self.hwnd.0 {
+                above = false;
             }
-            above = GetWindow(above, GW_HWNDPREV);
+            if IsWindowVisible(current) != 0 && IsIconic(current) == 0 {
+                windows.push(current as isize);
+                if above {
+                    exclusions.push(HWND(current));
+                }
+            }
+            current = GetWindow(current, GW_HWNDNEXT);
         }
-        let moved = self.last_geometry != Some(geometry);
-        // Refresh membership even when we have not moved: another application
-        // can open, close, minimize or reorder a window underneath this one.
-        {
-            let x = GetSystemMetrics(SM_XVIRTUALSCREEN);
-            let y = GetSystemMetrics(SM_YVIRTUALSCREEN);
-            let width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
-            let height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
+        let desktop = (
+            GetSystemMetrics(SM_XVIRTUALSCREEN),
+            GetSystemMetrics(SM_YVIRTUALSCREEN),
+            GetSystemMetrics(SM_CXVIRTUALSCREEN),
+            GetSystemMetrics(SM_CYVIRTUALSCREEN),
+        );
+        let snapshot = Snapshot {
+            geometry,
+            desktop,
+            windows,
+        };
+        let (moved, background_changed) =
+            snapshot.updates_since(self.last_snapshot.as_ref(), force);
+        // Shared visuals already receive live content from DWM. Reissuing their
+        // membership update on every timer tick can flash the transparent
+        // underlay. Poll for topology changes, but leave unchanged visuals alone.
+        if !moved && !background_changed {
+            return Ok(());
+        }
+        if background_changed {
+            let (x, y, width, height) = desktop;
             let mut source = RECT {
                 left: x,
                 top: y,
@@ -374,7 +416,7 @@ impl Renderer {
                 .SetOffsetY2(y as f32)
                 .map_err(|e| e.to_string())?;
         }
-        if force || moved {
+        if moved || force {
             self.blur
                 .SetStandardDeviation2(deviation(self.strength, scale))
                 .map_err(|e| e.to_string())?;
@@ -392,9 +434,9 @@ impl Renderer {
                     bottom: client.bottom as f32,
                 })
                 .map_err(|e| e.to_string())?;
-            self.last_geometry = Some(geometry);
         }
         self.device.Commit().map_err(|e| failure("提交背景", e))?;
+        self.last_snapshot = Some(snapshot);
         Ok(())
     }
 }
@@ -485,6 +527,54 @@ pub fn set_strength(window: &tauri::Window, strength: u32) -> Result<(), String>
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn snapshot() -> Snapshot {
+        Snapshot {
+            geometry: (100, 100, 960, 600, 96),
+            desktop: (0, 0, 1920, 1080),
+            windows: vec![10, 20, 30],
+        }
+    }
+
+    #[test]
+    fn stationary_polling_leaves_the_live_visual_untouched() {
+        let previous = snapshot();
+        assert_eq!(previous.updates_since(None, false), (true, true));
+        // One minute at the existing 100 ms polling interval must not submit
+        // any geometry or background changes when the desktop stays still.
+        for _ in 0..600 {
+            assert_eq!(
+                snapshot().updates_since(Some(&previous), false),
+                (false, false)
+            );
+        }
+    }
+
+    #[test]
+    fn moving_and_dpi_changes_do_not_rebuild_window_membership() {
+        let previous = snapshot();
+        let mut current = previous.clone();
+        current.geometry.0 += 50;
+        assert_eq!(current.updates_since(Some(&previous), false), (true, false));
+        current = previous.clone();
+        current.geometry = (100, 100, 1440, 900, 144);
+        assert_eq!(current.updates_since(Some(&previous), false), (true, false));
+    }
+
+    #[test]
+    fn windows_underneath_still_refresh_when_opened_closed_or_reordered() {
+        let previous = snapshot();
+        for windows in [vec![10, 20, 30, 40], vec![10, 20], vec![10, 30, 20]] {
+            let mut current = previous.clone();
+            current.windows = windows;
+            assert_eq!(current.updates_since(Some(&previous), false), (false, true));
+        }
+        let mut current = previous.clone();
+        current.desktop = (-1920, 0, 3840, 1080);
+        assert_eq!(current.updates_since(Some(&previous), false), (false, true));
+        assert_eq!(previous.updates_since(Some(&previous), true), (true, true));
+    }
+
     #[test]
     fn blur_range_stays_positive_monotonic_and_dpi_scaled() {
         assert_eq!(deviation(0, 1.0), 1.0);

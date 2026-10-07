@@ -30,6 +30,8 @@ encoding_rs_io = "0.1"
 chardetng = "0.1"
 zip = { version = "8", default-features = false, features = ["deflate"] }
 roxmltree = "0.21"
+markup5ever = "0.39"
+quick-xml = "0.42"
 image = { version = "0.25", default-features = false, features = ["jpeg", "png", "webp"] }
 percent-encoding = "2"
 

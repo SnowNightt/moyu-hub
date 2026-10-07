@@ -1,3 +1,4 @@
+use super::xml::parse as epub_xml;
 use encoding_rs::Encoding;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
@@ -434,22 +435,58 @@ impl ChapterWriter {
     fn rich(
         &mut self,
         kind: &str,
-        text: String,
+        mut text: String,
         resource: Option<String>,
-        anchor: Option<String>,
+        mut anchor: Option<String>,
         runs: Vec<Inline>,
     ) -> Result<()> {
         // Bound both text nodes and IPC payloads, including a file with a single enormous paragraph.
-        if text.len() > 32 * 1024 {
-            let mut piece = String::new();
-            for c in text.chars() {
-                piece.push(c);
-                if piece.len() >= 16 * 1024 {
-                    self.push(kind, std::mem::take(&mut piece), None, None)?;
-                }
+        if text.len() > 32 * 1024 && resource.is_some() {
+            let mut end = 32 * 1024;
+            while !text.is_char_boundary(end) {
+                end -= 1;
             }
-            if !piece.is_empty() {
-                self.push(kind, piece, None, None)?;
+            text.truncate(end);
+        } else if text.len() > 32 * 1024 {
+            let mut remaining_runs = runs.into_iter();
+            let mut current = remaining_runs.next();
+            let mut run_offset = 0;
+            let mut start = 0;
+            while start < text.len() {
+                let mut end = (start + 16 * 1024).min(text.len());
+                while !text.is_char_boundary(end) {
+                    end -= 1;
+                }
+                let mut needed = end - start;
+                let mut piece_runs = vec![];
+                while let Some(run) = &current {
+                    if needed == 0 {
+                        break;
+                    }
+                    let length = needed.min(run.text.len() - run_offset);
+                    if length > 0 {
+                        piece_runs.push(Inline {
+                            text: run.text[run_offset..run_offset + length].into(),
+                            strong: run.strong,
+                            emphasis: run.emphasis,
+                            href: run.href.clone(),
+                        });
+                    }
+                    needed -= length;
+                    run_offset += length;
+                    if run_offset == run.text.len() {
+                        current = remaining_runs.next();
+                        run_offset = 0;
+                    }
+                }
+                self.rich(
+                    kind,
+                    text[start..end].into(),
+                    None,
+                    anchor.take(),
+                    piece_runs,
+                )?;
+                start = end;
             }
             return Ok(());
         }
@@ -511,17 +548,43 @@ fn txt(path: &Path, root: &Path, label: Option<&str>, cancel: &AtomicBool) -> Re
     let mut line = String::new();
     let mut buf = vec![];
     let mut carry = vec![];
+    let mut line_start = true;
+    let mut first_piece = true;
     loop {
-        check(cancel)?; // read_until through a bounded take prevents an unbounded one-line allocation.
+        check(cancel)?;
         buf.clear();
-        let n = reader
-            .by_ref()
-            .take(32 * 1024)
-            .read_until(b'\n', &mut buf)
-            .map_err(io)?;
-        if n == 0 {
+        // Bound allocation while recognizing LF, CRLF and CR logical lines.
+        let mut line_end = false;
+        while buf.len() < 32 * 1024 {
+            let available = reader.fill_buf().map_err(io)?;
+            if available.is_empty() {
+                line_end = true;
+                break;
+            }
+            let limit = available.len().min(32 * 1024 - buf.len());
+            if let Some(end) = available[..limit]
+                .iter()
+                .position(|b| *b == b'\r' || *b == b'\n')
+            {
+                let delimiter = available[end];
+                buf.extend_from_slice(&available[..end]);
+                reader.consume(end + 1);
+                if delimiter == b'\r' && reader.fill_buf().map_err(io)?.first() == Some(&b'\n') {
+                    reader.consume(1);
+                }
+                line_end = true;
+                break;
+            }
+            buf.extend_from_slice(&available[..limit]);
+            reader.consume(limit);
+        }
+        if buf.is_empty() && !line_end {
             break;
         }
+        if reader.fill_buf().map_err(io)?.is_empty() {
+            line_end = true;
+        }
+        let eof = buf.is_empty() && reader.fill_buf().map_err(io)?.is_empty();
         if !carry.is_empty() {
             carry.extend_from_slice(&buf);
             buf = std::mem::take(&mut carry);
@@ -539,9 +602,18 @@ fn txt(path: &Path, root: &Path, label: Option<&str>, cancel: &AtomicBool) -> Re
                 "编码可能不正确，请选择编码并检查预览",
             ));
         }
-        let value = line.trim_matches(['\u{feff}', '\r', '\n']).trim();
+        let mut value = line.as_str();
+        if first_piece {
+            value = value.trim_start_matches('\u{feff}');
+        }
+        if line_start {
+            value = value.trim_start();
+        }
+        if line_end {
+            value = value.trim_end();
+        }
         if !value.is_empty() {
-            if value.chars().count() <= 80 && heading.is_match(value) {
+            if line_start && line_end && value.chars().count() <= 80 && heading.is_match(value) {
                 if writer.count > 0 {
                     if parsed.chapters.len() >= MAX_ENTRIES {
                         return Err(err("LIMIT_EXCEEDED", "章节超过 20,000 个"));
@@ -557,6 +629,11 @@ fn txt(path: &Path, root: &Path, label: Option<&str>, cancel: &AtomicBool) -> Re
             }
         }
         line.clear();
+        first_piece = false;
+        line_start = line_end;
+        if eof {
+            break;
+        }
     }
     if !carry.is_empty() {
         return Err(err("ENCODING_REQUIRED", "文本末尾编码不完整"));
@@ -682,12 +759,7 @@ fn comic(path: &Path, fmt: &str, cancel: &AtomicBool) -> Result<Parsed> {
         };
         let id = format!("r{}", parsed.resources.len());
         groups
-            .entry(
-                loc.rsplit_once('/')
-                    .map(|(p, _)| p)
-                    .unwrap_or("正文")
-                    .into(),
-            )
+            .entry(loc.rsplit_once('/').map(|(p, _)| p).unwrap_or("").into())
             .or_default()
             .push(id.clone());
         parsed.resources.push(Resource {
@@ -707,7 +779,11 @@ fn comic(path: &Path, fmt: &str, cancel: &AtomicBool) -> Result<Parsed> {
         let i = parsed.chapters.len();
         parsed.chapters.push(Chapter {
             id: format!("c{i}"),
-            title,
+            title: if title.is_empty() {
+                "正文".into()
+            } else {
+                title
+            },
             index: i,
             units: pages.len(),
             pages,
@@ -719,7 +795,7 @@ fn comic(path: &Path, fmt: &str, cancel: &AtomicBool) -> Result<Parsed> {
     Ok(parsed)
 }
 fn resolve(base: &str, href: &str) -> Result<String> {
-    let decoded = percent_encoding::percent_decode_str(href.split('#').next().unwrap_or(""))
+    let decoded = percent_encoding::percent_decode_str(href.split(['#', '?']).next().unwrap_or(""))
         .decode_utf8()
         .map_err(io)?;
     if decoded.contains([':', '\\']) || decoded.starts_with('/') {
@@ -747,23 +823,37 @@ fn resolve(base: &str, href: &str) -> Result<String> {
     Ok(value)
 }
 fn xml(z: &mut zip::ZipArchive<File>, loc: &str) -> Result<String> {
-    String::from_utf8(zip_bytes(z, loc, MAX_XML)?)
-        .map_err(|_| err("CORRUPT_ARCHIVE", "EPUB XML 必须是 UTF-8"))
+    super::xml::decode(&zip_bytes(z, loc, MAX_XML)?, loc)
 }
 fn node_text(n: roxmltree::Node) -> String {
     n.descendants()
-        .filter(|n| {
-            n.is_text()
-                && !n.ancestors().any(|a| {
-                    matches!(
-                        a.tag_name().name(),
-                        "script" | "style" | "iframe" | "object"
-                    )
-                })
+        .filter(|n| (n.is_text() || n.has_tag_name("br")) && readable_text(*n))
+        .filter_map(|n| {
+            if n.has_tag_name("br") {
+                Some("\n")
+            } else {
+                n.text()
+            }
         })
-        .filter_map(|n| n.text())
         .collect::<Vec<_>>()
         .join("")
+}
+fn readable_text(n: roxmltree::Node) -> bool {
+    !n.ancestors().any(|a| {
+        matches!(
+            a.tag_name().name(),
+            "script" | "style" | "iframe" | "object" | "audio" | "video" | "svg" | "foreignObject"
+        )
+    })
+}
+fn anchor<'a, 'input: 'a>(n: roxmltree::Node<'a, 'input>) -> Option<&'a str> {
+    n.attribute("id").or_else(|| {
+        if n.has_tag_name("a") {
+            n.attribute("name")
+        } else {
+            None
+        }
+    })
 }
 fn internal_href(base: &str, href: &str) -> Result<String> {
     let (file, anchor) = href.split_once('#').unwrap_or((href, ""));
@@ -783,23 +873,60 @@ fn internal_href(base: &str, href: &str) -> Result<String> {
         )
     })
 }
+struct ManifestItem {
+    locator: Option<String>,
+    media_type: Option<String>,
+    fallback: Option<String>,
+}
+fn remote_href(href: &str) -> bool {
+    href.starts_with("//")
+        || href.split_once(':').is_some_and(|(scheme, _)| {
+            scheme.eq_ignore_ascii_case("http") || scheme.eq_ignore_ascii_case("https")
+        })
+}
+fn spine_location<'a>(manifest: &'a HashMap<String, ManifestItem>, id: &str) -> Result<&'a str> {
+    let mut id = id;
+    let mut visited = std::collections::HashSet::new();
+    loop {
+        if !visited.insert(id) {
+            return Err(err("CORRUPT_ARCHIVE", "EPUB manifest fallback 存在循环"));
+        }
+        let item = manifest
+            .get(id)
+            .ok_or_else(|| err("CORRUPT_ARCHIVE", &format!("EPUB spine 资源不存在：{id}")))?;
+        if matches!(
+            item.media_type.as_deref(),
+            None | Some("application/xhtml+xml") | Some("image/svg+xml")
+        ) {
+            if let Some(loc) = &item.locator {
+                return Ok(loc);
+            }
+        }
+        if let Some(fallback) = &item.fallback {
+            id = fallback;
+        } else {
+            return Err(err(
+                "UNSUPPORTED_EPUB",
+                &format!("EPUB 章节格式不支持或正文位于远程，且没有本地替代正文：{id}"),
+            ));
+        }
+    }
+}
 fn epub(path: &Path, root: &Path, cancel: &AtomicBool) -> Result<Parsed> {
     if fs::metadata(path).map_err(io)?.len() > 512 * 1024 * 1024 {
         return Err(err("LIMIT_EXCEEDED", "EPUB 超过 512 MiB"));
     }
     let mut z = archive(path)?;
     let container = xml(&mut z, "META-INF/container.xml")?;
-    let doc = roxmltree::Document::parse(&container).map_err(io)?;
+    let doc = epub_xml(&container, "META-INF/container.xml")?;
     let opf = doc
         .descendants()
         .find(|n| n.has_tag_name("rootfile"))
         .and_then(|n| n.attribute("full-path"))
         .ok_or("EPUB 缺少 package")?;
-    if !safe_member(opf) {
-        return Err(err("INVALID_PATH", "EPUB package 路径无效"));
-    }
-    let package = xml(&mut z, opf)?;
-    let doc = roxmltree::Document::parse(&package).map_err(io)?;
+    let opf = resolve("", opf)?;
+    let package = xml(&mut z, &opf)?;
+    let doc = epub_xml(&package, &opf)?;
     let mut parsed = Parsed::new(path);
     for n in doc.descendants() {
         if n.has_tag_name("title") {
@@ -819,8 +946,23 @@ fn epub(path: &Path, root: &Path, cancel: &AtomicBool) -> Result<Parsed> {
     let mut ncx = None;
     for n in doc.descendants().filter(|n| n.has_tag_name("item")) {
         if let (Some(id), Some(href)) = (n.attribute("id"), n.attribute("href")) {
-            let loc = resolve(opf, href)?;
-            manifest.insert(id.to_owned(), loc.clone());
+            let locator = if remote_href(href) {
+                parsed.warnings.push(format!("远程资源未加载：{href}"));
+                None
+            } else {
+                Some(resolve(&opf, href)?)
+            };
+            manifest.insert(
+                id.to_owned(),
+                ManifestItem {
+                    locator: locator.clone(),
+                    media_type: n.attribute("media-type").map(str::to_owned),
+                    fallback: n.attribute("fallback").map(str::to_owned),
+                },
+            );
+            let Some(loc) = locator else {
+                continue;
+            };
             if image_name(&loc) {
                 let id = format!("r{}", parsed.resources.len());
                 resource_map.insert(loc.clone(), id.clone());
@@ -848,7 +990,7 @@ fn epub(path: &Path, root: &Path, cancel: &AtomicBool) -> Result<Parsed> {
     let mut navigation = vec![];
     if let Some(loc) = nav.or(ncx) {
         if let Ok(text) = xml(&mut z, &loc) {
-            if let Ok(d) = roxmltree::Document::parse(&text) {
+            if let Ok(d) = epub_xml(&text, &loc) {
                 for n in d.descendants() {
                     if n.has_tag_name("a") {
                         if let Some(href) = n.attribute("href") {
@@ -892,16 +1034,18 @@ fn epub(path: &Path, root: &Path, cancel: &AtomicBool) -> Result<Parsed> {
         .filter(|n| n.has_tag_name("itemref") && n.attribute("linear") != Some("no"))
     {
         check(cancel)?;
-        let loc = n
-            .attribute("idref")
-            .and_then(|id| manifest.get(id))
-            .ok_or("EPUB spine 资源不存在")?;
+        let idref = n.attribute("idref").ok_or("EPUB spine 缺少 idref")?;
+        let loc = spine_location(&manifest, idref)?;
         let text = xml(&mut z, loc)?;
-        let d = roxmltree::Document::parse(&text)
-            .map_err(|_| err("CORRUPT_ARCHIVE", "EPUB 正文 XML 损坏或包含外部实体"))?;
+        let d = epub_xml(&text, loc)?;
         let body = d
             .descendants()
             .find(|n| n.has_tag_name("body"))
+            .or_else(|| {
+                d.root_element()
+                    .has_tag_name(("http://www.w3.org/2000/svg", "svg"))
+                    .then(|| d.root_element())
+            })
             .ok_or("EPUB 正文缺少 body")?;
         let title = titles
             .get(loc)
@@ -913,108 +1057,173 @@ fn epub(path: &Path, root: &Path, cancel: &AtomicBool) -> Result<Parsed> {
             })
             .unwrap_or_else(|| format!("第 {} 节", parsed.chapters.len() + 1));
         let mut writer = ChapterWriter::new(root, parsed.chapters.len(), title);
-        writer.chapter.target = Some(loc.clone());
+        writer.chapter.target = Some(loc.into());
         fn walk(
             n: roxmltree::Node,
             writer: &mut ChapterWriter,
             loc: &str,
             map: &HashMap<String, String>,
             units: &mut usize,
+            cancel: &AtomicBool,
         ) -> Result<()> {
-            if matches!(
-                n.tag_name().name(),
-                "script" | "style" | "iframe" | "object" | "audio" | "video" | "svg"
-            ) {
-                return Ok(());
-            }
-            if n.has_tag_name("img") {
-                if let Some(src) = n.attribute("src") {
-                    if let Ok(p) = resolve(loc, src) {
-                        if let Some(id) = map.get(&p) {
-                            writer.push(
-                                "image",
-                                n.attribute("alt").unwrap_or("").into(),
-                                Some(id.clone()),
-                                n.attribute("id").map(str::to_owned),
-                            )?;
-                        }
-                    }
+            let mut pending = vec![(n, 0)];
+            while let Some((n, depth)) = pending.pop() {
+                check(cancel)?;
+                if depth > 256 {
+                    return Err(err("LIMIT_EXCEEDED", "EPUB 正文嵌套超过 256 层"));
                 }
-                return Ok(());
-            }
-            let block = matches!(
-                n.tag_name().name(),
-                "p" | "h1" | "h2" | "h3" | "h4" | "li" | "blockquote" | "pre"
-            );
-            if block {
-                let value = node_text(n);
-                if !value.trim().is_empty() {
-                    *units += value.len();
-                    let runs = n
-                        .descendants()
-                        .filter(|v| {
-                            v.is_text()
-                                && !v.ancestors().any(|a| {
-                                    matches!(
-                                        a.tag_name().name(),
-                                        "script" | "style" | "iframe" | "object"
-                                    )
-                                })
-                        })
-                        .map(|v| Inline {
-                            text: v.text().unwrap_or("").into(),
-                            strong: v
-                                .ancestors()
-                                .any(|a| matches!(a.tag_name().name(), "b" | "strong")),
-                            emphasis: v
-                                .ancestors()
-                                .any(|a| matches!(a.tag_name().name(), "i" | "em")),
-                            href: v
-                                .ancestors()
-                                .find(|a| a.has_tag_name("a"))
-                                .and_then(|a| a.attribute("href"))
-                                .and_then(|h| internal_href(loc, h).ok()),
-                        })
-                        .collect();
-                    writer.rich(
-                        if n.tag_name().name().starts_with('h') {
-                            "heading"
-                        } else {
-                            "paragraph"
-                        },
-                        value,
-                        None,
-                        n.attribute("id").map(str::to_owned),
-                        runs,
-                    )?;
-                }
-                for img in n.descendants().filter(|n| n.has_tag_name("img")) {
-                    walk(img, writer, loc, map, units)?;
-                }
-                return Ok(());
-            }
-            if let Some(anchor) = n.attribute("id") {
-                writer.push("anchor", String::new(), None, Some(anchor.into()))?;
-            }
-            for child in n.children() {
-                if child.is_element() {
-                    walk(child, writer, loc, map, units)?;
-                } else if child.is_text() {
-                    let value = child.text().unwrap_or("").trim();
+                if n.is_text() {
+                    let value = n.text().unwrap_or("").trim();
                     if !value.is_empty() {
                         *units += value.len();
                         writer.push("paragraph", value.into(), None, None)?;
                     }
+                    continue;
                 }
+                if !n.is_element() {
+                    continue;
+                }
+                if matches!(
+                    n.tag_name().name(),
+                    "script" | "style" | "iframe" | "object" | "audio" | "video"
+                ) {
+                    continue;
+                }
+                if n.has_tag_name(("http://www.w3.org/2000/svg", "svg")) {
+                    if let Some(id) = anchor(n) {
+                        writer.push("anchor", String::new(), None, Some(id.into()))?;
+                    }
+                    let images = n
+                        .descendants()
+                        .filter(|v| {
+                            v.has_tag_name(("http://www.w3.org/2000/svg", "image"))
+                                && !v.ancestors().take_while(|a| *a != n).any(|a| {
+                                    matches!(a.tag_name().name(), "script" | "foreignObject")
+                                })
+                        })
+                        .collect::<Vec<_>>();
+                    pending.extend(images.into_iter().rev().map(|image| (image, depth + 1)));
+                    continue;
+                }
+                let svg_image = n.has_tag_name(("http://www.w3.org/2000/svg", "image"));
+                if n.has_tag_name("img") || svg_image {
+                    let src = if svg_image {
+                        n.attribute(("http://www.w3.org/1999/xlink", "href"))
+                            .or_else(|| n.attribute("href"))
+                    } else {
+                        n.attribute("src")
+                    };
+                    if let Some(src) = src {
+                        if let Ok(p) = resolve(loc, src) {
+                            if let Some(id) = map.get(&p) {
+                                writer.push(
+                                    "image",
+                                    n.attribute("alt").unwrap_or("").into(),
+                                    Some(id.clone()),
+                                    n.attribute("id").map(str::to_owned),
+                                )?;
+                            }
+                        }
+                    }
+                    continue;
+                }
+                let block = matches!(
+                    n.tag_name().name(),
+                    "p" | "h1" | "h2" | "h3" | "h4" | "li" | "blockquote" | "pre"
+                );
+                if block {
+                    for target in n
+                        .descendants()
+                        .skip(1)
+                        .filter(|v| v.is_element() && readable_text(*v))
+                    {
+                        if let Some(id) = anchor(target) {
+                            writer.push("anchor", String::new(), None, Some(id.into()))?;
+                        }
+                    }
+                    let value = node_text(n);
+                    if !value.trim().is_empty() {
+                        *units += value.len();
+                        let runs = n
+                            .descendants()
+                            .filter(|v| (v.is_text() || v.has_tag_name("br")) && readable_text(*v))
+                            .map(|v| Inline {
+                                text: if v.has_tag_name("br") {
+                                    "\n"
+                                } else {
+                                    v.text().unwrap_or("")
+                                }
+                                .into(),
+                                strong: v
+                                    .ancestors()
+                                    .any(|a| matches!(a.tag_name().name(), "b" | "strong")),
+                                emphasis: v
+                                    .ancestors()
+                                    .any(|a| matches!(a.tag_name().name(), "i" | "em")),
+                                href: v
+                                    .ancestors()
+                                    .find(|a| a.has_tag_name("a"))
+                                    .and_then(|a| a.attribute("href"))
+                                    .and_then(|h| internal_href(loc, h).ok()),
+                            })
+                            .collect();
+                        writer.rich(
+                            if n.tag_name().name().starts_with('h') {
+                                "heading"
+                            } else {
+                                "paragraph"
+                            },
+                            value,
+                            None,
+                            anchor(n).map(str::to_owned),
+                            runs,
+                        )?;
+                    }
+                    let images =
+                        n.descendants()
+                            .filter(|n| {
+                                (n.has_tag_name("img")
+                                    || n.has_tag_name(("http://www.w3.org/2000/svg", "svg")))
+                                    && !n.ancestors().any(|a| {
+                                        matches!(
+                                            a.tag_name().name(),
+                                            "script"
+                                                | "style"
+                                                | "iframe"
+                                                | "object"
+                                                | "audio"
+                                                | "video"
+                                                | "foreignObject"
+                                        )
+                                    })
+                                    && !n.ancestors().skip(1).any(|a| {
+                                        a.has_tag_name(("http://www.w3.org/2000/svg", "svg"))
+                                    })
+                            })
+                            .collect::<Vec<_>>();
+                    pending.extend(images.into_iter().rev().map(|image| (image, depth + 1)));
+                    continue;
+                }
+                if let Some(id) = anchor(n) {
+                    writer.push("anchor", String::new(), None, Some(id.into()))?;
+                }
+                pending.extend(n.children().rev().map(|child| (child, depth + 1)));
             }
             Ok(())
         }
-        walk(body, &mut writer, loc, &resource_map, &mut text_units)?;
+        walk(
+            body,
+            &mut writer,
+            loc,
+            &resource_map,
+            &mut text_units,
+            cancel,
+        )?;
         if writer.count > 0 {
             let mut ch = writer.finish()?;
             ch.navigation = navigation
                 .iter()
-                .filter(|n| n.href.split('#').next() == Some(loc.as_str()))
+                .filter(|n| n.href.split('#').next() == Some(loc))
                 .cloned()
                 .collect();
             parsed.chapters.push(ch);
@@ -1259,5 +1468,398 @@ mod format_tests {
         let blocks = all_blocks(&cache, &parsed.chapters);
         assert_eq!(blocks.iter().filter(|b| b.kind == "image").count(), 1);
         assert!(!blocks.iter().any(|b| b.text.contains("BAD")));
+    }
+    #[test]
+    fn epub_doctype_navigation_and_svg_illustrations() {
+        let temp = Temp::new();
+        let path = temp.0.join("book.epub");
+        zip_at(&path, vec![
+            ("META-INF/container.xml", br#"<container xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles><rootfile full-path="OPS/book.opf"/></rootfiles></container>"#.to_vec()),
+            ("OPS/book.opf", br#"<package xmlns="http://www.idpf.org/2007/opf"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:title>Example</dc:title><dc:creator>Author</dc:creator></metadata><manifest><item id="a" href="text.xhtml"/><item id="b" href="credits.xhtml"/><item id="nav" href="nav.xhtml" properties="nav"/><item id="img" href="pic.png"/></manifest><spine><itemref idref="a"/><itemref idref="b"/></spine></package>"#.to_vec()),
+            ("OPS/nav.xhtml", br#"<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><body><nav><a href="text.xhtml">First</a><a href="credits.xhtml">Credits</a></nav></body></html>"#.to_vec()),
+            ("OPS/text.xhtml", br#"<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><body><p id="start">Hello <strong>reader</strong> &amp; world.</p><p><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image xlink:href="pic.png"/><image xlink:href="https://tracker/p.png"/><foreignObject><image href="pic.png"/></foreignObject></svg></p><svg xmlns="http://www.w3.org/2000/svg"><image href="pic.png"/><text>Not prose</text></svg><script>BAD()</script></body></html>"#.to_vec()),
+            ("OPS/credits.xhtml", br#"<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><body><p>Credits</p></body></html>"#.to_vec()),
+            ("OPS/pic.png", png()),
+        ]);
+        let cache = temp.0.join("cache");
+        let parsed = epub(&path, &cache, &AtomicBool::new(false)).unwrap();
+        assert_eq!(parsed.title, "Example");
+        assert_eq!(parsed.author.as_deref(), Some("Author"));
+        assert_eq!(parsed.chapters.len(), 2);
+        assert_eq!(parsed.chapters[0].title, "First");
+        assert_eq!(parsed.chapters[1].title, "Credits");
+        assert_eq!(parsed.chapters[0].navigation[0].href, "OPS/text.xhtml");
+        let blocks = all_blocks(&cache, &parsed.chapters);
+        assert_eq!(blocks.iter().filter(|b| b.kind == "image").count(), 2);
+        assert!(blocks
+            .iter()
+            .filter(|b| b.kind == "image")
+            .all(|b| b.resource_id.as_deref() == Some("r0")));
+        let text = blocks
+            .iter()
+            .find(|b| b.anchor.as_deref() == Some("start"))
+            .unwrap();
+        assert_eq!(text.text, "Hello reader & world.");
+        assert!(text.runs.iter().any(|r| r.strong && r.text == "reader"));
+        assert!(!blocks
+            .iter()
+            .any(|b| b.text.contains("BAD") || b.text.contains("Not prose")));
+    }
+    #[test]
+    fn epub_xml_rejects_unresolved_external_entities_and_malformed_xml() {
+        for text in [
+            r#"<!DOCTYPE html [<!ENTITY secret SYSTEM "file:///C:/private.txt">]><html><body>&secret;</body></html>"#,
+            r#"<!DOCTYPE html [<!ENTITY secret SYSTEM "https://example.com/private">]><html><body>&secret;</body></html>"#,
+            "<!DOCTYPE html><html><body><p>Broken</body></html>",
+        ] {
+            let error = epub_xml(text, "OPS/bad.xhtml").unwrap_err();
+            assert!(error.contains("CORRUPT_ARCHIVE"));
+            assert!(error.contains("OPS/bad.xhtml"));
+        }
+    }
+    fn epub_fixture(path: &Path, manifest: &str, spine: &str, body: Vec<u8>) {
+        zip_at(path, vec![
+            ("META-INF/container.xml", br#"<container><rootfiles><rootfile full-path="OPS/book.opf"/></rootfiles></container>"#.to_vec()),
+            ("OPS/book.opf", format!(r#"<package><metadata><title>Example</title></metadata><manifest><item id="text" href="text.xhtml" media-type="application/xhtml+xml"/>{manifest}</manifest><spine>{spine}</spine></package>"#).into_bytes()),
+            ("OPS/text.xhtml", body),
+        ]);
+    }
+    #[test]
+    fn epub_utf16_xml_documents() {
+        for (big_endian, bom) in [(false, true), (true, true), (false, false), (true, false)] {
+            let temp = Temp::new();
+            let path = temp.0.join("book.epub");
+            let mut bytes = if bom {
+                if big_endian {
+                    vec![0xfe, 0xff]
+                } else {
+                    vec![0xff, 0xfe]
+                }
+            } else {
+                vec![]
+            };
+            for c in "<?xml version=\"1.0\" encoding=\"UTF-16\"?><html><body><p>中文😀正文</p></body></html>".encode_utf16() {
+                bytes.extend_from_slice(&if big_endian { c.to_be_bytes() } else { c.to_le_bytes() });
+            }
+            epub_fixture(&path, "", r#"<itemref idref="text"/>"#, bytes);
+            let cache = temp.0.join("cache");
+            let parsed = epub(&path, &cache, &AtomicBool::new(false)).unwrap();
+            assert_eq!(all_blocks(&cache, &parsed.chapters)[0].text, "中文😀正文");
+        }
+    }
+    #[test]
+    fn epub_xhtml_named_entities() {
+        let temp = Temp::new();
+        let path = temp.0.join("book.epub");
+        epub_fixture(&path, "", r#"<itemref idref="text"/>"#, br#"<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><html><body><p>A&nbsp;B &copy; &mdash;</p><p><![CDATA[&nbsp;]]></p></body></html>"#.to_vec());
+        let cache = temp.0.join("cache");
+        let parsed = epub(&path, &cache, &AtomicBool::new(false)).unwrap();
+        let blocks = all_blocks(&cache, &parsed.chapters);
+        assert_eq!(blocks[0].text, "A\u{a0}B © —");
+        assert_eq!(blocks[1].text, "&nbsp;");
+    }
+    #[test]
+    fn epub_optional_remote_resources_and_spine_fallback() {
+        let temp = Temp::new();
+        let path = temp.0.join("book.epub");
+        epub_fixture(
+            &path,
+            r#"<item id="audio" href="https://example.com/audio.mp3" media-type="audio/mpeg"/><item id="foreign" href="foreign.pdf" media-type="application/pdf" fallback="text"/>"#,
+            r#"<itemref idref="foreign"/>"#,
+            b"<html><body><p>Readable local fallback</p></body></html>".to_vec(),
+        );
+        let cache = temp.0.join("cache");
+        let parsed = epub(&path, &cache, &AtomicBool::new(false)).unwrap();
+        assert_eq!(
+            all_blocks(&cache, &parsed.chapters)[0].text,
+            "Readable local fallback"
+        );
+        assert!(parsed.warnings.iter().any(|w| w.contains("audio.mp3")));
+    }
+    #[test]
+    fn epub_package_and_resource_urls_resolve_to_archive_paths() {
+        let temp = Temp::new();
+        let path = temp.0.join("book.epub");
+        zip_at(&path, vec![
+            ("META-INF/container.xml", br#"<container><rootfiles><rootfile full-path="Package%20Dir/book.opf"/></rootfiles></container>"#.to_vec()),
+            ("Package Dir/book.opf", br#"<package><manifest><item id="text" href="../Text/a%20b.xhtml?version=1" media-type="application/xhtml+xml"/><item id="nav" href="../nav.xhtml" properties="nav"/><item id="image" href="../Images/picture.png"/></manifest><spine><itemref idref="text"/></spine></package>"#.to_vec()),
+            ("Text/a b.xhtml", br#"<html><body><p id="note">Readable text</p><img src="../Images/picture.png?v=1"/></body></html>"#.to_vec()),
+            ("nav.xhtml", br#"<html><body><nav><a href="Text/a%20b.xhtml?version=1#note">Chapter</a></nav></body></html>"#.to_vec()),
+            ("Images/picture.png", png()),
+        ]);
+        let cache = temp.0.join("cache");
+        let parsed = epub(&path, &cache, &AtomicBool::new(false)).unwrap();
+        assert_eq!(parsed.chapters[0].target.as_deref(), Some("Text/a b.xhtml"));
+        assert_eq!(parsed.chapters[0].navigation[0].href, "Text/a b.xhtml#note");
+        assert!(all_blocks(&cache, &parsed.chapters)
+            .iter()
+            .any(|b| b.kind == "image"));
+        assert!(resolve("OPS/book.opf", "..%2F..%2Fescape.xhtml?query=1").is_err());
+    }
+    #[test]
+    fn long_rich_paragraph_preserves_anchor_and_links() {
+        let temp = Temp::new();
+        let cache = temp.0.join("cache");
+        let text = "中文😀 ".repeat(8000);
+        let mut writer = ChapterWriter::new(&cache, 0, "Long".into());
+        writer
+            .rich(
+                "paragraph",
+                text.clone(),
+                None,
+                Some("target".into()),
+                vec![Inline {
+                    text: text.clone(),
+                    strong: true,
+                    emphasis: false,
+                    href: Some("OPS/next.xhtml#end".into()),
+                }],
+            )
+            .unwrap();
+        let blocks = all_blocks(&cache, &[writer.finish().unwrap()]);
+        assert_eq!(
+            blocks.iter().map(|b| b.text.as_str()).collect::<String>(),
+            text
+        );
+        assert_eq!(blocks[0].anchor.as_deref(), Some("target"));
+        assert!(blocks
+            .iter()
+            .all(|b| b.runs.iter().map(|r| r.text.as_str()).collect::<String>() == b.text));
+        assert!(blocks.iter().all(|b| !b.runs.is_empty()
+            && b.runs
+                .iter()
+                .all(|r| r.strong && r.href.as_deref() == Some("OPS/next.xhtml#end"))));
+    }
+    #[test]
+    fn long_rich_paragraph_splits_across_multiple_unicode_runs() {
+        let temp = Temp::new();
+        let cache = temp.0.join("cache");
+        let runs = vec![
+            Inline {
+                text: "普通段落 ".repeat(3000),
+                strong: false,
+                emphasis: false,
+                href: None,
+            },
+            Inline {
+                text: "😀链接 ".repeat(5000),
+                strong: false,
+                emphasis: true,
+                href: Some("OPS/text.xhtml#target".into()),
+            },
+            Inline {
+                text: String::new(),
+                strong: false,
+                emphasis: false,
+                href: None,
+            },
+            Inline {
+                text: "粗体中文".repeat(4000),
+                strong: true,
+                emphasis: false,
+                href: None,
+            },
+        ];
+        let original = runs.iter().map(|r| r.text.as_str()).collect::<String>();
+        let mut writer = ChapterWriter::new(&cache, 0, "Long".into());
+        writer
+            .rich(
+                "paragraph",
+                original.clone(),
+                None,
+                Some("target".into()),
+                runs,
+            )
+            .unwrap();
+        let blocks = all_blocks(&cache, &[writer.finish().unwrap()]);
+        assert_eq!(
+            blocks.iter().map(|b| b.text.as_str()).collect::<String>(),
+            original
+        );
+        assert_eq!(blocks.iter().filter(|b| b.anchor.is_some()).count(), 1);
+        assert!(blocks.iter().all(|b| b.text.len() <= 16 * 1024
+            && b.runs.iter().map(|r| r.text.as_str()).collect::<String>() == b.text));
+        assert_eq!(
+            blocks
+                .iter()
+                .flat_map(|b| &b.runs)
+                .filter(|r| r.href.is_some())
+                .map(|r| r.text.as_str())
+                .collect::<String>(),
+            "😀链接 ".repeat(5000)
+        );
+        assert_eq!(
+            blocks
+                .iter()
+                .flat_map(|b| &b.runs)
+                .filter(|r| r.strong)
+                .map(|r| r.text.as_str())
+                .collect::<String>(),
+            "粗体中文".repeat(4000)
+        );
+    }
+    #[test]
+    fn epub_inline_anchors_and_line_breaks() {
+        let temp = Temp::new();
+        let path = temp.0.join("book.epub");
+        epub_fixture(
+            &path,
+            "",
+            r#"<itemref idref="text"/>"#,
+            b"<html><body><p>Before<br/>After <span id=\"footnote\">note</span></p></body></html>"
+                .to_vec(),
+        );
+        let cache = temp.0.join("cache");
+        let parsed = epub(&path, &cache, &AtomicBool::new(false)).unwrap();
+        let blocks = all_blocks(&cache, &parsed.chapters);
+        assert!(blocks
+            .iter()
+            .any(|b| b.anchor.as_deref() == Some("footnote")));
+        assert!(blocks.iter().any(|b| b.text.contains("Before\nAfter")));
+    }
+    #[test]
+    fn txt_chunk_boundaries_preserve_spaces_and_do_not_create_chapters() {
+        let temp = Temp::new();
+        let path = temp.0.join("book.txt");
+        let text = format!("{} chapter 2", "A".repeat(32 * 1024 - 1));
+        fs::write(&path, &text).unwrap();
+        let cache = temp.0.join("cache");
+        let parsed = txt(&path, &cache, Some("UTF-8"), &AtomicBool::new(false)).unwrap();
+        assert_eq!(parsed.chapters.len(), 1);
+        assert_eq!(
+            all_blocks(&cache, &parsed.chapters)
+                .iter()
+                .map(|b| b.text.as_str())
+                .collect::<String>(),
+            text
+        );
+    }
+    #[test]
+    fn txt_carriage_return_chapters() {
+        let temp = Temp::new();
+        let path = temp.0.join("book.txt");
+        fs::write(&path, "第一章 开始\r正文一\r第二章 结束\r正文二").unwrap();
+        let cache = temp.0.join("cache");
+        let parsed = txt(&path, &cache, Some("UTF-8"), &AtomicBool::new(false)).unwrap();
+        assert_eq!(parsed.chapters.len(), 2);
+        assert_eq!(parsed.chapters[1].title, "第二章 结束");
+    }
+    #[test]
+    fn comic_root_pages_are_first_and_do_not_merge_with_same_named_folder() {
+        let temp = Temp::new();
+        let path = temp.0.join("book.cbz");
+        zip_at(
+            &path,
+            vec![
+                ("cover.png", png()),
+                ("chapter1/1.png", png()),
+                ("正文/1.png", png()),
+            ],
+        );
+        let parsed = comic(&path, "CBZ", &AtomicBool::new(false)).unwrap();
+        assert_eq!(parsed.chapters.len(), 3);
+        assert_eq!(parsed.chapters[0].pages.len(), 1);
+        assert_eq!(
+            parsed
+                .resources
+                .iter()
+                .find(|r| r.id == parsed.chapters[0].pages[0])
+                .unwrap()
+                .locator,
+            "cover.png"
+        );
+    }
+    #[test]
+    fn epub_fallback_cycles_and_remote_spine_are_reported() {
+        let temp = Temp::new();
+        let path = temp.0.join("book.epub");
+        for (manifest, expected) in [
+            (
+                r#"<item id="first" href="a.pdf" media-type="application/pdf" fallback="second"/><item id="second" href="b.pdf" media-type="application/pdf" fallback="first"/>"#,
+                "fallback 存在循环",
+            ),
+            (
+                r#"<item id="first" href="https://example.com/text.xhtml" media-type="application/xhtml+xml"/>"#,
+                "UNSUPPORTED_EPUB",
+            ),
+            (
+                r#"<item id="first" href="a.pdf" media-type="application/pdf" fallback="missing"/>"#,
+                "spine 资源不存在",
+            ),
+        ] {
+            epub_fixture(
+                &path,
+                manifest,
+                r#"<itemref idref="first"/>"#,
+                b"<html><body><p>Text</p></body></html>".to_vec(),
+            );
+            let error = epub(&path, &temp.0.join("cache"), &AtomicBool::new(false))
+                .err()
+                .unwrap();
+            assert!(error.contains(expected), "{error}");
+        }
+    }
+    #[test]
+    fn epub_deep_nesting_and_missing_main_chapter_fail_explicitly() {
+        let temp = Temp::new();
+        let path = temp.0.join("book.epub");
+        let body = format!(
+            "<html><body>{}<p>Text</p>{}</body></html>",
+            "<div>".repeat(300),
+            "</div>".repeat(300)
+        );
+        epub_fixture(&path, "", r#"<itemref idref="text"/>"#, body.into_bytes());
+        let error = epub(&path, &temp.0.join("cache"), &AtomicBool::new(false))
+            .err()
+            .unwrap();
+        assert!(error.contains("LIMIT_EXCEEDED"), "{error}");
+        epub_fixture(
+            &path,
+            r#"<item id="missing" href="missing.xhtml" media-type="application/xhtml+xml"/>"#,
+            r#"<itemref idref="missing"/>"#,
+            b"<html><body><p>Text</p></body></html>".to_vec(),
+        );
+        assert!(epub(&path, &temp.0.join("cache"), &AtomicBool::new(false)).is_err());
+        let body = format!(
+            "<html><body>{}<p>Text</p>{}</body></html>",
+            "<div>".repeat(64),
+            "</div>".repeat(64)
+        );
+        epub_fixture(&path, "", r#"<itemref idref="text"/>"#, body.into_bytes());
+        assert!(epub(&path, &temp.0.join("cache"), &AtomicBool::new(false)).is_ok());
+    }
+    #[test]
+    #[ignore = "requires a local EPUB directory via MOYU_EPUB_DIR"]
+    fn local_epub_imports() {
+        let directory = std::env::var_os("MOYU_EPUB_DIR").expect("set MOYU_EPUB_DIR");
+        let temp = Temp::new();
+        let mut failures = vec![];
+        let mut checked = 0;
+        for entry in fs::read_dir(directory).unwrap() {
+            let path = entry.unwrap().path();
+            if path.extension().and_then(|s| s.to_str()) != Some("epub") {
+                continue;
+            }
+            let cache = temp.0.join(checked.to_string());
+            checked += 1;
+            match parse(&path, "EPUB", &cache, None, &AtomicBool::new(false)) {
+                Ok(parsed) => {
+                    let blocks = all_blocks(&cache, &parsed.chapters);
+                    println!(
+                        "{}: {} chapters, {} images, {} text bytes",
+                        path.display(),
+                        parsed.chapters.len(),
+                        blocks.iter().filter(|b| b.kind == "image").count(),
+                        blocks.iter().map(|b| b.text.len()).sum::<usize>()
+                    );
+                    assert!(blocks
+                        .iter()
+                        .any(|b| b.kind == "paragraph" && !b.text.is_empty()));
+                }
+                Err(error) => failures.push(format!("{}: {error}", path.display())),
+            }
+        }
+        assert!(checked > 0, "no EPUB files found");
+        assert!(failures.is_empty(), "{}", failures.join("\n"));
     }
 }
