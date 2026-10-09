@@ -10,6 +10,8 @@
 
 以下命令从项目根目录运行；选择相关行，不默认执行全表或全量测试。
 
+共享时钟及其页面接线使用 `pnpm exec vitest run src/shared/ui/Clock/Clock.test.ts src/features/steam/navigation.test.ts`，覆盖日期/时间显示、分钟更新、StrictMode 定时器清理和首页导航回归。
+
 | 改动范围                             | 定向验证                                                                                                                                                         |
 | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Steam 请求、解析或缓存               | `pnpm exec vitest run src/features/steam/parsers.test.ts src/features/steam/createSteamProvider.test.ts src/platform/http.test.ts src/platform/database.test.ts` |

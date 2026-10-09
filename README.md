@@ -40,11 +40,11 @@ Windows 命令包装器 `scripts/desktop.mjs` 使用项目内 `.build-tmp/` 作�
 
 Steam 与首页共用请求和缓存。已移除首页最近使用及 Steam 最近浏览，不采集或写入游戏浏览记录。阅读器使用本地 SQLite，正文和图片通过 Rust 按需读取；音乐登录/播放、小黑盒和在线阅读仍未接入。未接入的业务动作禁用，正式服务不填入测试作品或假进度。
 
-本地导入默认引用原文件，可选择复制到应用书库。TXT 支持编码预览和手动选择；漫画支持 JPEG、PNG、WebP。EPUB 首版支持文字正文、基础强调、插图和内部目录链接，不支持 DRM、固定版式和图片型 EPUB。移出书架不会删除原始文件；清理缓存保留托管原件、进度和书签。详细规则、实现差异和验收见 [阅读器实施记录](docs/documents/reader-implementation.md)。
+本地导入默认引用原文件，可选择复制到应用书库。TXT 支持编码预览和手动选择；漫画支持 JPEG、PNG、WebP。EPUB 首版支持文字正文、基础强调、插图和内部目录链接，不支持 DRM、固定版式和图片型 EPUB。移出书架不会删除原始文件；清理缓存保留托管原件、进度和书签。工程边界见[架构说明](docs/architecture.md#数据与存储边界)。历史实施记录 `docs/documents/reader-implementation.md` 是可选本地材料，不随仓库分发。
 
 ## 架构与后续接入
 
-详见 [架构说明](docs/documents/architecture.md)。各模块的 `provider.ts` 定义数据契约；在 `src/app/services.tsx` 注册真实实现。页面不拼接第三方 URL、不解析第三方响应、不直接调用原生文件或数据库插件。
+详见[当前架构说明](docs/architecture.md)。各模块的 `provider.ts` 定义数据契约；在 `src/app/services.tsx` 注册真实实现。页面不拼接第三方 URL、不解析第三方响应、不直接调用原生文件或数据库插件。`docs/documents/architecture.md` 保留为可选本地阶段记录。
 
 桌面启动通过 `createAppServices()` 注册 Steam、首页聚合、HTTP 与 SQLite 远程缓存；无需 Steam API Key。HTTP 仅允许 Steam 商店指定路径，图片 CSP 使用 Steam CDN 白名单。普通浏览器预览保留明确的未接入状态，测试 fixture 不进入正式服务。详细实现与待人工验收项见 `docs/documents/steam-implementation-plan.md` 和验证记录。
 
@@ -52,7 +52,7 @@ Steam 与首页共用请求和缓存。已移除首页最近使用及 Steam 最�
 
 ## 验证
 
-构建、运行与界面检查记录见 [阶段验收记录](docs/documents/verification.md)。浏览器布局验收不等于真实桌面玻璃效果验收；Windows 11 未在本机验证。
+构建、定向测试和桌面验收方法见[测试指南](docs/testing.md)。历史验收记录 `docs/documents/verification.md` 是可选本地材料，不随仓库分发。浏览器布局验收不等于真实桌面玻璃效果验收；Windows 11 未在本机验证。
 
 ## 项目规范与 OpenSpec
 

@@ -11,3 +11,4 @@ export { PageHeader } from './PageHeader';
 export { Pagination } from './Pagination';
 export type { ButtonProps } from './Button';
 export { ResourceView } from './ResourceView';
+export { Clock } from './Clock';

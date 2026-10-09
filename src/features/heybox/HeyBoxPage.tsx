@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { MessageCircle, MessagesSquare, Image as ImageIcon } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import {
+  Clock,
   Dialog,
   EmptyState,
   PageHeader,
@@ -10,7 +11,6 @@ import {
   SearchBox,
   Tabs,
 } from '../../shared/ui';
-import { Clock } from '../home/HomePage';
 import { useServices } from '../../app/services';
 import { useResource } from '../../shared/lib/useResource';
 

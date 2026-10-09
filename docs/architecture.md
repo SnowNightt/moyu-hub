@@ -18,6 +18,8 @@ AppLayout / desktop adapter → Tauri Window、Tray、Windows 原生窗口
 
 [main.tsx](../src/main.tsx) 启动应用，[services.tsx](../src/app/services.tsx) 显式组装服务，[router.tsx](../src/app/router.tsx) 使用 Hash Router，适用于浏览器预览和打包 WebView。`AppLayout` 承载导航、全局播放器容器及 Steam 详情宿主；首页通过聚合 provider 复用已注册模块。
 
+首页与小黑盒的时钟复用 [Clock 共享组件](../src/shared/ui/Clock/index.tsx)，通过 `shared/ui` 公开出口导入，两个页面之间没有为复用时钟建立依赖。
+
 Vite 开发服务器使用 `127.0.0.1:1420`，发布时只提供构建后的静态资源；正式服务不依赖开发服务器中间件。浏览器运行时 `createAppServices()` 返回空服务，窗口能力禁用，设置走独立的 localStorage；这条路径用于布局预览。
 
 ## 当前接入状态
