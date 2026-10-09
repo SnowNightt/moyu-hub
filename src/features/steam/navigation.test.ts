@@ -103,14 +103,14 @@ describe('Steam navigation', () => {
     expect(host.textContent).toContain('reading failed');
     expect(host.textContent).toContain('Portal 2');
     const home = host.querySelector('.home-top');
-    await click(host.querySelector('.game-card'));
+    await click(host.querySelector('.steam-game-card'));
     expect(router.state.location.pathname).toBe('/');
     expect(router.state.location.search).toBe('?game=620');
     expect(host.querySelector('.home-top')).toBe(home);
     await click([...host.querySelectorAll('button')].find((b) => b.textContent === '刷新详情')!);
     await click(host.querySelector('[aria-label="关闭游戏详情"]'));
     expect(router.state.location.search).toBe('');
-    await click(host.querySelector('.game-card'));
+    await click(host.querySelector('.steam-game-card'));
   });
   it('search page 3 survives open, close and history navigation without reloading the list', async () => {
     const { router, searchGames } = await mount('/steam?tab=search&q=portal&page=3');
@@ -138,7 +138,7 @@ describe('Steam navigation', () => {
     await click(host.querySelector('[aria-label="关闭游戏详情"]'));
     expect(router.state.location.pathname).toBe('/steam');
     expect(host.textContent).not.toContain('最近浏览');
-    expect(host.querySelectorAll('.steam-featured-sections > .panel')).toHaveLength(3);
+    expect(host.querySelectorAll('.steam-featured-sections > .ui-panel')).toHaveLength(3);
   });
   it('invalid ID never loads; Esc closes it', async () => {
     const { load, router } = await mount('/?game=bad');
@@ -154,29 +154,31 @@ describe('Steam navigation', () => {
   it('deals default to all, preserve source order, paginate and reset page on genre changes', async () => {
     const { router, getDeals } = await mount('/steam?tab=deals&sort=price');
     expect(host.querySelector('select[aria-label="游戏排序"]')).toBeNull();
-    expect(host.querySelectorAll('.filter-bar button')).toHaveLength(9);
-    expect(host.querySelector('.filter-bar button[aria-pressed="true"]')?.textContent).toBe('全部');
+    expect(host.querySelectorAll('.ui-filter-bar button')).toHaveLength(9);
+    expect(host.querySelector('.ui-filter-bar button[aria-pressed="true"]')?.textContent).toBe(
+      '全部',
+    );
     expect(getDeals.mock.lastCall?.slice(0, 2)).toEqual(['all', 1]);
-    expect([...host.querySelectorAll('.game-card h3')].map((n) => n.textContent)).toEqual(
+    expect([...host.querySelectorAll('.steam-game-card h3')].map((n) => n.textContent)).toEqual(
       parseSearch(deals, 1).items.map((g) => g.title),
     );
     await click([...host.querySelectorAll('button')].find((b) => b.textContent === '下一页')!);
     expect(getDeals.mock.lastCall?.slice(0, 2)).toEqual(['all', 2]);
-    expect(host.querySelector('.game-card h3')?.textContent).toBe(
+    expect(host.querySelector('.steam-game-card h3')?.textContent).toBe(
       parseSearch(dealsPage2, 2).items[0].title,
     );
     const location = router.state.location.search;
-    await click(host.querySelector('.game-card'));
+    await click(host.querySelector('.steam-game-card'));
     await click(host.querySelector('[aria-label="关闭游戏详情"]'));
     expect(router.state.location.search).toBe(location);
     await click(
-      [...host.querySelectorAll('.filter-bar button')].find((b) => b.textContent === '动作')!,
+      [...host.querySelectorAll('.ui-filter-bar button')].find((b) => b.textContent === '动作')!,
     );
     expect(getDeals.mock.lastCall?.slice(0, 2)).toEqual(['动作', 1]);
     await click([...host.querySelectorAll('button')].find((b) => b.textContent === '下一页')!);
     expect(getDeals.mock.lastCall?.slice(0, 2)).toEqual(['动作', 2]);
     await click(
-      [...host.querySelectorAll('.filter-bar button')].find((b) => b.textContent === '全部')!,
+      [...host.querySelectorAll('.ui-filter-bar button')].find((b) => b.textContent === '全部')!,
     );
     expect(getDeals.mock.lastCall?.slice(0, 2)).toEqual(['all', 1]);
   });

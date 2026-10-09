@@ -1,0 +1,9 @@
+.app-boot-error {
+  display: grid;
+  place-content: center;
+  gap: 15px;
+  height: 100%;
+  padding: 30px;
+  background: var(--reading-bg);
+  color: var(--ink);
+}

@@ -20,6 +20,8 @@ AppLayout / desktop adapter → Tauri Window、Tray、Windows 原生窗口
 
 首页与小黑盒的时钟复用 [Clock 共享组件](../src/shared/ui/Clock/index.tsx)，通过 `shared/ui` 公开出口导入，两个页面之间没有为复用时钟建立依赖。
 
+前端样式由 [app/styles.css](../src/app/styles.css) 统一组装，页面与组件 CSS 就近维护，使用普通 CSS 和类名前缀。全局只维护主题变量、基础规则、共享工具类与桌面环境材质；目录和命名约定见 [项目规范](project-conventions.md#样式归属)。
+
 Vite 开发服务器使用 `127.0.0.1:1420`，发布时只提供构建后的静态资源；正式服务不依赖开发服务器中间件。浏览器运行时 `createAppServices()` 返回空服务，窗口能力禁用，设置走独立的 localStorage；这条路径用于布局预览。
 
 ## 当前接入状态

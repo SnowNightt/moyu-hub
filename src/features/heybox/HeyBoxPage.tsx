@@ -45,7 +45,7 @@ export function HeyBoxPage() {
     <>
       <PageHeader title="小黑盒" subtitle={heybox ? undefined : '尚未连接'} right={<Clock />} />
       <div className="heybox-layout">
-        <Panel className="post-feed">
+        <Panel className="heybox-post-feed">
           <Tabs items={tabs} value={tab} onChange={(value) => setParams({ tab: value })} />
           <ResourceView
             state={feed.state}
@@ -56,23 +56,23 @@ export function HeyBoxPage() {
               data.items.length ? (
                 data.items.map((post) => (
                   <button
-                    className={`post-row ${post.id === id ? 'active' : ''}`}
+                    className={`heybox-post-row ${post.id === id ? 'ui-active' : ''}`}
                     key={post.id}
                     onClick={() => setParams({ tab, q: query, post: post.id })}
                   >
                     {post.cover ? (
-                      <img className="cover" src={post.cover} alt="" />
+                      <img className="ui-cover" src={post.cover} alt="" />
                     ) : (
-                      <div className="cover empty-art">
+                      <div className="ui-cover ui-empty-art">
                         <MessagesSquare />
                       </div>
                     )}
-                    <div className="grow">
+                    <div className="ui-grow">
                       <h3>{post.title}</h3>
                       <small>
                         {post.author} · {new Date(post.publishedAt).toLocaleString()}
                       </small>
-                      <p className="excerpt">{post.excerpt}</p>
+                      <p className="heybox-excerpt">{post.excerpt}</p>
                       <small>
                         <MessageCircle />
                         {post.commentCount}
@@ -86,7 +86,7 @@ export function HeyBoxPage() {
             }
           </ResourceView>
         </Panel>
-        <Panel className="post-detail">
+        <Panel className="heybox-post-detail">
           <SearchBox
             placeholder="搜索帖子"
             value={draft}
@@ -107,18 +107,18 @@ export function HeyBoxPage() {
                 </small>
                 {post.images.map((url) => (
                   <button
-                    className="post-image"
+                    className="heybox-post-image"
                     key={url}
                     onClick={() => setImage(url)}
                     aria-label="查看帖子大图"
                   >
-                    <img className="cover" src={url} alt="帖子图片" />
+                    <img className="ui-cover" src={url} alt="帖子图片" />
                   </button>
                 ))}
-                <p className="plain-text">{post.body}</p>
-                <h3 className="comments-head">评论（{post.comments.length}）</h3>
+                <p className="ui-plain-text">{post.body}</p>
+                <h3 className="heybox-comments-head">评论（{post.comments.length}）</h3>
                 {post.comments.map((comment) => (
-                  <div className="comment" key={comment.id}>
+                  <div className="heybox-comment" key={comment.id}>
                     <strong>{comment.author}</strong>
                     <small>{new Date(comment.publishedAt).toLocaleString()}</small>
                     <p>{comment.text}</p>
@@ -132,18 +132,18 @@ export function HeyBoxPage() {
           </ResourceView>
           {detail.state.status === 'unconfigured' && (
             <>
-              <div className="media-well">
+              <div className="ui-media-well">
                 <ImageIcon />
                 <small>帖子图片</small>
               </div>
-              <h3 className="comments-head">评论</h3>
+              <h3 className="heybox-comments-head">评论</h3>
               <EmptyState compact title="暂无评论内容" icon={MessageCircle} />
             </>
           )}
         </Panel>
       </div>
       <Dialog title="帖子图片" open={!!image} onClose={() => setImage(null)} wide>
-        {image && <img className="lightbox-image" src={image} alt="帖子大图" />}
+        {image && <img className="heybox-lightbox-image" src={image} alt="帖子大图" />}
       </Dialog>
     </>
   );

@@ -35,7 +35,7 @@ function BookCard({ item }: { item: LibraryItem }) {
   const [busy, setBusy] = useState(false);
   const report = (e: unknown) => useShell.getState().notify(String(e));
   return (
-    <article className="book-card">
+    <article className="reader-book-card">
       {item.coverResourceId ? (
         <ReaderImage
           itemId={item.id}
@@ -44,23 +44,23 @@ function BookCard({ item }: { item: LibraryItem }) {
           thumbnail
         />
       ) : item.cover ? (
-        <img className="cover" src={item.cover} alt={`${item.title}封面`} />
+        <img className="ui-cover" src={item.cover} alt={`${item.title}封面`} />
       ) : (
-        <div className="cover empty-art">
+        <div className="ui-cover ui-empty-art">
           <BookOpen />
         </div>
       )}
-      <div className="book-info">
+      <div className="reader-book-info">
         <h3>{item.title}</h3>
         <small>{item.author ?? '作者未提供'}</small>
-        <div className="row">
-          <span className={`badge ${item.type === 'comic' ? 'comic' : ''}`}>
+        <div className="ui-row">
+          <span className={`ui-badge ${item.type === 'comic' ? 'ui-comic' : ''}`}>
             {item.type === 'novel' ? '小说' : '漫画'}
           </span>
-          <span className="tag">{item.format}</span>
+          <span className="ui-tag">{item.format}</span>
         </div>
         {item.progress && (
-          <small className="muted">
+          <small className="ui-muted">
             已读 {Math.round((item.progress.completion ?? 0) * 100)}% ·{' '}
             {new Date(item.progress.updatedAt).toLocaleDateString()}
           </small>
@@ -71,10 +71,13 @@ function BookCard({ item }: { item: LibraryItem }) {
         {item.availability === 'changed' && (
           <small className="reader-error">内容已变化，请重新导入</small>
         )}
-        <Link className="primary" to={`/reader/${item.type}/${encodeURIComponent(item.id)}`}>
+        <Link
+          className="ui-button-primary"
+          to={`/reader/${item.type}/${encodeURIComponent(item.id)}`}
+        >
           {item.progress ? '继续阅读' : '开始阅读'}
         </Link>
-        <div className="row">
+        <div className="ui-row">
           {item.storageMode === 'reference' && (
             <Button
               variant="text"
@@ -105,7 +108,7 @@ function BookCard({ item }: { item: LibraryItem }) {
             移除《{item.title}》及其阅读进度、书签
             {item.storageMode === 'copy' ? '和应用书库副本' : ''}。原始文件不会删除。
           </p>
-          <div className="actions">
+          <div className="ui-dialog-actions">
             <Button onClick={() => setRemoving(false)}>取消</Button>
             <Button
               variant="primary"
@@ -129,7 +132,7 @@ function BookCard({ item }: { item: LibraryItem }) {
 }
 function HistoryHeader() {
   return (
-    <table className="history">
+    <table className="reader-history">
       <thead>
         <tr>
           {['书名', '当前章节', '阅读进度', '阅读时间', '操作'].map((name) => (
@@ -178,11 +181,11 @@ export function ReaderPage() {
   );
   const detail = useResource(onlineReader && workId ? loadDetail : undefined);
   const filterBar = (
-    <div className="filter-bar">
+    <div className="ui-filter-bar">
       {filters.map((item) => (
         <button
           key={item.value}
-          className={filter === item.value ? 'active' : ''}
+          className={filter === item.value ? 'ui-active' : ''}
           onClick={() => setParams({ tab, type: item.value, q: query })}
         >
           {item.label}
@@ -196,7 +199,7 @@ export function ReaderPage() {
       <ResourceView state={history.state} retry={history.retry} label="阅读历史">
         {(items) =>
           items.length ? (
-            <table className="history">
+            <table className="reader-history">
               <tbody>
                 {items.map((progress) => (
                   <tr key={progress.itemId}>
@@ -217,7 +220,7 @@ export function ReaderPage() {
                     <td>
                       {library.state.status === 'ready' && (
                         <Link
-                          className="text-btn"
+                          className="ui-button-text"
                           to={`/reader/${library.state.data.find((i) => i.id === progress.itemId)?.type ?? 'novel'}/${progress.itemId}`}
                         >
                           继续
@@ -250,7 +253,7 @@ export function ReaderPage() {
       <PageHeader
         title="阅读器"
         right={
-          <div className="row">
+          <div className="ui-row">
             <SearchBox
               placeholder={tab === 'online' ? '搜索小说或漫画' : '搜索书名、作者或关键词'}
               value={draft}
@@ -264,7 +267,7 @@ export function ReaderPage() {
           </div>
         }
       />
-      <Panel className="shelf">
+      <Panel className="reader-shelf">
         <Tabs
           items={tabs}
           value={tab}
@@ -275,7 +278,7 @@ export function ReaderPage() {
         />
         {tab === 'history' ? (
           <>
-            <div className="between">
+            <div className="ui-between">
               <h2>阅读历史</h2>
               <Button
                 variant="text"
@@ -299,15 +302,17 @@ export function ReaderPage() {
             <ResourceView state={online.state} retry={online.retry} label="在线阅读">
               {(data) =>
                 data.items.length ? (
-                  <div className="book-grid">
+                  <div className="reader-book-grid">
                     {data.items.map((item) => (
-                      <article className="book-card" key={item.id}>
-                        {item.cover && <img className="cover" src={item.cover} alt={item.title} />}
-                        <div className="book-info">
+                      <article className="reader-book-card" key={item.id}>
+                        {item.cover && (
+                          <img className="ui-cover" src={item.cover} alt={item.title} />
+                        )}
+                        <div className="reader-book-info">
                           <h3>{item.title}</h3>
                           <small>{item.author}</small>
                           <Link
-                            className="primary"
+                            className="ui-button-primary"
                             to={`/reader/work/${encodeURIComponent(item.id)}`}
                           >
                             查看作品
@@ -340,7 +345,7 @@ export function ReaderPage() {
                       .includes(query.toLocaleLowerCase()),
                 );
                 return filtered.length ? (
-                  <div className="book-grid">
+                  <div className="reader-book-grid">
                     {filtered.map((item) => (
                       <BookCard item={item} key={item.id} />
                     ))}
@@ -360,7 +365,7 @@ export function ReaderPage() {
         )}
       </Panel>
       {tab === 'shelf' && (
-        <Panel className="history-panel">
+        <Panel className="reader-history-panel">
           <SectionTitle
             title="最近阅读"
             icon={Clock3}
@@ -384,17 +389,17 @@ export function ReaderPage() {
           {(data) => (
             <>
               <h2>{data.item.title}</h2>
-              <p className="muted">作者：{data.item.author ?? '未提供'}</p>
-              <p className="plain-text">{data.summary}</p>
+              <p className="ui-muted">作者：{data.item.author ?? '未提供'}</p>
+              <p className="ui-plain-text">{data.summary}</p>
               <h3>章节列表</h3>
-              <div className="chapter-grid">
+              <div className="reader-chapter-grid">
                 {data.chapters.map((chapter) => (
                   <Button key={chapter.id} disabled>
                     {chapter.title}
                   </Button>
                 ))}
               </div>
-              <div className="actions">
+              <div className="ui-dialog-actions">
                 <Button variant="primary" disabled>
                   加入书架
                 </Button>

@@ -1,3 +1,4 @@
+import './app/styles.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
@@ -9,9 +10,6 @@ import { useShell } from './app/shellStore';
 import { initializeDesktop } from './platform/desktop';
 import { desktopRuntime } from './platform/runtime';
 import { getCurrentWindow } from '@tauri-apps/api/window';
-import './shared/styles/tokens.css';
-import './shared/styles/reference.css';
-import './shared/styles/shell.css';
 
 window.addEventListener('moyuhub:storage-error', () => {
   useShell.setState({ storageError: true });

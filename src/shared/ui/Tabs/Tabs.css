@@ -1,0 +1,27 @@
+.ui-tabs {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--rule);
+}
+.ui-tabs button {
+  padding: 9px 5px 12px;
+  border-bottom: 3px solid transparent;
+  font-size: 16px;
+  color: var(--muted);
+}
+.ui-tabs .ui-active {
+  color: var(--accent);
+  border-color: var(--accent);
+  font-weight: 650;
+}
+.app-window .ui-tabs {
+  gap: 21px;
+  margin-bottom: 10px;
+}
+.app-window .ui-tabs button {
+  font-size: 12px;
+  padding: 4px 3px 6px;
+  border-bottom-width: 2px;
+}

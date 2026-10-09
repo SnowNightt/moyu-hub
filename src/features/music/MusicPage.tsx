@@ -26,7 +26,7 @@ const tabs = [
 function SongTable({ songs }: { songs: Song[] }) {
   return (
     <>
-      <table className="songs">
+      <table className="music-songs">
         <thead>
           <tr>
             <th>#</th>
@@ -41,7 +41,7 @@ function SongTable({ songs }: { songs: Song[] }) {
             <tr key={song.id}>
               <td>{index + 1}</td>
               <td>
-                <div className="song-title">
+                <div className="music-song-title">
                   <TrackArtwork cover={song.cover} title={song.title} />
                   {song.title}
                 </div>
@@ -62,9 +62,9 @@ function SongTable({ songs }: { songs: Song[] }) {
 }
 function PlaylistGrid({ items, onSelect }: { items: Playlist[]; onSelect: (id: string) => void }) {
   return items.length ? (
-    <div className="playlist-grid">
+    <div className="music-playlist-grid">
       {items.map((item) => (
-        <button className="playlist" key={item.id} onClick={() => onSelect(item.id)}>
+        <button className="music-playlist" key={item.id} onClick={() => onSelect(item.id)}>
           <TrackArtwork cover={item.cover} title={item.title} />
           <h3>{item.title}</h3>
           <small>{item.trackCount} 首</small>
@@ -125,7 +125,7 @@ export function MusicPage() {
               onChange={setDraft}
               onSubmit={() => setParams({ tab: 'search', q: draft.trim() })}
             />
-            <p className="small muted integration-line">
+            <p className="ui-small ui-muted music-integration-line">
               {music ? (query ? `搜索“${query}”` : '输入关键词后搜索歌曲') : '音乐服务尚未接入'}
             </p>
             <Tabs items={tabs} value={tab} onChange={changeTab} />
@@ -146,7 +146,7 @@ export function MusicPage() {
               </>
             )}
           </Panel>
-          <Panel className="playlist-panel">
+          <Panel className="music-playlist-panel">
             <SectionTitle
               title="我的歌单"
               action={
@@ -161,12 +161,12 @@ export function MusicPage() {
             </ResourceView>
           </Panel>
         </div>
-        <Panel className="lyrics">
+        <Panel className="music-lyrics">
           <SectionTitle title="歌词" />
           <TrackArtwork cover={current?.cover} title={current?.title} />
           <h3>{current?.title ?? '尚未选择歌曲'}</h3>
-          <p className="muted">{current?.artist ?? '选择歌曲后显示歌词'}</p>
-          <div className="lyric-lines">
+          <p className="ui-muted">{current?.artist ?? '选择歌曲后显示歌词'}</p>
+          <div className="music-lyric-lines">
             <ResourceView state={lyrics.state} label="歌词" empty="暂无歌词">
               {(lines) =>
                 lines.length ? (
@@ -177,14 +177,14 @@ export function MusicPage() {
               }
             </ResourceView>
           </div>
-          <div className="bottom-hint">
+          <div className="music-bottom-hint">
             <Music2 />
             音乐状态会在切换页面时继续保留
           </div>
         </Panel>
       </div>
       <Dialog title="登录网易云音乐" open={accountOpen} onClose={() => setAccountOpen(false)}>
-        <div className="qr-slot">
+        <div className="music-qr-slot">
           <QrCode />
         </div>
         <EmptyState
@@ -192,7 +192,7 @@ export function MusicPage() {
           description="接入网易云音乐服务后，使用二维码登录。"
           icon={CircleUserRound}
         />
-        <div className="actions">
+        <div className="ui-dialog-actions">
           <Button disabled>刷新二维码</Button>
         </div>
       </Dialog>

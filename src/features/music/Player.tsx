@@ -7,11 +7,11 @@ import { useSettings } from '../settings/store';
 
 export function PlaybackControls() {
   return (
-    <div className="player-controls">
+    <div className="music-player-controls">
       <Button variant="icon" disabled aria-label="上一首">
         <SkipBack />
       </Button>
-      <button className="round-play" disabled aria-label="播放">
+      <button className="music-round-play" disabled aria-label="播放">
         <Play />
       </button>
       <Button variant="icon" disabled aria-label="下一首">
@@ -22,9 +22,9 @@ export function PlaybackControls() {
 }
 export function TrackArtwork({ cover, title = '' }: { cover?: string; title?: string }) {
   return cover ? (
-    <img className="cover" src={cover} alt={title} />
+    <img className="ui-cover" src={cover} alt={title} />
   ) : (
-    <div className="cover empty-art" aria-hidden="true">
+    <div className="ui-cover ui-empty-art" aria-hidden="true">
       <Disc3 />
     </div>
   );
@@ -37,26 +37,26 @@ export function Player() {
   const [queueOpen, setQueueOpen] = useState(false);
   return (
     <>
-      <footer className="player" aria-label="全局音乐播放器">
+      <footer className="music-player" aria-label="全局音乐播放器">
         <TrackArtwork cover={current?.cover} title={current?.title} />
-        <div className="song-meta">
+        <div className="music-song-meta">
           <strong>{current?.title ?? '尚未选择歌曲'}</strong>
           <small>{current?.artist ?? '网易云音乐尚未接入'}</small>
         </div>
         <PlaybackControls />
-        <div className="timeline">
+        <div className="music-timeline">
           <span>—:—</span>
           <Slider value={0} label="歌曲播放进度" disabled />
           <span>—:—</span>
         </div>
-        <Volume2 className="volume-icon" aria-hidden="true" />
+        <Volume2 className="music-volume-icon" aria-hidden="true" />
         <Slider
-          className="volume"
+          className="music-volume"
           value={settings.volume}
           label="播放音量"
           onChange={(value) => update('volume', value)}
         />
-        <div className="end-controls">
+        <div className="music-end-controls">
           <Button variant="icon" onClick={() => setQueueOpen(true)} aria-label="播放列表">
             <ListMusic />
           </Button>

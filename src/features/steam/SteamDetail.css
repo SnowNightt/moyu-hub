@@ -1,0 +1,128 @@
+.steam-game-detail-layout {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 26px;
+}
+.steam-detail-screen {
+  width: 100%;
+  aspect-ratio: 1.8;
+}
+.steam-screenshots {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+  margin: 12px 0 20px;
+}
+.steam-screenshots button {
+  padding: 0;
+  border-radius: 7px;
+  border: 2px solid transparent;
+}
+.steam-screenshots button.ui-active {
+  border-color: var(--accent);
+}
+.steam-screenshots .ui-cover {
+  width: 100%;
+  aspect-ratio: 1.4;
+}
+.steam-game-intro p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+  margin-top: 14px;
+}
+.steam-game-detail-side .ui-cover {
+  width: 100%;
+  aspect-ratio: 1.7;
+  margin: 18px 0;
+}
+.steam-game-detail-side h1 {
+  font-size: 32px;
+}
+.steam-game-detail-side .steam-price {
+  font-size: 28px;
+  margin: 20px 0 10px;
+}
+.steam-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.steam-game-detail-layout {
+  grid-template-columns: 1.65fr 1fr;
+  gap: 18px;
+}
+.steam-detail-screen {
+  aspect-ratio: 1.9;
+}
+.steam-screenshots {
+  gap: 7px;
+  margin: 10px 0 14px;
+}
+.steam-screenshots .ui-cover {
+  aspect-ratio: 1.7;
+}
+.steam-game-intro h2 {
+  font-size: 18px;
+}
+.steam-game-intro p {
+  font-size: 11px;
+  margin-top: 10px;
+  line-height: 1.8;
+}
+.steam-game-detail-side h1 {
+  font-size: 25px;
+}
+.steam-game-detail-side .ui-cover {
+  margin: 12px 0;
+}
+.steam-game-detail-side > p {
+  font-size: 12px;
+  line-height: 1.6;
+}
+.steam-game-detail-side .steam-price {
+  font-size: 23px;
+  margin: 13px 0 7px;
+}
+.steam-game-detail-side .steam-discount {
+  font-size: 15px;
+}
+.steam-game-detail-side .steam-fine-print {
+  font-size: 10px;
+}
+.steam-meta-row {
+  padding: 7px 0;
+  font-size: 11px;
+}
+[data-theme='dark'] .ui-dialog .steam-screenshots button.ui-active {
+  box-shadow: 0 0 0 2px rgba(143, 195, 164, 0.16);
+}
+.steam-detail-frame .ui-media-well {
+  height: 180px;
+}
+.steam-detail-frame .steam-empty-shots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+.steam-detail-frame .steam-empty-shots .ui-media-well {
+  height: 62px;
+  min-height: 62px;
+}
+.steam-detail-frame .steam-game-detail-side > .ui-media-well {
+  height: 100px;
+}
+.steam-detail-frame h2 {
+  margin: 12px 0;
+}
+.steam-game-intro p {
+  white-space: pre-line;
+}
+.steam-game-detail-layout > :first-child {
+  min-width: 0;
+}

@@ -14,7 +14,7 @@ export function SearchBox({
 }) {
   return (
     <form
-      className="search"
+      className="ui-search-box"
       role="search"
       onSubmit={(event) => {
         event.preventDefault();

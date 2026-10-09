@@ -31,10 +31,10 @@ function Row({
   className?: string;
 }) {
   return (
-    <div className={`setting-row ${className}`}>
-      <span className="setting-label">
+    <div className={`settings-row ${className}`}>
+      <span className="settings-label">
         {label}
-        {hint && <small className="row-hint">{hint}</small>}
+        {hint && <small className="settings-row-hint">{hint}</small>}
       </span>
       {children}
     </div>
@@ -54,8 +54,8 @@ function RangeRow({
   disabled?: boolean;
 }) {
   return (
-    <Row label={label} hint={hint} className="range-row">
-      <div className="range-control">
+    <Row label={label} hint={hint} className="settings-range-row">
+      <div className="settings-range-control">
         <Slider label={label} value={value} onChange={onChange} disabled={disabled} />
         <output>{value}%</output>
       </div>
@@ -74,7 +74,7 @@ function Select<K extends keyof Settings>({
   const { settings, update } = useSettings();
   return (
     <select
-      className="select"
+      className="ui-select"
       aria-label={label}
       value={String(settings[field])}
       onChange={(event) => {
@@ -136,7 +136,7 @@ export function SettingsPage() {
         />
       </Row>
       <Row label="窗口大小" hint="固定尺寸">
-        <span className="small muted">960 × 600</span>
+        <span className="ui-small ui-muted">960 × 600</span>
       </Row>
       <Row label="启动后打开首页">
         <Switch
@@ -156,7 +156,7 @@ export function SettingsPage() {
         />
       </Row>
       {desktopRuntime && !trayReady && (
-        <p className="small muted">托盘不可用，关闭窗口将退出应用。</p>
+        <p className="ui-small ui-muted">托盘不可用，关闭窗口将退出应用。</p>
       )}
     </>
   );
@@ -179,16 +179,16 @@ export function SettingsPage() {
               外观
             </h2>
             <Row label="主题模式">
-              <div className="segmented">
+              <div className="ui-segmented">
                 <button
-                  className={settings.theme === 'light' ? 'active' : ''}
+                  className={settings.theme === 'light' ? 'ui-active' : ''}
                   onClick={() => update('theme', 'light')}
                 >
                   <Sun />
                   浅色
                 </button>
                 <button
-                  className={settings.theme === 'dark' ? 'active' : ''}
+                  className={settings.theme === 'dark' ? 'ui-active' : ''}
                   onClick={() => update('theme', 'dark')}
                 >
                   <Moon />
@@ -218,19 +218,19 @@ export function SettingsPage() {
               disabled={!desktopRuntime || blurControl !== 'ready'}
             />
             <Row label="玻璃材质">
-              <span className="badge">
+              <span className="ui-badge">
                 <Layers />
                 {material === 'unavailable' ? '系统材质不可用' : '始终开启'}
               </span>
             </Row>
-            <div className="appearance-preview">
+            <div className="settings-appearance-preview">
               {[
                 { value: 20, label: '通透' },
                 { value: 40, label: '平衡' },
                 { value: 80, label: '柔和' },
               ].map((item) => (
                 <button
-                  className={settings.opacity === item.value ? 'active' : ''}
+                  className={settings.opacity === item.value ? 'ui-active' : ''}
                   key={item.value}
                   aria-label={`${item.label}不透明度${item.value}%`}
                   onClick={() => update('opacity', item.value)}

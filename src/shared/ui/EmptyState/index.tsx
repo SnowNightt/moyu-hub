@@ -13,7 +13,7 @@ export function EmptyState({
   compact?: boolean;
 }) {
   return (
-    <div className={`empty-state ${compact ? 'compact' : ''}`} role="status">
+    <div className={`ui-empty-state ${compact ? 'ui-compact' : ''}`} role="status">
       <Icon aria-hidden="true" />
       <p>{title}</p>
       {description && <small>{description}</small>}

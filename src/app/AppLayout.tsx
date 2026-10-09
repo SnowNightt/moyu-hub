@@ -8,7 +8,6 @@ import { useShell } from './shellStore';
 import { applyDesktopSettings, closeWindow, minimizeWindow } from '../platform/desktop';
 import { desktopRuntime } from '../platform/runtime';
 import { errorMessage } from '../shared/lib/resource';
-import styles from './AppLayout.module.css';
 import { SteamDetailController } from '../features/steam/SteamDetailController';
 import { MoyuLogo } from './MoyuLogo';
 
@@ -81,17 +80,17 @@ export function AppLayout() {
     void action().catch((error: unknown) => notify(errorMessage(error)));
   };
   return (
-    <div className={`${styles.preview} ${desktopRuntime ? styles.desktop : ''}`}>
-      <div className={`app ${reading ? 'reading' : ''}`}>
-        <div className={styles.dragArea} data-tauri-drag-region aria-hidden="true" />
-        <div className="titlebar">
+    <div className={`app-preview ${desktopRuntime ? 'app-desktop' : ''}`}>
+      <div className={`app-window ${reading ? 'app-reading' : ''}`}>
+        <div className="app-drag-area" data-tauri-drag-region aria-hidden="true" />
+        <div className="app-titlebar">
           <Button
             variant="icon"
             aria-label="窗口置顶"
             title="窗口置顶"
             aria-pressed={settings.alwaysOnTop}
             disabled={!desktopRuntime}
-            className={settings.alwaysOnTop ? 'active-pin' : ''}
+            className={settings.alwaysOnTop ? 'app-active-pin' : ''}
             onClick={() => update('alwaysOnTop', !settings.alwaysOnTop)}
           >
             <Pin />
@@ -115,29 +114,29 @@ export function AppLayout() {
             <X />
           </Button>
         </div>
-        <aside className="sidebar">
-          <div className="brand">
+        <aside className="app-sidebar">
+          <div className="app-brand">
             <MoyuLogo />
-            <div className="brand-text">
+            <div className="app-brand-text">
               <strong>MoyuHub</strong>
             </div>
           </div>
-          <nav className="nav" aria-label="主要导航">
+          <nav className="app-nav" aria-label="主要导航">
             {navigation.map(({ to, title, icon: Icon }) => (
               <NavLink
                 key={to}
                 to={to}
                 end={to === '/'}
-                className={({ isActive }) => (isActive ? 'active' : '')}
+                className={({ isActive }) => (isActive ? 'ui-active' : '')}
               >
                 <Icon aria-hidden="true" />
                 <span>{title}</span>
               </NavLink>
             ))}
           </nav>
-          <p className="sidebar-note">你的进度与偏好，留在这里。</p>
+          <p className="app-sidebar-note">你的进度与偏好，留在这里。</p>
         </aside>
-        <main className={`main ${reading ? 'reader-main' : ''}`} key={location.pathname}>
+        <main className={`app-main ${reading ? 'app-reader-main' : ''}`} key={location.pathname}>
           <Outlet />
         </main>
         <Player />
@@ -145,7 +144,7 @@ export function AppLayout() {
       </div>
       {notice && (
         <div id="toast-root" role="status">
-          <div className="toast">{notice}</div>
+          <div className="app-toast">{notice}</div>
         </div>
       )}
     </div>

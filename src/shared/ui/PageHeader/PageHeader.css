@@ -1,0 +1,35 @@
+.ui-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 16px;
+  min-height: 42px;
+}
+.ui-page-header .ui-page-heading {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.ui-page-header .ui-page-heading > span {
+  font-size: 17px;
+  color: var(--muted);
+}
+.ui-page-header {
+  margin-bottom: 11px;
+}
+.app-window .ui-page-header {
+  min-height: 33px;
+  margin-bottom: 10px;
+  gap: 12px;
+}
+.app-window .ui-page-header .ui-page-heading {
+  gap: 12px;
+}
+.app-window .ui-page-header .ui-page-heading > span {
+  display: block;
+  font-size: 11px;
+}
+[data-theme='dark'] .app-window .ui-page-header h1 {
+  text-shadow: 0 2px 7px rgba(4, 12, 22, 0.25);
+}

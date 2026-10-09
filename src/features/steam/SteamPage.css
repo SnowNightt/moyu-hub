@@ -1,0 +1,182 @@
+.steam-feature {
+  display: grid;
+  grid-template-columns: 1.62fr 1fr;
+  gap: 30px;
+  padding: 15px;
+  margin-bottom: 16px;
+}
+.steam-feature .ui-cover {
+  width: 100%;
+  height: 270px;
+}
+.steam-feature-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  padding-right: 4px;
+}
+.steam-feature-copy h2 {
+  font-size: 32px;
+}
+.steam-feature-copy .steam-price {
+  font-size: 27px;
+}
+.steam-feature-copy .ui-badge {
+  font-size: 11px;
+}
+.steam-feature-copy p {
+  color: var(--muted);
+}
+.steam-feature-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+.steam-feature-controls .ui-button-icon {
+  background: #ffffffe0;
+  color: #283a37;
+  border-radius: 50%;
+}
+.steam-dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 0 0;
+}
+.steam-dots button {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #83979b60;
+  padding: 0;
+}
+.steam-dots .ui-active {
+  background: var(--accent);
+}
+.steam-sale {
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.steam-sale .ui-cover {
+  height: 150px;
+  aspect-ratio: auto;
+}
+.steam-sale .steam-price {
+  margin-top: 5px;
+}
+.steam-fine-print {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: right;
+}
+.app-window .steam-fine-print {
+  font-size: 9px;
+}
+.app-window .steam-feature {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 16px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.app-window .steam-feature .ui-cover {
+  height: 158px;
+}
+.app-window .steam-feature-copy {
+  padding-right: 2px;
+  gap: 5px;
+}
+.app-window .steam-feature-copy > .ui-badge {
+  display: none;
+}
+.app-window .steam-feature-copy h2 {
+  font-size: 23px;
+}
+.app-window .steam-feature-copy p {
+  font-size: 11px;
+  line-height: 1.5;
+}
+.app-window .steam-feature-copy .steam-price {
+  font-size: 20px;
+}
+.app-window .steam-feature-copy .ui-badge {
+  font-size: 9px;
+}
+.app-window .steam-feature-copy .ui-button-primary {
+  min-height: 27px;
+}
+.app-window .steam-feature-controls {
+  right: 8px;
+  bottom: 8px;
+}
+.app-window .steam-feature-controls .ui-button-icon {
+  width: 27px;
+  height: 27px;
+}
+.app-window .steam-dots {
+  padding-top: 5px;
+  gap: 6px;
+}
+.app-window .steam-dots button {
+  width: 6px;
+  height: 6px;
+}
+.app-window .steam-sale {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.app-window .steam-sale .ui-cover {
+  height: 89px;
+}
+.app-window .steam-sale .ui-panel-head {
+  margin-bottom: 7px;
+}
+.app-window .steam-sale .steam-price {
+  margin-top: 4px;
+}
+.app-window .steam-feature {
+  min-height: 196px;
+}
+.app-window .steam-feature > .ui-empty-state {
+  border-radius: 8px;
+  background: var(--surface);
+  height: 158px;
+}
+.app-window .steam-sale {
+  min-height: 188px;
+}
+.app-window .steam-dots {
+  align-items: center;
+}
+.app-window .steam-dots button:first-child,
+.app-window .steam-dots button:last-child {
+  width: 24px;
+  height: 24px;
+  font-size: 20px;
+  line-height: 20px;
+}
+.app-window .steam-feature .ui-cover {
+  height: 190px;
+  object-fit: cover;
+}
+.app-window .steam-feature .steam-feature-copy h2 {
+  font-size: 24px;
+  overflow-wrap: anywhere;
+}
+.app-window .steam-feature .steam-feature-copy .steam-price {
+  font-size: 20px;
+}
+.steam-featured-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.steam-featured-sections > .ui-panel {
+  margin-block: 0;
+}

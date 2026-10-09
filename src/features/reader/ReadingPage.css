@@ -1,0 +1,587 @@
+.reader-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-height: 53px;
+  padding: 0 18px;
+  margin-bottom: 16px;
+}
+.reader-toolbar .reader-title {
+  font-size: 16px;
+}
+.reader-toolbar .reader-tools {
+  display: flex;
+  gap: 4px;
+}
+.reader-toolbar .reader-tools button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 9px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+.reader-toolbar .reader-tools .ui-active {
+  background: var(--surface);
+  color: var(--accent);
+}
+.reader-reading-layout {
+  display: flex;
+  gap: 10px;
+  min-height: 0;
+  flex: 1;
+}
+.reader-chapter-pane {
+  width: 240px;
+  flex-shrink: 0;
+  padding: 15px;
+  overflow: auto;
+}
+.reader-chapter-pane .ui-tabs {
+  gap: 28px;
+}
+.reader-chapter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 8px;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  width: 100%;
+  border-radius: 7px;
+}
+.reader-chapter-row .ui-cover {
+  width: 48px;
+  height: 55px;
+}
+.reader-chapter-row.ui-active {
+  color: var(--accent);
+  background: #5a92742a;
+  border: 1px solid var(--line);
+  font-weight: 600;
+}
+.reader-chapter-row small {
+  display: block;
+  font-weight: 400;
+  font-size: 11px;
+}
+.reader-bookmark-list {
+  margin-top: 25px;
+  border-top: 1px solid var(--rule);
+  padding-top: 20px;
+}
+.reader-bookmark-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  text-align: left;
+  font-size: 13px;
+  padding: 10px 2px;
+}
+.reader-reading-center {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+  background: var(--reading-bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.reader-prose-scroll {
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+  padding: 36px 28px;
+  scrollbar-width: thin;
+}
+.reader-prose {
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: var(--reading-line);
+  max-width: var(--reading-width);
+  margin: auto;
+}
+.reader-prose h1 {
+  font-family: var(--font-family);
+  font-size: 30px;
+  text-align: center;
+  margin: 13px 0 34px;
+  letter-spacing: 0;
+}
+.reader-prose p {
+  text-indent: 2em;
+  margin: 0 0 24px;
+}
+.reader-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 15px 20px;
+  border-top: 1px solid var(--rule);
+  font-size: 12px;
+}
+.reader-footer .ui-button-secondary {
+  min-height: 35px;
+  font-size: 13px;
+}
+.reader-footer .ui-progress {
+  margin-top: 8px;
+}
+.reader-type-pane {
+  width: 275px;
+  flex-shrink: 0;
+  padding: 17px 18px;
+  overflow: auto;
+}
+.reader-type-pane h3 {
+  font-size: 18px;
+  margin-bottom: 24px;
+}
+.reader-type-setting {
+  margin-bottom: 28px;
+}
+.reader-type-setting .ui-between {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+.reader-type-setting input[type='range'] {
+  width: 100%;
+}
+.reader-type-setting select {
+  width: 100%;
+}
+.reader-type-pane .ui-segmented {
+  flex-wrap: wrap;
+}
+.reader-type-pane .ui-segmented button {
+  flex: 1;
+  padding: 9px;
+}
+.reader-compact .reader-chapter-pane {
+  display: none;
+}
+.reader-hide-typeset .reader-type-pane {
+  display: none;
+}
+.reader-comic-layout {
+  position: relative;
+  flex: 1;
+  display: flex;
+  gap: 16px;
+  min-height: 0;
+  overflow: hidden;
+}
+.reader-comic-layout .reader-chapter-pane {
+  width: 220px;
+  align-self: flex-start;
+  max-height: 100%;
+}
+.reader-comic-layout-stage {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  text-align: center;
+  padding: 0 50px;
+  position: relative;
+  scrollbar-width: thin;
+}
+.reader-comic-layout-stage img {
+  display: block;
+  width: calc(570px * var(--zoom, 0.9));
+  max-width: 100%;
+  margin: 0 auto 20px;
+  box-shadow: 0 10px 28px #08111338;
+  cursor: zoom-in;
+}
+.reader-comic-page-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 15px;
+}
+.reader-comic-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  z-index: 2;
+}
+.reader-comic-arrow.reader-left {
+  left: 10px;
+}
+.reader-comic-arrow.reader-right {
+  right: 10px;
+}
+.reader-comic-controls {
+  margin-top: 15px;
+  border-radius: 12px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 12px;
+}
+.reader-comic-controls .reader-progress-wrap {
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+}
+.reader-comic-controls .reader-progress-wrap input {
+  width: 100%;
+  margin-top: 8px;
+}
+.app-window .reader-toolbar {
+  padding: 0 4px;
+  min-height: 34px;
+  margin-bottom: 10px;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+.app-window .reader-toolbar .reader-title {
+  font-size: 12px;
+}
+.app-window .reader-toolbar .reader-tools {
+  gap: 2px;
+}
+.app-window .reader-toolbar .reader-tools button {
+  font-size: 11px;
+  padding: 4px 6px;
+  gap: 4px;
+}
+.app-window .reader-toolbar .reader-tools svg {
+  width: 16px;
+  height: 16px;
+}
+.app-window .reader-toolbar .ui-button-secondary {
+  font-size: 11px;
+  min-height: 27px;
+  padding: 4px 9px;
+}
+.app-window .reader-reading-layout {
+  gap: 9px;
+}
+.app-window .reader-chapter-pane {
+  position: static;
+  display: block;
+  width: 150px;
+  padding: 10px;
+}
+.app-window .reader-compact .reader-chapter-pane {
+  display: none;
+}
+.app-window .reader-chapter-pane .ui-tabs {
+  gap: 20px;
+}
+.app-window .reader-chapter-row {
+  padding: 8px 5px;
+  gap: 8px;
+  font-size: 12px;
+}
+.app-window .reader-chapter-row .ui-cover {
+  width: 30px;
+  height: 38px;
+}
+.app-window .reader-chapter-row small {
+  font-size: 9px;
+}
+.app-window .reader-bookmark-list {
+  margin-top: 16px;
+  padding-top: 14px;
+}
+.app-window .reader-bookmark-item {
+  font-size: 10px;
+  padding: 7px 0;
+}
+.app-window .reader-reading-center {
+  border-radius: 10px;
+}
+.app-window .reader-prose-scroll {
+  padding: 20px 18px;
+}
+.app-window .reader-prose {
+  font-size: var(--font-size);
+}
+.app-window .reader-prose h1 {
+  font-size: 22px;
+  line-height: 1.5;
+  margin: 6px 0 22px;
+}
+.app-window .reader-prose p {
+  margin-bottom: 18px;
+}
+.app-window .reader-footer {
+  padding: 10px;
+  gap: 8px;
+  font-size: 10px;
+}
+.app-window .reader-footer .ui-button-secondary {
+  font-size: 10px;
+  min-height: 27px;
+  padding: 4px 7px;
+}
+.app-window .reader-footer .ui-progress {
+  margin-top: 5px;
+}
+.app-window .reader-type-pane {
+  position: static;
+  width: 180px;
+  padding: 12px;
+}
+.app-window .reader-type-pane h3 {
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.app-window .reader-type-setting {
+  margin-bottom: 18px;
+}
+.app-window .reader-type-setting .ui-between {
+  font-size: 11px;
+  margin-bottom: 11px;
+}
+.app-window .reader-type-pane .ui-segmented button {
+  padding: 7px 8px;
+  font-size: 10px;
+}
+.app-window .reader-comic-layout {
+  gap: 10px;
+}
+.app-window .reader-comic-layout .reader-chapter-pane {
+  width: 150px;
+}
+.app-window .reader-comic-layout-stage {
+  padding: 0 40px;
+}
+.app-window .reader-comic-layout-stage img {
+  width: calc(330px * var(--zoom, 0.9));
+  max-width: 100%;
+  margin-bottom: 10px;
+}
+.app-window .reader-comic-page-label {
+  font-size: 9px;
+  margin-bottom: 7px;
+}
+.app-window .reader-comic-arrow {
+  width: 36px;
+  height: 36px;
+}
+.app-window .reader-comic-controls {
+  margin-top: 10px;
+  padding: 9px 12px;
+  gap: 8px;
+  font-size: 10px;
+  flex-wrap: nowrap;
+}
+.app-window .reader-comic-controls .ui-button-secondary {
+  font-size: 10px;
+  padding: 4px 7px;
+  min-height: 27px;
+}
+.app-window .reader-comic-controls .reader-progress-wrap {
+  font-size: 10px;
+  min-width: 115px;
+}
+.app-window .reader-comic-controls .reader-zoom-controls {
+  gap: 7px;
+  font-size: 10px;
+}
+.app-window .reader-comic-controls .reader-zoom-controls .music-volume {
+  width: 45px;
+}
+[data-theme='dark'] .app-window .reader-chapter-row.ui-active {
+  background: linear-gradient(130deg, rgba(60, 101, 78, 0.47), rgba(27, 61, 47, 0.29));
+  border-color: rgba(144, 196, 162, 0.34);
+  box-shadow:
+    0 3px 6px -3px rgba(3, 10, 16, 0.45),
+    inset 0 1px 0 rgba(198, 225, 206, 0.12);
+  color: #ceebd9;
+}
+[data-theme='dark'] .app-window .reader-toolbar.ui-glass,
+[data-theme='dark'] .app-window .reader-comic-controls {
+  background-color: rgba(24, 42, 55, 0.86);
+}
+[data-theme='dark'] .app-window .reader-reading-center {
+  background:
+    linear-gradient(150deg, rgba(45, 62, 75, 0.28), rgba(10, 19, 28, 0.16)), var(--reading-bg);
+  border-color: rgba(187, 211, 228, 0.18);
+  border-top-color: rgba(228, 241, 250, 0.27);
+  box-shadow:
+    var(--depth-shadow),
+    inset 0 1px 0 rgba(215, 235, 248, 0.12),
+    inset 0 -1px 0 rgba(1, 7, 15, 0.46);
+}
+[data-theme='dark'] .app-window .reader-prose-scroll {
+  color: #dae4ea;
+}
+[data-theme='dark'] .app-window .reader-prose h1 {
+  color: #f1f6f8;
+}
+[data-theme='dark'] .app-window .reader-footer {
+  background: rgba(7, 20, 31, 0.38);
+  border-top-color: rgba(162, 191, 213, 0.14);
+  box-shadow: inset 0 1px 0 rgba(217, 232, 244, 0.045);
+}
+[data-theme='dark'] .app-window .reader-comic-layout-stage img {
+  box-shadow:
+    0 4px 12px rgba(2, 7, 15, 0.4),
+    0 18px 30px -15px rgba(1, 5, 11, 0.65),
+    0 0 0 1px rgba(233, 243, 248, 0.14);
+}
+.app-window .reader-toolbar {
+  flex-shrink: 0;
+}
+.app-window .reader-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.app-window .reader-chapter-pane > .ui-empty-state {
+  min-height: 145px;
+  padding: 12px 4px;
+}
+.app-window .reader-chapter-pane .ui-empty-state small {
+  font-size: 10px;
+}
+.app-window .reader-prose .ui-empty-state {
+  height: 350px;
+  font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+}
+.app-window .reader-type-setting select {
+  width: 100%;
+  margin-top: 10px;
+}
+.app-window .reader-comic-layout-stage {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+.app-window .reader-comic-layout-stage > .ui-empty-state {
+  height: 350px;
+}
+.app-window .reader-comic-controls {
+  flex-shrink: 0;
+}
+.app-window .reader-footer .ui-grow {
+  text-align: center;
+}
+.reader-session {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.reader-layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  gap: 12px;
+  padding: 8px 0;
+}
+.reader-layout .reader-chapter-pane {
+  width: 180px;
+  flex: none;
+  overflow: auto;
+}
+.reader-layout .reader-type-pane {
+  width: 170px;
+  flex: none;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.reader-stage {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+  border-radius: 12px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.78);
+  color: #29372e;
+  overflow-anchor: none;
+}
+.reader-theme-dark .reader-stage {
+  background: rgba(23, 30, 26, 0.92);
+  color: #dce7df;
+}
+.reader-local-prose {
+  margin: 0 auto;
+  overflow-wrap: anywhere;
+}
+.reader-local-prose p {
+  margin: 0 0 1.2em;
+  white-space: pre-wrap;
+  text-indent: 2em;
+}
+.reader-local-prose h2 {
+  font-size: 1.2em;
+  margin: 0 0 1.6em;
+}
+.reader-stage.reader-paged {
+  overflow: hidden;
+}
+.reader-local-footer {
+  flex: none;
+  gap: 8px;
+  padding: 8px;
+}
+.reader-local-footer .ui-grow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+.reader-comic-pages {
+  margin: auto;
+  max-width: 1600px;
+}
+.reader-comic-pages > div {
+  margin-bottom: 16px;
+  text-align: center;
+}
+.reader-comic-options {
+  justify-content: center;
+  flex: none;
+  padding: 6px;
+}
+.reader-comic-options input[type='range'] {
+  max-width: 150px;
+}
+.reader-bookmark {
+  display: flex;
+  gap: 4px;
+  margin: 8px 0;
+}
+.reader-bookmark > button:first-child {
+  flex: 1;
+  text-align: left;
+}
+.reader-inline-link {
+  display: inline;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--accent);
+  text-decoration: underline;
+  font: inherit;
+  cursor: pointer;
+}
+.reader-subchapter {
+  padding-left: 20px;
+  font-size: 11px;
+}
+.reader-comic-pages.reader-single > div {
+  margin-bottom: 0;
+}

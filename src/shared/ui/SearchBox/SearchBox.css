@@ -1,0 +1,61 @@
+.ui-search-box {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 180px;
+  max-width: 310px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 12px;
+  box-shadow: inset 0 1px 1px #fff6;
+}
+.ui-search-box input {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  width: 100%;
+  min-width: 0;
+}
+.ui-search-box input::placeholder {
+  color: var(--muted);
+}
+.ui-search-box svg {
+  width: 18px;
+  height: 18px;
+  color: var(--muted);
+}
+.ui-search-box button {
+  display: flex;
+}
+.app-window .ui-search-box {
+  min-width: 140px;
+  max-width: 230px;
+  padding: 5px 8px;
+  border-radius: 7px;
+  gap: 6px;
+}
+.app-window .ui-search-box input {
+  font-size: 12px;
+}
+.app-window .ui-search-box svg {
+  width: 15px;
+  height: 15px;
+}
+[data-theme='dark'] .app-window .ui-search-box {
+  background: var(--depth-well);
+  border-color: rgba(162, 193, 215, 0.2);
+  box-shadow:
+    inset 0 1px 3px rgba(1, 7, 15, 0.4),
+    0 1px 0 rgba(211, 232, 245, 0.055);
+  color: #dce9ef;
+}
+[data-theme='dark'] .app-window .ui-search-box input::placeholder {
+  color: #94aabc;
+}
+[data-theme='dark'] .app-window .ui-search-box:focus-within {
+  border-color: rgba(139, 199, 171, 0.64);
+  box-shadow:
+    inset 0 1px 3px rgba(1, 7, 15, 0.32),
+    0 0 0 2px rgba(114, 174, 145, 0.11);
+}

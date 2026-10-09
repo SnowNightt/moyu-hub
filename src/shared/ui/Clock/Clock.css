@@ -1,0 +1,19 @@
+.ui-clock {
+  font-size: 15px;
+  white-space: nowrap;
+}
+.ui-clock strong {
+  font-size: 31px;
+  font-weight: 450;
+  letter-spacing: 1px;
+  margin-left: 12px;
+}
+.app-window .ui-clock {
+  display: block;
+  font-size: 10px;
+}
+.app-window .ui-clock strong {
+  font-size: 18px;
+  margin-left: 8px;
+  letter-spacing: 0.2px;
+}

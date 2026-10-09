@@ -1,0 +1,181 @@
+.music-round-play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 47px;
+  height: 47px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  border: 1px solid #fffc;
+  box-shadow:
+    inset 0 1px 4px #fff9,
+    0 2px 10px #406a5730;
+  flex-shrink: 0;
+}
+.music-round-play svg {
+  width: 24px;
+  height: 24px;
+}
+.music-timeline {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  flex: 1;
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.music-timeline input {
+  width: 100%;
+  flex: 1;
+  min-width: 24px;
+}
+.music-volume {
+  width: 75px;
+}
+.music-player {
+  grid-column: 1/-1;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 10px 26px;
+  border-radius: 14px 14px 0 0;
+  background: var(--panel);
+  border-top: 1px solid var(--line);
+  box-shadow: inset 0 1px 3px #fff;
+  backdrop-filter: blur(var(--blur));
+  z-index: 2;
+  min-width: 0;
+}
+.music-player .ui-cover {
+  width: 52px;
+  height: 52px;
+}
+.music-player .music-song-meta {
+  width: 260px;
+  min-width: 130px;
+}
+.music-player .music-song-meta strong {
+  font-size: 16px;
+}
+.music-player-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.music-player .music-timeline {
+  max-width: 530px;
+}
+.music-player .music-end-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+.music-prototype-note {
+  font-size: 9px;
+  color: var(--muted);
+  text-align: right;
+  margin-top: 2px;
+}
+.app-window .music-player {
+  padding: 9px 14px;
+  gap: 10px;
+  border-radius: 11px 11px 0 0;
+}
+.app-window .music-player .ui-cover {
+  width: 39px;
+  height: 39px;
+}
+.app-window .music-player .music-song-meta {
+  width: 128px;
+  min-width: 90px;
+}
+.app-window .music-player .music-song-meta strong {
+  font-size: 13px;
+}
+.app-window .music-player .music-song-meta small {
+  font-size: 10px;
+}
+.app-window .music-player-controls {
+  gap: 6px;
+}
+.app-window .music-player-controls .music-round-play {
+  width: 34px;
+  height: 34px;
+}
+.app-window .music-player-controls .music-round-play svg {
+  width: 19px;
+  height: 19px;
+}
+.app-window .music-player .music-timeline {
+  display: flex;
+  max-width: none;
+  gap: 7px;
+  font-size: 10px;
+}
+.app-window .music-player .music-volume-icon {
+  display: inline-flex;
+  width: 26px;
+}
+.app-window .music-player .music-volume {
+  display: block;
+  width: 55px;
+}
+.app-window .music-player .music-end-controls {
+  display: flex;
+  gap: 3px;
+  margin-left: 4px;
+}
+.app-window .music-player .music-end-controls .music-prototype-note {
+  display: block;
+  font-size: 8px;
+}
+.app-window .music-round-play {
+  width: 34px;
+  height: 34px;
+}
+[data-theme='dark'] .app-window .music-round-play {
+  background: linear-gradient(145deg, #719f88, #3e705b);
+  border-color: rgba(197, 231, 212, 0.8);
+  box-shadow:
+    0 3px 7px rgba(3, 14, 18, 0.42),
+    0 0 0 3px rgba(140, 193, 162, 0.055),
+    inset 0 1px 2px rgba(230, 250, 239, 0.34);
+  color: #f6fcf8;
+}
+[data-theme='dark'] .app-window .music-round-play {
+  transition: transform 180ms cubic-bezier(0.2, 0.75, 0.3, 1);
+}
+[data-theme='dark'] .app-window .music-round-play:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 2px 4px rgba(3, 13, 17, 0.24),
+    0 1px 0 rgba(205, 234, 219, 0.1);
+}
+[data-theme='dark'] .app-window .music-player {
+  background: linear-gradient(180deg, rgba(56, 80, 98, 0.82), rgba(19, 35, 49, 0.94));
+  border-top-color: rgba(221, 239, 250, 0.34);
+  box-shadow:
+    0 -2px 5px rgba(2, 9, 17, 0.24),
+    0 -10px 20px -9px rgba(2, 8, 18, 0.46),
+    inset 0 1px 0 rgba(213, 234, 245, 0.13),
+    inset 0 -1px 0 rgba(1, 7, 13, 0.38);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-theme='dark'] .app-window .music-round-play {
+    transition: none;
+  }
+}
+.app-window .music-player .music-song-meta small {
+  display: block;
+}
+.app-window .music-player .music-timeline {
+  flex: 1;
+}
+.app-window .music-round-play:disabled {
+  opacity: 0.45;
+}

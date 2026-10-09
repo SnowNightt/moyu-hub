@@ -12,7 +12,7 @@ export function Switch({
   return (
     <input
       type="checkbox"
-      className="switch"
+      className="ui-switch"
       role="switch"
       checked={checked}
       disabled={disabled}

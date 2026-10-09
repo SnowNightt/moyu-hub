@@ -76,7 +76,7 @@ export function SteamPage() {
     <>
       <PageHeader
         title="Steam"
-        subtitle={<span className="badge">中国区 · 简体中文</span>}
+        subtitle={<span className="ui-badge">中国区 · 简体中文</span>}
         right={
           <SearchBox
             placeholder="游戏名称"
@@ -86,7 +86,7 @@ export function SteamPage() {
           />
         }
       />
-      <div className="between">
+      <div className="ui-between">
         <Tabs
           items={tabs.filter((item) => item.value !== 'search' || !!query)}
           value={tab}
@@ -106,13 +106,13 @@ export function SteamPage() {
                   <>
                     <div>
                       {game.cover ? (
-                        <SteamImage className="cover" src={game.cover} alt={game.title} />
+                        <SteamImage className="ui-cover" src={game.cover} alt={game.title} />
                       ) : (
-                        <div className="media-well">
+                        <div className="ui-media-well">
                           <Gamepad2 />
                         </div>
                       )}
-                      <div className="dots">
+                      <div className="steam-dots">
                         <button
                           aria-label="上一款焦点游戏"
                           onClick={() =>
@@ -130,7 +130,7 @@ export function SteamPage() {
                             key={g.id}
                             onClick={() => setFocus(i)}
                             className={
-                              i === focus % (result.data.featured.length || 1) ? 'active' : ''
+                              i === focus % (result.data.featured.length || 1) ? 'ui-active' : ''
                             }
                             aria-label={`焦点游戏${i + 1}`}
                           />
@@ -145,8 +145,8 @@ export function SteamPage() {
                         </button>
                       </div>
                     </div>
-                    <div className="feature-copy">
-                      <span className="badge">新品精选</span>
+                    <div className="steam-feature-copy">
+                      <span className="ui-badge">新品精选</span>
                       <h2>{game.title}</h2>
                       <GamePrice price={game.price} />
                       <Button variant="primary" onClick={() => navigation.open(game.id)}>
@@ -177,7 +177,7 @@ export function SteamPage() {
               <ResourceView state={featured.state} label="Steam" retry={featured.retry}>
                 {(result) =>
                   result.data[kind].length ? (
-                    <div className="game-grid">
+                    <div className="steam-game-grid">
                       {result.data[kind].map((game) => (
                         <GameCard key={game.id} game={game} />
                       ))}
@@ -193,11 +193,11 @@ export function SteamPage() {
       ) : (
         <Panel>
           {(tab === 'genres' || tab === 'deals') && (
-            <div className="filter-bar">
+            <div className="ui-filter-bar">
               {(tab === 'deals' ? ['all', ...gameGenres] : gameGenres).map((name) => (
                 <button
                   key={name}
-                  className={name === (tab === 'deals' ? dealsGenre : genre) ? 'active' : ''}
+                  className={name === (tab === 'deals' ? dealsGenre : genre) ? 'ui-active' : ''}
                   aria-pressed={name === (tab === 'deals' ? dealsGenre : genre)}
                   onClick={() => setParams({ tab, genre: name, page: '1' })}
                 >
@@ -206,7 +206,7 @@ export function SteamPage() {
               ))}
             </div>
           )}
-          <div className="between">
+          <div className="ui-between">
             <h2>{tab === 'deals' ? '限时特惠' : tab === 'genres' ? `${genre}游戏` : '搜索结果'}</h2>
           </div>
           {tab === 'search' && !query ? (
@@ -216,11 +216,11 @@ export function SteamPage() {
               {(result) => (
                 <>
                   <SteamDataNotice result={result} />
-                  <p className="small muted">
+                  <p className="ui-small ui-muted">
                     来源匹配 {result.data.total} 项，已过滤非单个游戏条目
                   </p>
                   {result.data.items.length ? (
-                    <div className={tab === 'search' ? 'steam-search-list' : 'game-grid'}>
+                    <div className={tab === 'search' ? 'steam-search-list' : 'steam-game-grid'}>
                       {result.data.items.map((game) =>
                         tab === 'search' ? (
                           <SteamSearchRow key={game.id} game={game} />
@@ -254,7 +254,7 @@ export function SteamPage() {
           />
         </Panel>
       )}
-      <div className="fine-print">中国区价格，最终购买价格以 Steam 商店为准。</div>
+      <div className="steam-fine-print">中国区价格，最终购买价格以 Steam 商店为准。</div>
     </>
   );
 }

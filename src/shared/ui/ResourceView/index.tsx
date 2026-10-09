@@ -23,17 +23,17 @@ export function ResourceView<T>({
     );
   if (state.status === 'loading')
     return (
-      <div className="resource-loading" role="status">
-        <LoaderCircle className="spin" />
+      <div className="ui-resource-loading" role="status">
+        <LoaderCircle className="ui-spin" />
         正在加载…
-        <div className="skeleton" />
-        <div className="skeleton" />
-        <div className="skeleton" />
+        <div className="ui-skeleton" />
+        <div className="ui-skeleton" />
+        <div className="ui-skeleton" />
       </div>
     );
   if (state.status === 'error')
     return (
-      <div className="resource-error" role="alert">
+      <div className="ui-resource-error" role="alert">
         <p>暂时无法获取内容</p>
         <small>{state.message}</small>
         {retry && <Button onClick={retry}>重试</Button>}

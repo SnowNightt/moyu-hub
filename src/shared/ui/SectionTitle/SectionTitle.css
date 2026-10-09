@@ -1,0 +1,37 @@
+.ui-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.ui-section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ui-section-title > svg {
+  width: 29px;
+  height: 29px;
+}
+.ui-module-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.app-window .ui-panel-head {
+  margin-bottom: 8px;
+  gap: 8px;
+}
+.app-window .ui-section-title {
+  gap: 8px;
+}
+.app-window .ui-section-title > svg {
+  width: 23px;
+  height: 23px;
+}
+.app-window .ui-module-logo {
+  width: 26px;
+  height: 26px;
+}

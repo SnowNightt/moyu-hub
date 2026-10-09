@@ -61,7 +61,7 @@ export function ReaderImage({
       {url ? (
         <img src={url} alt={alt} />
       ) : (
-        <span className="muted small">{error || (visible ? '加载图片…' : alt)}</span>
+        <span className="ui-muted ui-small">{error || (visible ? '加载图片…' : alt)}</span>
       )}
     </div>
   );

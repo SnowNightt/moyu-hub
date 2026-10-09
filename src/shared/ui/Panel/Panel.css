@@ -1,0 +1,42 @@
+.ui-glass {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  backdrop-filter: blur(calc(var(--blur) * 0.6)) saturate(115%);
+  box-shadow:
+    inset 0 1px 2px #ffffffe0,
+    inset 0 -1px 2px #ffffff30,
+    0 6px 22px #273f5010;
+}
+.ui-panel {
+  padding: 20px;
+}
+[data-theme='dark'] .ui-glass {
+  box-shadow:
+    inset 0 1px 2px #ffffff28,
+    0 6px 22px #07131a20;
+}
+.app-window .ui-glass {
+  border-radius: 10px;
+}
+.app-window .ui-panel {
+  padding: 10px;
+}
+[data-theme='dark'] .app-window .ui-glass {
+  background-color: var(--panel);
+  background-image: linear-gradient(
+    142deg,
+    rgba(149, 182, 201, 0.14),
+    rgba(48, 72, 91, 0.035) 48%,
+    rgba(2, 11, 20, 0.16)
+  );
+  border: 1px solid rgba(180, 208, 224, 0.17);
+  border-top-color: rgba(220, 237, 247, 0.32);
+  border-left-color: rgba(201, 223, 237, 0.22);
+  border-bottom-color: rgba(126, 158, 181, 0.1);
+  box-shadow:
+    var(--depth-shadow),
+    inset 0 1px 0 rgba(218, 237, 247, 0.17),
+    inset 0 -1px 0 rgba(2, 8, 16, 0.44),
+    inset 1px 0 0 rgba(214, 234, 244, 0.045);
+}

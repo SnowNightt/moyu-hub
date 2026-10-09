@@ -424,10 +424,10 @@ function ReadingSession({ itemId, comic }: { itemId?: string; comic: boolean }) 
       : block.text;
   }
   return (
-    <div className={`local-reader reader-theme-${theme}`}>
+    <div className={`reader-session reader-theme-${theme}`}>
       <div className="reader-toolbar">
         <Link
-          className="secondary"
+          className="ui-button-secondary"
           to="/reader"
           onClick={() => {
             void flush().catch(() => {});
@@ -437,7 +437,7 @@ function ReadingSession({ itemId, comic }: { itemId?: string; comic: boolean }) 
           返回书架
         </Link>
         <strong className="reader-title">{item?.title ?? '尚未选择作品'}</strong>
-        <div className="tools">
+        <div className="reader-tools">
           <Button
             variant="text"
             onClick={() => {
@@ -492,10 +492,10 @@ function ReadingSession({ itemId, comic }: { itemId?: string; comic: boolean }) 
         <EmptyState title="尚未选择作品" description="请从书架导入并打开作品。" icon={BookOpen} />
       ) : (
         <>
-          <div className="local-reading-layout">
+          <div className="reader-layout">
             {directory && (
-              <aside className="glass chapter-pane">
-                <div className="row">
+              <aside className="ui-glass reader-chapter-pane">
+                <div className="ui-row">
                   <Button variant="text" onClick={() => setShowBookmarks(false)}>
                     目录
                   </Button>
@@ -533,13 +533,13 @@ function ReadingSession({ itemId, comic }: { itemId?: string; comic: boolean }) 
                       </div>
                     ))
                   ) : (
-                    <p className="muted">暂无书签</p>
+                    <p className="ui-muted">暂无书签</p>
                   )
                 ) : (
                   chapters.map((c, i) => (
                     <div key={c.id}>
                       <button
-                        className={`chapter-row ${i === chapterIndex ? 'active' : ''}`}
+                        className={`reader-chapter-row ${i === chapterIndex ? 'ui-active' : ''}`}
                         onClick={() => changeChapter(i)}
                       >
                         <span>{c.title}</span>
@@ -548,7 +548,7 @@ function ReadingSession({ itemId, comic }: { itemId?: string; comic: boolean }) 
                         ?.filter((n) => n.href.includes('#'))
                         .map((n, index) => (
                           <button
-                            className="chapter-row reader-subchapter"
+                            className="reader-chapter-row reader-subchapter"
                             key={index}
                             onClick={() => void followLink(n.href)}
                           >
@@ -562,7 +562,7 @@ function ReadingSession({ itemId, comic }: { itemId?: string; comic: boolean }) 
             )}
             <div
               ref={stage}
-              className={`local-reading-stage ${comic ? 'local-comic-stage' : 'local-prose-stage'} ${!comic && settings.readingMode === 'page' ? 'reader-paged' : ''}`}
+              className={`reader-stage ${comic ? 'reader-comic-stage' : 'reader-prose-stage'} ${!comic && settings.readingMode === 'page' ? 'reader-paged' : ''}`}
               onScroll={() => record()}
               onKeyDown={(e) => {
                 if (e.key === 'ArrowRight' || e.key === 'PageDown') {
@@ -578,10 +578,10 @@ function ReadingSession({ itemId, comic }: { itemId?: string; comic: boolean }) 
               aria-label="阅读正文"
             >
               {loading ? (
-                <p className="muted">加载内容…</p>
+                <p className="ui-muted">加载内容…</p>
               ) : comic ? (
                 <div
-                  className={`local-comic-pages ${mode}`}
+                  className={`reader-comic-pages reader-${mode}`}
                   style={{ width: mode === 'single' ? fittedWidth : `${zoom}%` }}
                 >
                   {(chapter?.pages ?? []).map((resourceId, index) => {
@@ -603,7 +603,7 @@ function ReadingSession({ itemId, comic }: { itemId?: string; comic: boolean }) 
                             style={{ aspectRatio: `${r?.width ?? 800}/${r?.height ?? 1200}` }}
                           />
                         )}
-                        <small className="muted">
+                        <small className="ui-muted">
                           {index + 1} / {chapter?.pages?.length}
                         </small>
                       </div>
@@ -612,7 +612,7 @@ function ReadingSession({ itemId, comic }: { itemId?: string; comic: boolean }) 
                 </div>
               ) : (
                 <article
-                  className="local-prose"
+                  className="reader-local-prose"
                   style={{
                     fontFamily: settings.readingFont,
                     fontSize: settings.readingSize,
@@ -645,12 +645,12 @@ function ReadingSession({ itemId, comic }: { itemId?: string; comic: boolean }) 
               )}
             </div>
             {typeset && !comic && (
-              <aside className="glass type-pane">
+              <aside className="ui-glass reader-type-pane">
                 <h3>排版设置</h3>
                 <label>
                   字体
                   <select
-                    className="select"
+                    className="ui-select"
                     value={settings.readingFont}
                     onChange={(e) => {
                       keepAnchor();
@@ -697,7 +697,7 @@ function ReadingSession({ itemId, comic }: { itemId?: string; comic: boolean }) 
                 <label>
                   阅读模式
                   <select
-                    className="select"
+                    className="ui-select"
                     value={settings.readingMode}
                     onChange={(e) => update('readingMode', e.target.value as 'scroll' | 'page')}
                   >
@@ -708,7 +708,7 @@ function ReadingSession({ itemId, comic }: { itemId?: string; comic: boolean }) 
               </aside>
             )}
           </div>
-          <footer className="reader-footer local-reader-footer">
+          <footer className="reader-footer reader-local-footer">
             <Button
               disabled={!ready || loading || chapterIndex === 0}
               onClick={() => changeChapter(chapterIndex - 1)}
@@ -719,7 +719,7 @@ function ReadingSession({ itemId, comic }: { itemId?: string; comic: boolean }) 
               <ChevronLeft />
               上一页
             </Button>
-            <span className="grow small muted">
+            <span className="ui-grow ui-small ui-muted">
               {chapter?.title ?? '加载中'} · {percent}%
               {comic
                 ? ` · 第 ${(mode === 'continuous' ? (latest.current?.page ?? page) : page) + 1} 页`
@@ -737,9 +737,9 @@ function ReadingSession({ itemId, comic }: { itemId?: string; comic: boolean }) 
             </Button>
           </footer>
           {comic && (
-            <div className="row local-comic-options">
+            <div className="ui-row reader-comic-options">
               <select
-                className="select"
+                className="ui-select"
                 aria-label="漫画模式"
                 value={mode}
                 onChange={(e) => {

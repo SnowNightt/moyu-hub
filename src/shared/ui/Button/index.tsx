@@ -10,8 +10,11 @@ export function Button({
   type = 'button',
   ...props
 }: ButtonProps) {
-  const style = { primary: 'primary', secondary: 'secondary', text: 'text-btn', icon: 'icon-btn' }[
-    variant
-  ];
+  const style = {
+    primary: 'ui-button-primary',
+    secondary: 'ui-button-secondary',
+    text: 'ui-button-text',
+    icon: 'ui-button-icon',
+  }[variant];
   return <button type={type} className={`${style} ${className}`} {...props} />;
 }

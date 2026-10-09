@@ -23,11 +23,11 @@ afterEach(async () => {
 
 it('shows the local date and 24-hour time and updates across a minute boundary', async () => {
   await act(async () => root.render(h(Clock)));
-  expect(host.querySelector('.clock span')?.textContent).toContain('10/09');
-  expect(host.querySelector('.clock span')?.textContent).toContain('周五');
-  expect(host.querySelector('.clock strong')?.textContent).toBe('12:34');
+  expect(host.querySelector('.ui-clock span')?.textContent).toContain('10/09');
+  expect(host.querySelector('.ui-clock span')?.textContent).toContain('周五');
+  expect(host.querySelector('.ui-clock strong')?.textContent).toBe('12:34');
   await act(async () => vi.advanceTimersByTime(1000));
-  expect(host.querySelector('.clock strong')?.textContent).toBe('12:35');
+  expect(host.querySelector('.ui-clock strong')?.textContent).toBe('12:35');
 });
 
 it('keeps one timer under StrictMode and releases it when the page removes the clock', async () => {

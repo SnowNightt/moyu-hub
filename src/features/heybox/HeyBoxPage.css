@@ -1,0 +1,173 @@
+.heybox-layout {
+  display: grid;
+  grid-template-columns: 1.24fr 1fr;
+  gap: 12px;
+}
+.heybox-post-feed {
+  padding: 16px;
+  align-self: start;
+}
+.heybox-post-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule);
+  width: 100%;
+  text-align: left;
+}
+.heybox-post-row .ui-cover {
+  width: 40%;
+  aspect-ratio: 1.25;
+  object-fit: cover;
+}
+.heybox-post-row:last-child {
+  border: 0;
+}
+.heybox-post-row.ui-active {
+  background: #4b82631a;
+  border-radius: 9px;
+  box-shadow: inset 0 0 0 1px #5b9a8280;
+  padding: 12px;
+  margin-top: 3px;
+}
+.heybox-post-row h3 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+.heybox-post-row .heybox-excerpt {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 15px 0;
+}
+.heybox-post-detail {
+  padding: 20px;
+}
+.heybox-post-detail .ui-cover {
+  width: 100%;
+  aspect-ratio: 1.78;
+  margin: 20px 0;
+}
+.heybox-post-detail p {
+  color: var(--muted);
+  margin: 12px 0;
+  line-height: 1.9;
+}
+.heybox-comment {
+  padding: 15px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 14px;
+}
+.heybox-comment small {
+  margin-left: 12px;
+}
+.heybox-comments-head {
+  margin: 24px 0 7px;
+  font-size: 19px;
+}
+.app-window .heybox-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 10px;
+  align-items: start;
+}
+.app-window .heybox-post-feed {
+  padding: 10px;
+}
+.app-window .heybox-post-row {
+  gap: 12px;
+  padding: 8px 0;
+}
+.app-window .heybox-post-row.ui-active {
+  padding: 8px;
+}
+.app-window .heybox-post-row .ui-cover {
+  width: 110px;
+  height: 90px;
+  aspect-ratio: auto;
+}
+.app-window .heybox-post-row h3 {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 7px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.app-window .heybox-post-row .ui-small {
+  font-size: 10px;
+}
+.app-window .heybox-post-row .heybox-excerpt {
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 7px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.app-window .heybox-post-detail {
+  padding: 12px;
+  max-height: 448px;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+.app-window .heybox-post-detail h2 {
+  font-size: 16px;
+}
+.app-window .heybox-post-detail .ui-cover {
+  margin: 12px 0;
+}
+.app-window .heybox-post-detail p {
+  font-size: 12px;
+  line-height: 1.75;
+  margin: 8px 0;
+}
+.app-window .heybox-comments-head {
+  font-size: 14px;
+  margin: 17px 0 5px;
+}
+.app-window .heybox-comment {
+  padding: 10px 0;
+  font-size: 11px;
+}
+[data-theme='dark'] .app-window .heybox-layout {
+  gap: 12px;
+}
+[data-theme='dark'] .app-window .heybox-post-row.ui-active {
+  background: linear-gradient(130deg, rgba(60, 101, 78, 0.47), rgba(27, 61, 47, 0.29));
+  border-color: rgba(144, 196, 162, 0.34);
+  box-shadow:
+    0 3px 6px -3px rgba(3, 10, 16, 0.45),
+    inset 0 1px 0 rgba(198, 225, 206, 0.12);
+  color: #ceebd9;
+}
+.app-window .heybox-post-feed,
+.app-window .heybox-post-detail {
+  height: 440px;
+  overflow: auto;
+}
+.app-window .heybox-post-feed > .ui-empty-state {
+  min-height: 330px;
+}
+.app-window .heybox-post-detail > .ui-empty-state {
+  min-height: 110px;
+}
+.app-window .heybox-post-detail > .ui-empty-state.ui-compact {
+  min-height: 50px;
+}
+.app-window .heybox-post-detail .ui-media-well {
+  height: 120px;
+}
+.app-window .heybox-post-image {
+  padding: 0;
+  width: 100%;
+}
+.heybox-lightbox-image {
+  display: block;
+  max-width: 100%;
+  max-height: 450px;
+  margin: auto;
+  object-fit: contain;
+}

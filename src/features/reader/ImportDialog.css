@@ -1,0 +1,53 @@
+.reader-dropzone {
+  border: 1px dashed #80968a;
+  border-radius: 12px;
+  text-align: center;
+  padding: 28px 15px;
+  background: var(--surface);
+  margin: 15px 0;
+}
+.reader-dropzone > svg {
+  width: 38px;
+  height: 38px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.reader-dropzone.reader-dragging {
+  background: #4e8b6526;
+}
+.reader-dropzone .ui-row {
+  justify-content: center;
+  margin-top: 22px;
+}
+.reader-import-mode {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+.reader-import-list {
+  max-height: 230px;
+  overflow: auto;
+  margin: 12px 0;
+}
+.reader-import-entry {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.reader-import-entry > small {
+  flex-basis: 100%;
+  overflow-wrap: anywhere;
+}
+.reader-preview {
+  max-height: 130px;
+  overflow: auto;
+  white-space: pre-wrap;
+  font-size: 12px;
+  padding: 10px;
+  background: rgba(128, 128, 128, 0.08);
+  border-radius: 8px;
+}

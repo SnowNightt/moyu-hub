@@ -7,7 +7,7 @@ export function Clock() {
     return () => clearInterval(timer);
   }, []);
   return (
-    <div className="clock">
+    <div className="ui-clock">
       <span>
         {new Intl.DateTimeFormat('zh-CN', {
           month: '2-digit',

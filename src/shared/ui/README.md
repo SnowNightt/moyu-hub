@@ -7,7 +7,7 @@ Clock 供首页和小黑盒的页面标题区复用，不从任一页面模块�
 | 组件         | 用途与关键属性                                         | 默认与状态                                                          |
 | ------------ | ------------------------------------------------------ | ------------------------------------------------------------------- |
 | Button       | 原生按钮属性；`variant` 为 primary/secondary/text/icon | secondary、type=button；hover/focus/active/disabled                 |
-| Panel        | 玻璃内容区域；原生 section 属性、className             | glass + panel                                                       |
+| Panel        | 玻璃内容区域；原生 section 属性、className             | ui-glass + ui-panel                                                 |
 | SectionTitle | title、icon/brand、action                              | 区域标题和可选操作                                                  |
 | EmptyState   | title、description、icon、compact                      | 不含假数据的空或未接入说明                                          |
 | ResourceView | state、children(data)、retry、label、empty             | 未接入/加载/错误/成功四态；成功数据为空由 children 处理             |
@@ -36,6 +36,8 @@ import { Button, Dialog, Panel, ResourceView, Tabs } from '../../shared/ui';
 </Dialog>
 ```
 
-样式来自公共主题变量和当前原型应用样式。新增业务行为应通过回调接入，不能把 Tauri 或特定模块的请求层移入公共组件。
+样式由组件目录内的普通 CSS 维护，例如 [Button.css](Button/Button.css)、[Panel.css](Panel/Panel.css) 与 [Clock.css](Clock/Clock.css)，由 [应用样式入口](../../app/styles.css) 统一加载。组件与共享工具类使用 `ui-` 前缀，主题变量位于 `shared/styles/tokens.css`。`className` 接收调用方带页面/业务前缀的布局类；组件内部外观留在组件 CSS，页面覆盖留在对应页面 CSS。Button 的 variant 值仍是 primary/secondary/text/icon，实际渲染为 `ui-button-*`；Link 可复用这些类。
+
+新增业务行为应通过回调接入，不能把 Tauri 或特定模块的请求层移入公共组件。
 
 时钟用法：`<PageHeader title="首页" right={<Clock />} />`，其中 Clock 和 PageHeader 均从公共出口导入。

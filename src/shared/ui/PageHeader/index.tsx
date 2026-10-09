@@ -10,8 +10,8 @@ export function PageHeader({
   right?: ReactNode;
 }) {
   return (
-    <header className="page-head">
-      <div className="heading">
+    <header className="ui-page-header">
+      <div className="ui-page-heading">
         <h1>{title}</h1>
         {subtitle && <span>{subtitle}</span>}
       </div>

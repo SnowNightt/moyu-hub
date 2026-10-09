@@ -9,7 +9,7 @@
 | `src/app/`                                                | 应用布局、Hash Router、服务组装、全局异常与窗口状态 |
 | `src/features/{home,music,steam,heybox,reader,settings}/` | 模块页面、业务组件、provider、模型与模块逻辑        |
 | `src/shared/ui/`                                          | 通用展示组件，按组件目录组织，经 `index.ts` 导出    |
-| `src/shared/styles/`                                      | 设计变量、原型参考样式与桌面壳样式                  |
+| `src/shared/styles/`                                      | 设计变量、基础规则、共享工具类与桌面环境材质样式    |
 | `src/shared/lib/`                                         | 资源状态、加载器和通用纯逻辑                        |
 | `src/platform/`                                           | 运行环境、HTTP、SQLite、缓存、设置与原生命令适配    |
 | `src-tauri/src/`                                          | Tauri 注册、Rust 阅读解析及 Windows 窗口实现        |
@@ -32,9 +32,19 @@
 
 - React 组件用 PascalCase `.tsx`，工具、provider、store 和模型沿用 camelCase `.ts`；测试与被测逻辑就近放置为 `.test.ts`。Rust 模块使用 snake_case `.rs`。
 - TypeScript 使用现有 strict 配置，公开契约显式定义，类型导入使用 `import type`；不绕过类型检查解决数据源变化。
-- 遵循 [.prettierrc.json](../.prettierrc.json)：单引号、尾逗号、100 列。CSS Modules 用于局部布局，公共视觉变量沿用 `tokens.css` 等现有样式。
+- 遵循 [.prettierrc.json](../.prettierrc.json)：单引号、尾逗号、100 列。使用普通 `.css` 配合类名前缀，不使用 CSS Modules；公共视觉变量沿用 `tokens.css`。
 - 视觉调整依据已确认原型的应用部分及用户后续要求，保留真实桌面玻璃与清晰前景；不将原型背景包装成桌面材质。
 - 稳定通用组件通过 `shared/ui/index.ts` 导出并更新 [UI 说明](../src/shared/ui/README.md)。不提前拆出未被其他项目使用的 UI 包。
+
+### 样式归属
+
+页面 CSS 与对应 `Page.tsx` 同目录，例如 [HomePage.css](../src/features/home/HomePage.css)；独立业务组件使用同名 CSS，例如 [Player.css](../src/features/music/Player.css)、[GameCard.css](../src/features/steam/GameCard.css)。共享 UI 样式放各组件目录，例如 [Button.css](../src/shared/ui/Button/Button.css)。页面负责布局及其对共享组件的覆盖，组件负责自身基础视觉与状态。
+
+业务类名使用 `home-`、`music-`、`steam-`、`heybox-`、`reader-`、`settings-` 前缀；应用壳使用 `app-`，共享组件和工具类使用 `ui-`。共享状态使用 `ui-active`、`ui-compact` 等有前缀的类，并在所属组件选择器内限定，不能单独声明全局 `.ui-active` 外观。不同用途的类名保持唯一，不因添加前缀合并不同选择器。动态类名同样带前缀，例如 `reader-${mode}`；业务状态值保持原有定义。
+
+全局样式仅维护 [tokens.css](../src/shared/styles/tokens.css) 的主题变量、[base.css](../src/shared/styles/base.css) 的基础规则、[utilities.css](../src/shared/styles/utilities.css) 的共享排版/表单/图片类和 [shell.css](../src/shared/styles/shell.css) 的桌面环境材质规则。页面样式不使用裸标签全局选择器；标签规则需由所属前缀类限定。
+
+[styles.css](../src/app/styles.css) 是应用样式组装入口，由 `main.tsx` 导入，统一加载全局、共享 UI、应用壳、业务组件与页面样式，避免组件导入顺序隐式决定级联。播放器控件与空状态末尾加载的原因在入口中说明。新增样式文件需在入口登记；同一归属中的基础、固定窗口适配及明暗主题覆盖在该文件内维护。普通 CSS 不会因导入位置自动隔离，不能依靠页面切换卸载 CSS。
 
 ## 状态、数据与权限
 

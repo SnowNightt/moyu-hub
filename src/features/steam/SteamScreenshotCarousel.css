@@ -1,0 +1,124 @@
+.steam-carousel {
+  min-width: 0;
+  margin-bottom: 18px;
+}
+.steam-carousel-stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #101820;
+  aspect-ratio: 16 / 9;
+}
+.steam-carousel-stage .steam-carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 0;
+  animation: steam-shot-in 220ms ease-out;
+}
+.steam-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid #ffffff40;
+  border-radius: 8px;
+  background: #101820b3;
+  color: white;
+}
+.steam-carousel-arrow.steam-carousel-previous {
+  left: 10px;
+}
+.steam-carousel-arrow.steam-carousel-next {
+  right: 10px;
+}
+.steam-carousel-arrow:hover {
+  background: #101820e6;
+}
+.steam-carousel-count {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 2px 9px;
+  border-radius: 12px;
+  background: #101820b3;
+  color: white;
+  font-size: 11px;
+}
+.steam-carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.steam-carousel-previews {
+  position: relative;
+  display: flex;
+  flex: 1;
+  gap: 8px;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 4px 2px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted) transparent;
+}
+.steam-carousel-previews button {
+  flex: 0 0 104px;
+  padding: 2px;
+  border: 2px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  scroll-snap-align: center;
+  opacity: 0.65;
+}
+.steam-carousel-previews button:hover,
+.steam-carousel-previews button[aria-pressed='true'] {
+  opacity: 1;
+}
+.steam-carousel-previews button[aria-pressed='true'] {
+  border-color: var(--accent);
+}
+.steam-carousel-previews .ui-cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.steam-carousel-preview-arrow {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 40px;
+  padding: 0;
+  color: var(--ink);
+  background: transparent;
+}
+.steam-carousel-preview-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+.steam-carousel button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+@keyframes steam-shot-in {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .steam-carousel-stage .steam-carousel-image {
+    animation: none;
+  }
+}

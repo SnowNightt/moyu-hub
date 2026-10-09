@@ -1,0 +1,198 @@
+.reader-shelf {
+  padding: 18px;
+}
+.reader-book-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+.reader-book-card {
+  display: flex;
+  gap: 16px;
+  min-width: 0;
+}
+.reader-book-card > .ui-cover {
+  width: 45%;
+  height: 230px;
+  object-fit: fill;
+  box-shadow: 4px 8px 12px #314f4830;
+}
+.reader-book-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  align-items: flex-start;
+}
+.reader-book-info h3 {
+  font-size: 20px;
+}
+.reader-book-info .ui-progress {
+  width: 100%;
+}
+.reader-book-info .reader-book-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+.reader-book-actions .ui-button-primary {
+  font-size: 12px;
+  padding: 5px 12px;
+  min-height: 35px;
+}
+.reader-history-panel {
+  margin-top: 14px;
+  padding: 18px;
+}
+.reader-history {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.reader-history th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+  padding: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+.reader-history td {
+  padding: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+.reader-history .ui-cover {
+  width: 44px;
+  height: 52px;
+}
+.reader-history .ui-button-primary {
+  min-height: 32px;
+  padding: 4px 18px;
+  font-size: 12px;
+}
+.reader-history td:first-child > div {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.reader-history .ui-progress {
+  max-width: 180px;
+}
+.app-window .reader-shelf {
+  padding: 12px;
+}
+.app-window .reader-book-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.app-window .reader-book-card {
+  flex-direction: column;
+  gap: 7px;
+}
+.app-window .reader-book-card > .ui-cover {
+  width: 100%;
+  height: 122px;
+  object-fit: contain;
+  box-shadow: none;
+}
+.app-window .reader-book-info {
+  gap: 4px;
+  align-items: stretch;
+}
+.app-window .reader-book-info h3 {
+  font-size: 14px;
+}
+.app-window .reader-book-info > small {
+  font-size: 10px;
+  line-height: 1.4;
+}
+.app-window .reader-book-info .reader-book-actions {
+  margin-top: 4px;
+  gap: 6px;
+}
+.app-window .reader-book-actions .ui-button-primary {
+  font-size: 10px;
+  padding: 4px 9px;
+  min-height: 26px;
+}
+.app-window .reader-book-actions .ui-button-secondary {
+  padding: 3px 6px !important;
+  min-height: 26px !important;
+}
+.app-window .reader-history-panel {
+  margin-top: 10px;
+  padding: 10px;
+}
+.app-window .reader-history {
+  font-size: 11px;
+}
+.app-window .reader-history th {
+  font-size: 10px;
+  padding: 5px 6px;
+}
+.app-window .reader-history td {
+  padding: 5px 6px;
+}
+.app-window .reader-history .ui-cover {
+  width: 28px;
+  height: 34px;
+}
+.app-window .reader-history td:first-child > div {
+  gap: 9px;
+}
+.app-window .reader-history .ui-button-primary {
+  min-height: 24px;
+  padding: 3px 11px;
+  font-size: 10px;
+}
+.app-window .reader-history .ui-progress {
+  max-width: 100px;
+}
+.app-window .reader-history .ui-button-icon {
+  width: 24px;
+  height: 24px;
+}
+[data-theme='dark'] .app-window .reader-book-card {
+  transition: transform 180ms cubic-bezier(0.2, 0.75, 0.3, 1);
+}
+[data-theme='dark'] .app-window .reader-book-card {
+  padding: 6px;
+  background: rgba(8, 22, 32, 0.43);
+  border-radius: 8px;
+  box-shadow:
+    0 2px 5px rgba(2, 8, 17, 0.22),
+    inset 0 1px 0 rgba(198, 223, 237, 0.12);
+}
+[data-theme='dark'] .app-window .reader-book-card > .ui-cover {
+  height: 116px;
+  filter: drop-shadow(0 3px 4px rgba(1, 7, 14, 0.36));
+  box-shadow: none;
+}
+[data-theme='dark'] .app-window .reader-book-card:hover {
+  transform: translateY(-1px);
+  background: rgba(20, 41, 53, 0.57);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-theme='dark'] .app-window .reader-book-card {
+    transition: none;
+  }
+  [data-theme='dark'] .app-window .reader-book-card:hover {
+    transform: none;
+  }
+}
+.app-window .reader-shelf {
+  min-height: 355px;
+}
+.app-window .reader-shelf > .ui-empty-state {
+  min-height: 244px;
+}
+.app-window .reader-history-panel {
+  min-height: 150px;
+}
+.reader-chapter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}

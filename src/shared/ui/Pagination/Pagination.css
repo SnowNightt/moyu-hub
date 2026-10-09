@@ -1,0 +1,17 @@
+.ui-pagination {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  align-items: center;
+  margin: 20px 0;
+}
+.ui-pagination .ui-button-secondary {
+  font-size: 13px;
+}
+.app-window .ui-pagination {
+  gap: 12px;
+  margin: 14px 0;
+}
+.app-window .ui-pagination .ui-button-secondary {
+  font-size: 11px;
+}

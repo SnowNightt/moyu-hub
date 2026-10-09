@@ -1,0 +1,299 @@
+.home-top {
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
+  gap: 14px;
+  height: 286px;
+}
+.home-mid {
+  display: grid;
+  grid-template-columns: 2.77fr 1fr;
+  gap: 14px;
+  height: 286px;
+  margin-top: 16px;
+}
+.home-music {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.home-music .home-album {
+  position: absolute;
+  right: 22px;
+  top: 22px;
+  width: 170px;
+  height: 153px;
+}
+.home-music .home-song-line {
+  padding-top: 8px;
+  max-width: calc(100% - 180px);
+  font-size: 20px;
+}
+.home-music .home-mini-player {
+  margin-top: auto;
+}
+.home-mini-player {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.home-reading-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 10px 0;
+}
+.home-reading-row .ui-cover {
+  width: 112px;
+  height: 95px;
+}
+.home-reading-row .ui-progress {
+  margin-top: 10px;
+}
+.home-reading-row h3 {
+  display: inline;
+}
+.home-reading-row .ui-badge {
+  margin-left: 7px;
+}
+.home-reading-row .ui-button-primary {
+  padding: 8px 18px;
+  font-size: 13px;
+}
+.home-steam .ui-panel-head {
+  margin-bottom: 10px;
+}
+.home-steam .steam-game-card .steam-art h3 {
+  position: absolute;
+  bottom: 9px;
+  left: 12px;
+  color: white;
+  text-shadow: 0 1px 5px #000;
+  z-index: 2;
+}
+.home-steam .steam-game-card .ui-cover {
+  aspect-ratio: 1.68;
+}
+.home-steam .steam-game-card .steam-art:after {
+  content: '';
+  position: absolute;
+  inset: 65% 0 0;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(transparent, #152423a8);
+}
+.home-heybox-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 16px;
+  text-align: center;
+}
+.home-heybox-empty > svg {
+  width: 78px;
+  height: 78px;
+  opacity: 0.25;
+}
+.home-heybox {
+  display: flex;
+  flex-direction: column;
+}
+.home-heybox .ui-button-primary {
+  width: 100%;
+  margin-top: auto;
+}
+[data-theme='dark'] .home-steam .steam-game-card .steam-art h3 {
+  color: white;
+}
+.home-reading-row .ui-muted.ui-small {
+  font-size: 14px;
+}
+.app-window .home-top {
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
+  gap: 10px;
+  height: 156px;
+}
+.app-window .home-mid {
+  display: grid;
+  grid-template-columns: 2.6fr 1fr;
+  gap: 10px;
+  height: 168px;
+  margin-top: 10px;
+}
+.app-window .home-top > .ui-panel,
+.app-window .home-mid > .ui-panel {
+  min-height: 0;
+}
+.app-window .home-music .home-album {
+  width: 84px;
+  height: 79px;
+  right: 12px;
+  top: 12px;
+}
+.app-window .home-music .home-song-line {
+  font-size: 15px;
+  padding-top: 12px;
+  max-width: calc(100% - 91px);
+}
+.app-window .home-music .home-song-line .ui-small {
+  font-size: 11px;
+}
+.app-window .home-mini-player {
+  gap: 5px;
+}
+.app-window .home-mini-player .ui-button-icon {
+  width: 23px;
+  height: 28px;
+}
+.app-window .home-mini-player .music-round-play {
+  width: 31px;
+  height: 31px;
+}
+.app-window .home-mini-player > .music-volume,
+.app-window .home-mini-player > svg {
+  display: none;
+}
+.app-window .home-mini-player .music-timeline {
+  font-size: 9px;
+  gap: 5px;
+}
+.app-window .home-reading-row {
+  gap: 8px;
+  margin: 3px 0;
+  min-height: 49px;
+}
+.app-window .home-reading-row .ui-cover {
+  width: 38px;
+  height: 46px;
+}
+.app-window .home-reading-row h3 {
+  font-size: 13px;
+}
+.app-window .home-reading-row .ui-badge {
+  display: none;
+}
+.app-window .home-reading-row .ui-muted.ui-small {
+  font-size: 10px;
+  line-height: 1.4;
+  margin-top: 1px !important;
+}
+.app-window .home-reading-row .ui-progress {
+  font-size: 9px;
+  line-height: 1.4;
+  gap: 6px;
+  margin-top: 1px;
+}
+.app-window .home-reading-row .ui-button-primary {
+  font-size: 10px;
+  padding: 4px 8px;
+  min-height: 25px;
+}
+.app-window .home-steam .ui-panel-head {
+  margin-bottom: 7px;
+}
+.app-window .home-steam .steam-game-card .ui-cover {
+  height: 84px;
+  aspect-ratio: auto;
+}
+.app-window .home-steam .steam-game-card .steam-art h3 {
+  font-size: 12px;
+  left: 8px;
+  bottom: 6px;
+  margin: 0;
+}
+.app-window .home-heybox-empty {
+  gap: 8px;
+}
+.app-window .home-heybox-empty > svg {
+  width: 40px;
+  height: 40px;
+}
+.app-window .home-heybox-empty .ui-small {
+  font-size: 10px;
+}
+.app-window .home-heybox .ui-button-primary {
+  font-size: 11px;
+  min-height: 28px;
+  padding: 4px 7px;
+}
+[data-theme='dark'] .app-window .home-top,
+[data-theme='dark'] .app-window .home-mid {
+  gap: 12px;
+}
+[data-theme='dark'] .app-window .home-mid {
+  margin-top: 12px;
+}
+[data-theme='dark'] .app-window .home-steam .steam-game-card .ui-cover {
+  height: 78px;
+  border-radius: 8px 8px 0 0;
+}
+[data-theme='dark'] .app-window .home-steam .steam-game-card .steam-price {
+  margin-top: 0;
+  padding: 4px 7px;
+  min-height: 31px;
+  background: linear-gradient(180deg, rgba(44, 66, 78, 0.56), rgba(14, 30, 41, 0.7));
+  box-shadow: inset 0 1px 0 rgba(169, 202, 218, 0.12);
+}
+[data-theme='dark'] .app-window .home-music .home-album {
+  box-shadow:
+    0 3px 6px rgba(2, 9, 20, 0.42),
+    0 9px 15px -7px rgba(2, 7, 15, 0.54),
+    0 0 0 1px rgba(220, 238, 248, 0.2);
+}
+.app-window .home-top .ui-empty-state {
+  min-height: 110px;
+  padding: 5px;
+}
+.app-window .home-mid .ui-empty-state {
+  min-height: 116px;
+  padding: 5px;
+}
+.app-window .home-mid {
+  height: auto;
+  min-height: 168px;
+  grid-template-columns: minmax(0, 2.6fr) minmax(0, 1fr);
+}
+.app-window .home-steam {
+  min-width: 0;
+}
+.app-window .home-steam .steam-game-card .steam-art h3 {
+  right: 8px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.app-window .home-music .home-album-slot {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 84px;
+  height: 79px;
+}
+.app-window .home-music .home-album-slot .ui-cover {
+  width: 100%;
+  height: 100%;
+}
+.app-window .home-music .home-song-line {
+  max-width: calc(100% - 88px);
+}
+.app-window .home-music .home-song-line strong {
+  font-size: 14px;
+}
+.app-window .home-music .home-song-line .ui-small {
+  display: block;
+  margin-top: 3px;
+}
+.app-window .home-heybox .ui-section-title {
+  gap: 6px;
+}
+.app-window .home-heybox .ui-module-logo {
+  width: 23px;
+}
+.app-window .home-heybox .ui-panel-head {
+  gap: 3px;
+}
+.app-window .home-heybox .ui-badge {
+  padding: 1px 5px;
+}

@@ -30,7 +30,7 @@ export function Dialog({
   return (
     <dialog
       ref={ref}
-      className={`glass modal ${wide ? 'detail-modal' : ''}`}
+      className={`ui-glass ui-dialog ${wide ? 'ui-dialog-wide' : ''}`}
       aria-labelledby={titleId}
       onCancel={(event) => {
         event.preventDefault();
@@ -48,14 +48,14 @@ export function Dialog({
           onClose();
       }}
     >
-      <div className="row modal-head">
+      <div className="ui-row ui-dialog-head">
         <h2 id={titleId}>{title}</h2>
-        <small className="muted dialog-hint">Esc 关闭</small>
+        <small className="ui-muted ui-dialog-hint">Esc 关闭</small>
         <Button variant="icon" onClick={onClose} aria-label={`关闭${title}`} autoFocus>
           <X />
         </Button>
       </div>
-      <div className="modal-content">{children}</div>
+      <div className="ui-dialog-content">{children}</div>
     </dialog>
   );
 }

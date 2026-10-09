@@ -10,7 +10,7 @@ export function Pagination({
   onChange: (page: number) => void;
 }) {
   return (
-    <div className="pagination">
+    <div className="ui-pagination">
       <Button disabled={page <= 1 || !totalPages} onClick={() => onChange(page - 1)}>
         上一页
       </Button>

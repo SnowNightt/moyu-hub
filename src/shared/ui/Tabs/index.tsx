@@ -12,7 +12,7 @@ export function Tabs({
   const ref = useRef<HTMLDivElement>(null);
   return (
     <div
-      className="tabs"
+      className="ui-tabs"
       role="tablist"
       ref={ref}
       onKeyDown={(event) => {
@@ -36,7 +36,7 @@ export function Tabs({
           role="tab"
           aria-selected={value === item.value}
           tabIndex={value === item.value ? 0 : -1}
-          className={value === item.value ? 'active' : ''}
+          className={value === item.value ? 'ui-active' : ''}
           onClick={() => onChange(item.value)}
         >
           {item.label}

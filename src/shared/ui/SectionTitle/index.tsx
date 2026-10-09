@@ -12,10 +12,10 @@ export function SectionTitle({
   action?: ReactNode;
 }) {
   return (
-    <div className="panel-head">
-      <div className="section-title">
+    <div className="ui-panel-head">
+      <div className="ui-section-title">
         {Icon && <Icon aria-hidden="true" />}
-        {brand && <img className="module-logo" src={`/brand/${brand}.png`} alt="" />}
+        {brand && <img className="ui-module-logo" src={`/brand/${brand}.png`} alt="" />}
         <h2>{title}</h2>
       </div>
       {action}

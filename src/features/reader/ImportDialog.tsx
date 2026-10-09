@@ -65,8 +65,8 @@ export function ImportDialog({ open, onClose }: { open: boolean; onClose: () => 
   }
   return (
     <Dialog title="本地导入" open={open} onClose={onClose}>
-      <p className="muted">TXT / EPUB 小说 · CBZ / 图片文件夹漫画</p>
-      <div className="row">
+      <p className="ui-muted">TXT / EPUB 小说 · CBZ / 图片文件夹漫画</p>
+      <div className="ui-row">
         <Button
           variant="primary"
           disabled={!reader || busy || running}
@@ -80,11 +80,11 @@ export function ImportDialog({ open, onClose }: { open: boolean; onClose: () => 
           选择漫画文件夹
         </Button>
       </div>
-      {!reader && <p className="muted">请在桌面应用中导入本地内容。</p>}
+      {!reader && <p className="ui-muted">请在桌面应用中导入本地内容。</p>}
       <label className="reader-import-mode">
         存储方式{' '}
         <select
-          className="select"
+          className="ui-select"
           value={mode}
           disabled={busy || running}
           onChange={(e) => setMode(e.target.value as typeof mode)}
@@ -93,7 +93,7 @@ export function ImportDialog({ open, onClose }: { open: boolean; onClose: () => 
           <option value="copy">复制到应用书库</option>
         </select>
       </label>
-      <p className="small muted">
+      <p className="ui-small ui-muted">
         {mode === 'reference'
           ? '保留原位置；移动或删除原文件后需要重新定位。'
           : '额外占用磁盘空间；原文件移动后仍可阅读。'}{' '}
@@ -105,12 +105,12 @@ export function ImportDialog({ open, onClose }: { open: boolean; onClose: () => 
             {requests.map((r, index) => (
               <div key={r.sourceToken} className="reader-import-entry">
                 <span>{r.displayName}</span>
-                <span className="badge">
+                <span className="ui-badge">
                   {r.format === 'TXT' || r.format === 'EPUB' ? '小说' : '漫画'} · {r.format}
                 </span>
                 {requests.length === 1 && (
                   <input
-                    className="select"
+                    className="ui-select"
                     aria-label="书名（可选）"
                     placeholder="书名（可选）"
                     value={r.title ?? ''}
@@ -123,7 +123,7 @@ export function ImportDialog({ open, onClose }: { open: boolean; onClose: () => 
                 )}
                 {r.format === 'TXT' && (
                   <select
-                    className="select"
+                    className="ui-select"
                     aria-label={`${r.displayName} 编码`}
                     value={r.encoding ?? ''}
                     disabled={busy}
@@ -152,7 +152,7 @@ export function ImportDialog({ open, onClose }: { open: boolean; onClose: () => 
             ))}
           </div>
           {inspection?.sizeBytes !== undefined && (
-            <p className="small muted">
+            <p className="ui-small ui-muted">
               内容体积 {(inspection.sizeBytes / 1024 / 1024).toFixed(2)} MiB
               {mode === 'copy' ? '，复制将额外占用相应空间。' : '，索引和阅读缓存另计。'}
             </p>
@@ -176,7 +176,7 @@ export function ImportDialog({ open, onClose }: { open: boolean; onClose: () => 
               <pre className="reader-preview">{inspection.preview}</pre>
             </details>
           )}
-          <div className="actions">
+          <div className="ui-dialog-actions">
             <Button variant="primary" disabled={busy} onClick={() => void start()}>
               导入 {requests.length} 项
             </Button>
@@ -190,12 +190,12 @@ export function ImportDialog({ open, onClose }: { open: boolean; onClose: () => 
               <strong>{entry.name}</strong>
               <span>{statuses[entry.status] ?? entry.status}</span>
               {entry.message && (
-                <small className={entry.status === 'failed' ? 'reader-error' : 'muted'}>
+                <small className={entry.status === 'failed' ? 'reader-error' : 'ui-muted'}>
                   {entry.message}
                 </small>
               )}
               {entry.itemId && (
-                <Link className="text-btn" to="/reader" onClick={onClose}>
+                <Link className="ui-button-text" to="/reader" onClick={onClose}>
                   查看书架
                 </Link>
               )}
@@ -219,8 +219,8 @@ export function ImportDialog({ open, onClose }: { open: boolean; onClose: () => 
         </div>
       )}
       {running && (
-        <div className="actions">
-          <span className="small muted">关闭弹窗后继续导入</span>
+        <div className="ui-dialog-actions">
+          <span className="ui-small ui-muted">关闭弹窗后继续导入</span>
           <Button onClick={() => void reader!.cancelImport().catch((e) => setError(String(e)))}>
             取消导入
           </Button>

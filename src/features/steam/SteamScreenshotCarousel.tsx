@@ -70,7 +70,7 @@ export function SteamScreenshotCarousel({
     >
       <div className="steam-carousel-stage" aria-live={playing ? 'off' : 'polite'}>
         <SteamImage
-          className="cover steam-carousel-image"
+          className="ui-cover steam-carousel-image"
           src={screenshots[current]}
           alt={`${title}截图 ${current + 1} / ${count}`}
         />
@@ -78,7 +78,7 @@ export function SteamScreenshotCarousel({
           <>
             <button
               type="button"
-              className="steam-carousel-arrow previous"
+              className="steam-carousel-arrow steam-carousel-previous"
               aria-label="上一张截图"
               onClick={() => move(-1)}
             >
@@ -86,7 +86,7 @@ export function SteamScreenshotCarousel({
             </button>
             <button
               type="button"
-              className="steam-carousel-arrow next"
+              className="steam-carousel-arrow steam-carousel-next"
               aria-label="下一张截图"
               onClick={() => move(1)}
             >
@@ -117,7 +117,11 @@ export function SteamScreenshotCarousel({
                 aria-pressed={position === current}
                 onClick={() => setIndex(position)}
               >
-                <SteamImage className="cover" src={url} alt={`${title}截图 ${position + 1} 预览`} />
+                <SteamImage
+                  className="ui-cover"
+                  src={url}
+                  alt={`${title}截图 ${position + 1} 预览`}
+                />
               </button>
             ))}
           </div>

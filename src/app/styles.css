@@ -1,0 +1,38 @@
+/* 全局基础 → 共享 UI → 应用壳 → 业务组件 → 页面覆盖；所有类名使用归属前缀。 */
+@import '../shared/styles/tokens.css';
+@import '../shared/styles/base.css';
+@import '../shared/styles/utilities.css';
+@import '../shared/ui/Button/Button.css';
+@import '../shared/ui/Panel/Panel.css';
+@import '../shared/ui/Slider/Slider.css';
+@import '../shared/ui/Switch/Switch.css';
+@import '../shared/ui/Clock/Clock.css';
+@import '../shared/ui/PageHeader/PageHeader.css';
+@import '../shared/ui/SectionTitle/SectionTitle.css';
+@import '../shared/ui/SearchBox/SearchBox.css';
+@import '../shared/ui/Tabs/Tabs.css';
+@import '../shared/ui/Pagination/Pagination.css';
+@import '../shared/ui/ResourceView/ResourceView.css';
+@import '../shared/ui/Dialog/Dialog.css';
+@import './AppLayout.css';
+@import './ErrorBoundary.css';
+@import '../shared/styles/shell.css';
+@import '../features/reader/reader.css';
+@import '../features/reader/ReaderImage.css';
+@import '../features/reader/ImportDialog.css';
+@import '../features/steam/GameCard.css';
+@import '../features/steam/SteamDetail.css';
+@import '../features/steam/SteamScreenshotCarousel.css';
+@import '../features/steam/SteamSearchRow.css';
+@import '../features/steam/SteamDataNotice.css';
+@import '../features/steam/SteamPage.css';
+@import '../features/music/MusicPage.css';
+@import '../features/heybox/HeyBoxPage.css';
+@import '../features/reader/ReaderPage.css';
+@import '../features/reader/ReadingPage.css';
+@import '../features/settings/SettingsPage.css';
+@import '../features/home/HomePage.css';
+/* 复用的播放控件尺寸保持优先于首页迷你播放器的早期适配规则。 */
+@import '../features/music/Player.css';
+/* 空状态的标题与图标覆盖容器内的通用正文规则。 */
+@import '../shared/ui/EmptyState/EmptyState.css';

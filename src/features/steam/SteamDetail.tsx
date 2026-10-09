@@ -41,7 +41,7 @@ export function SteamDetail({
               <>
                 <SteamDataNotice result={result} />
                 <button
-                  className="text-btn"
+                  className="ui-button-text"
                   onClick={() => {
                     force.current = true;
                     retry();
@@ -49,28 +49,28 @@ export function SteamDetail({
                 >
                   刷新详情
                 </button>
-                <div className="game-detail-layout">
+                <div className="steam-game-detail-layout">
                   <div>
                     <SteamScreenshotCarousel
                       key={game.id}
                       screenshots={game.screenshots}
                       title={game.title}
                     />
-                    <div className="game-intro">
+                    <div className="steam-game-intro">
                       <h2>游戏介绍</h2>
                       <p>{game.description || '暂无介绍'}</p>
                     </div>
                   </div>
-                  <div className="game-detail-side">
+                  <div className="steam-game-detail-side">
                     <h1>{game.title}</h1>
                     {game.cover ? (
-                      <SteamImage className="cover" src={game.cover} alt={game.title} />
+                      <SteamImage className="ui-cover" src={game.cover} alt={game.title} />
                     ) : (
                       <EmptyState compact title="暂无封面" icon={Gamepad2} />
                     )}
                     <p>{game.summary}</p>
                     <GamePrice price={game.price} />
-                    {game.comingSoon && <span className="badge">尚未发售</span>}
+                    {game.comingSoon && <span className="ui-badge">尚未发售</span>}
                     <small>中国区价格，以 Steam 结算页为准。</small>
                     {[
                       ['支持平台', game.platforms.join(' / ')],
@@ -79,7 +79,7 @@ export function SteamDetail({
                       ['发行商', game.publishers.join(' / ')],
                       ['游戏类型', game.genres.join(' / ')],
                     ].map(([name, value]) => (
-                      <div className="meta-row" key={name}>
+                      <div className="steam-meta-row" key={name}>
                         <span>{name}</span>
                         <span>{value || '—'}</span>
                       </div>
@@ -92,30 +92,30 @@ export function SteamDetail({
         </ResourceView>
       )}
       {state.status === 'unconfigured' && validAppId(id ?? '') && (
-        <div className="game-detail-layout detail-frame">
+        <div className="steam-game-detail-layout steam-detail-frame">
           <div>
-            <div className="media-well">
+            <div className="ui-media-well">
               <Image />
               <small>游戏截图</small>
             </div>
-            <div className="screenshots empty-shots">
+            <div className="steam-screenshots steam-empty-shots">
               {['主图', '截图', '截图'].map((label, index) => (
-                <div key={index} className="media-well">
+                <div key={index} className="ui-media-well">
                   <Image />
                   <small>{label}</small>
                 </div>
               ))}
             </div>
             <h2>游戏介绍</h2>
-            <p className="muted">选择游戏后显示介绍</p>
+            <p className="ui-muted">选择游戏后显示介绍</p>
           </div>
-          <div className="game-detail-side">
+          <div className="steam-game-detail-side">
             <h2>尚未选择游戏</h2>
-            <div className="media-well">
+            <div className="ui-media-well">
               <Gamepad2 />
             </div>
             {['价格与折扣', '支持平台', '发行日期', '开发商', '发行商', '游戏类型'].map((label) => (
-              <div className="meta-row" key={label}>
+              <div className="steam-meta-row" key={label}>
                 <span>{label}</span>
                 <span>—</span>
               </div>

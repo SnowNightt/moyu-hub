@@ -33,23 +33,23 @@ export function HomePage() {
       <PageHeader title="首页" subtitle="今天，从这里继续" right={<Clock />} />
       <div className="home-top">
         <Panel className="home-music">
-          <div className="section-title">
+          <div className="ui-section-title">
             <MusicSectionIcon />
             <h2>网易云音乐</h2>
-            <span className="badge">{current ? '已暂停' : '未播放'}</span>
+            <span className="ui-badge">{current ? '已暂停' : '未播放'}</span>
           </div>
-          <div className="album-slot">
+          <div className="home-album-slot">
             <TrackArtwork cover={current?.cover} title={current?.title} />
           </div>
-          <div className="song-line">
+          <div className="home-song-line">
             <strong>{current?.title ?? '尚未选择歌曲'}</strong>
-            <span className="small muted">
+            <span className="ui-small ui-muted">
               {current ? ` / ${current.artist}` : ' / 接入后开始播放'}
             </span>
           </div>
-          <div className="mini-player">
+          <div className="home-mini-player">
             <PlaybackControls />
-            <div className="timeline">
+            <div className="music-timeline">
               <span>—:—</span>
               <Slider label="首页歌曲播放进度" value={0} disabled />
               <span>—:—</span>
@@ -67,15 +67,15 @@ export function HomePage() {
             {(data) =>
               data.length ? (
                 data.slice(0, 2).map(({ item, progress }) => (
-                  <div className="reading-row" key={item.id}>
-                    <div className="grow">
+                  <div className="home-reading-row" key={item.id}>
+                    <div className="ui-grow">
                       <h3>{item.title}</h3>
                       <small>
                         {item.author} · 已读 {Math.round((progress.completion ?? 0) * 100)}%
                       </small>
                     </div>
                     <Link
-                      className="primary"
+                      className="ui-button-primary"
                       to={`/reader/${item.type}/${encodeURIComponent(item.id)}`}
                     >
                       继续阅读
@@ -99,7 +99,7 @@ export function HomePage() {
             title="Steam 精选"
             icon={GameSectionIcon}
             action={
-              <Link className="text-btn" to="/steam">
+              <Link className="ui-button-text" to="/steam">
                 查看全部
                 <ChevronRight />
               </Link>
@@ -115,7 +115,7 @@ export function HomePage() {
               data.data.length ? (
                 <>
                   <SteamDataNotice result={data} showUpdatedAt={false} />
-                  <div className="game-grid">
+                  <div className="steam-game-grid">
                     {data.data.slice(0, 3).map((game) => (
                       <GameCard game={game} key={game.id} home />
                     ))}
@@ -131,13 +131,13 @@ export function HomePage() {
           <SectionTitle
             title="小黑盒"
             icon={BoxSectionIcon}
-            action={<span className="badge warning">未连接</span>}
+            action={<span className="ui-badge ui-warning">未连接</span>}
           />
-          <div className="heybox-empty">
+          <div className="home-heybox-empty">
             <MessagesSquare />
-            <span className="small muted">服务接入后显示热门帖子</span>
+            <span className="ui-small ui-muted">服务接入后显示热门帖子</span>
           </div>
-          <Link className="primary" to="/heybox">
+          <Link className="ui-button-primary" to="/heybox">
             查看推荐界面
             <ChevronRight />
           </Link>

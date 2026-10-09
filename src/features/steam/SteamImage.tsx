@@ -3,7 +3,11 @@ type Props = { src: string; alt: string; className?: string };
 function ImageContent({ src, alt, className }: Props) {
   const [failed, setFailed] = useState(false);
   return failed ? (
-    <div className={`${className ?? ''} empty-art`} role="img" aria-label={alt || '图片暂不可用'}>
+    <div
+      className={`${className ?? ''} ui-empty-art`}
+      role="img"
+      aria-label={alt || '图片暂不可用'}
+    >
       <small>图片暂不可用</small>
     </div>
   ) : (

@@ -1,0 +1,8 @@
+.reader-error {
+  color: #b94a43;
+  padding: 8px;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  max-height: 90px;
+  overflow: auto;
+}

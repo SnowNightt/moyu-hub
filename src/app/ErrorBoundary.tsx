@@ -11,10 +11,10 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { failed: 
   }
   render() {
     return this.state.failed ? (
-      <main className="boot-error">
+      <main className="app-boot-error">
         <h1>界面暂时无法显示</h1>
         <p>请重新打开应用。</p>
-        <button className="primary" onClick={() => window.location.reload()}>
+        <button className="ui-button-primary" onClick={() => window.location.reload()}>
           重新加载
         </button>
       </main>

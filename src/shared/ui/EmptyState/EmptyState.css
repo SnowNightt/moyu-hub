@@ -1,0 +1,35 @@
+.ui-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 150px;
+  padding: 18px 12px;
+  text-align: center;
+  color: var(--muted);
+}
+.ui-empty-state > svg {
+  width: 30px;
+  height: 30px;
+  opacity: 0.65;
+}
+.ui-empty-state p {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--ink);
+  font-size: 13px;
+}
+.ui-empty-state small {
+  font-size: 11px;
+  max-width: 270px;
+}
+.ui-empty-state.ui-compact {
+  min-height: 66px;
+  padding: 8px 5px;
+  gap: 4px;
+}
+.ui-empty-state.ui-compact > svg {
+  width: 21px;
+  height: 21px;
+}
