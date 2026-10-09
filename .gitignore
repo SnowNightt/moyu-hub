@@ -19,14 +19,14 @@ test-results/
 /scripts/extract-reference-styles.py
 
 # Existing AI-generated docs only; new authored docs can be committed
-/docs/architecture.md
-/docs/native-rounded-window-check.json
-/docs/reader-implementation.md
-/docs/reader-local-import-plan.md
-/docs/reader-online-implementation-plan.md
-/docs/steam-implementation-plan.md
-/docs/verification-native.json
-/docs/verification.md
+/docs/documents/architecture.md
+/docs/documents/native-rounded-window-check.json
+/docs/documents/reader-implementation.md
+/docs/documents/reader-local-import-plan.md
+/docs/documents/reader-online-implementation-plan.md
+/docs/documents/steam-implementation-plan.md
+/docs/documents/verification-native.json
+/docs/documents/verification.md
 /docs/screenshots/desktop-blur-0.png
 /docs/screenshots/desktop-blur-100.png
 /docs/screenshots/desktop-blur-50.png
@@ -37,5 +37,5 @@ test-results/
 /docs/screenshots/settings-no-shadow.png
 /docs/screenshots/window-corner-final.png
 /docs/screenshots/window-frame-final.png
-
+/docs/prototype
 /demo

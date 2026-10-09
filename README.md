@@ -40,16 +40,22 @@ Windows 命令包装器 `scripts/desktop.mjs` 使用项目内 `.build-tmp/` 作�
 
 Steam 与首页共用请求和缓存。已移除首页最近使用及 Steam 最近浏览，不采集或写入游戏浏览记录。阅读器使用本地 SQLite，正文和图片通过 Rust 按需读取；音乐登录/播放、小黑盒和在线阅读仍未接入。未接入的业务动作禁用，正式服务不填入测试作品或假进度。
 
-本地导入默认引用原文件，可选择复制到应用书库。TXT 支持编码预览和手动选择；漫画支持 JPEG、PNG、WebP。EPUB 首版支持文字正文、基础强调、插图和内部目录链接，不支持 DRM、固定版式和图片型 EPUB。移出书架不会删除原始文件；清理缓存保留托管原件、进度和书签。详细规则、实现差异和验收见 [阅读器实施记录](docs/reader-implementation.md)。
+本地导入默认引用原文件，可选择复制到应用书库。TXT 支持编码预览和手动选择；漫画支持 JPEG、PNG、WebP。EPUB 首版支持文字正文、基础强调、插图和内部目录链接，不支持 DRM、固定版式和图片型 EPUB。移出书架不会删除原始文件；清理缓存保留托管原件、进度和书签。详细规则、实现差异和验收见 [阅读器实施记录](docs/documents/reader-implementation.md)。
 
 ## 架构与后续接入
 
-详见 [架构说明](docs/architecture.md)。各模块的 `provider.ts` 定义数据契约；在 `src/app/services.tsx` 注册真实实现。页面不拼接第三方 URL、不解析第三方响应、不直接调用原生文件或数据库插件。
+详见 [架构说明](docs/documents/architecture.md)。各模块的 `provider.ts` 定义数据契约；在 `src/app/services.tsx` 注册真实实现。页面不拼接第三方 URL、不解析第三方响应、不直接调用原生文件或数据库插件。
 
-桌面启动通过 `createAppServices()` 注册 Steam、首页聚合、HTTP 与 SQLite 远程缓存；无需 Steam API Key。HTTP 仅允许 Steam 商店指定路径，图片 CSP 使用 Steam CDN 白名单。普通浏览器预览保留明确的未接入状态，测试 fixture 不进入正式服务。详细实现与待人工验收项见 `docs/steam-implementation-plan.md` 和验证记录。
+桌面启动通过 `createAppServices()` 注册 Steam、首页聚合、HTTP 与 SQLite 远程缓存；无需 Steam API Key。HTTP 仅允许 Steam 商店指定路径，图片 CSP 使用 Steam CDN 白名单。普通浏览器预览保留明确的未接入状态，测试 fixture 不进入正式服务。详细实现与待人工验收项见 `docs/documents/steam-implementation-plan.md` 和验证记录。
 
 玻璃材质始终开启。“窗口不透明度”下面的“模糊强度”滑杆可独立调节真实桌面背景模糊，并自动保存。0% 为最弱玻璃，100% 为最强，默认 40%。Windows 原生实现使用 DWM 共享背景与 DirectComposition 高斯模糊；背景接口属于未公开 API，当前已在本机 Windows 10 22H2 验证。能力不可用时禁用滑杆，回退系统 Blur / Acrylic；系统材质也不可用时保留可读底色。浏览器预览不模拟原生桌面模糊。
 
 ## 验证
 
-构建、运行与界面检查记录见 [阶段验收记录](docs/verification.md)。浏览器布局验收不等于真实桌面玻璃效果验收；Windows 11 未在本机验证。
+构建、运行与界面检查记录见 [阶段验收记录](docs/documents/verification.md)。浏览器布局验收不等于真实桌面玻璃效果验收；Windows 11 未在本机验证。
+
+## 项目规范与 OpenSpec
+
+开发前先读 [Agent 规则](AGENTS.md)和[文档地图](docs/index.md)。工程规范包括开发流程、当前架构、代码约定、测试指南和文档维护规则；功能规格与变更统一在 [OpenSpec](openspec/config.yaml) 中维护。
+
+项目已通过 `openspec init --tools none` 初始化，使用 `spec-driven` schema，仅生成 OpenSpec 目录，继续使用已有用户级 OpenSpec skills。本次初始化未导入历史功能规格、未创建活动变更，原有需求和设计材料保留为输入。新功能从 `openspec new change change-name` 开始，完整流程见[开发流程](docs/workflows/development.md)。
